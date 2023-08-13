@@ -6,6 +6,7 @@
     <title>Weather App</title>
     <link rel="stylesheet" href="./WeatherApp800.css">
     <link rel="stylesheet" href="./WeatherApp1900.css">
+    <link rel="stylesheet" href="./WeatherAppMobile.css">
 </head>
 <body>
     <div class="container">
@@ -13,17 +14,20 @@
             <div class="element">
                 <div class="subelement">
                     <img src="../Icons_for_cities/kolkata.svg" alt="kolkata_image">
+                    <p class="contentfill"></p>
                 </div>
             </div>
             <div class="double">
                 <div class="subelement">
-                    <select name ="cities" class="drop-down">
-                        <option selected value = "kolkata">Kolkata</option>
-                        <option value = "anadyr">Anadyr</option>
-                        <option value = "auckland">Auckland</option>
-                        <option value = "dublin">Dublin</option>
-                        <option value = "winnipeg">Winnipeg</option>
-                    </select>
+                    <form action="#" method="post" class="citiesform">
+                        <select name ="cities" class="drop-down" title="cities">
+                            <option selected value = "kolkata">Kolkata</option>
+                            <option value = "anadyr">Anadyr</option>
+                            <option value = "auckland">Auckland</option>
+                            <option value = "dublin">Dublin</option>
+                            <option value = "winnipeg">Winnipeg</option>
+                        </select>
+                    </form>
                 </div>
                 <div class ="rest">
                     <div id="first_seg">
@@ -43,22 +47,26 @@
                 <div class="subelement2">
                     <div class="innerspace">
                     </div>
-                    <div class = "innercont borright">
-                        <p class="headings">Temp *C</p>
-                        <p class="celfah">25 C</p>
+                    <div class = "innercont">
+                        <div class="borright">
+                            <p class="headings">Temp *C</p>
+                            <p class="celfah">25 C</p>
+                        </div>
                     </div>
                 </div>
                 <div class="subelement2">
-                    <div class = "innercont2 borright">
-                        <p class="headings">Temp F</p>
-                        <p class="celfah">78 F</p>
+                    <div class = "innercont2">
+                        <div class="borright">
+                            <p class="headings">Temp F</p>
+                            <p class="celfah">78 F</p>
+                        </div>
                     </div>
                     <div class="innerspace">
                     </div>
                 </div>
             </div>
             <div class="element">
-                <div class="subelement2">
+                <div class="subelement2 borright2">
                     <div class="innerspace">
                     </div>
                     <div class = "innercont">
@@ -230,7 +238,114 @@
             </div>
         </div>
         <div class="midsection">
-
+            <div class="titlebar">
+                <p class="centrwrd">Top cities around world</p>
+                <div class="iconplace">
+                    <div class="iconcontainer border_bottom">
+                        <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny_icon" class="icons">
+                    </div>
+                    <div class="iconcontainer">
+                        <img src="../Weather_Icons/snowflakeIcon.svg" alt="Winter icon" class="icons">
+                    </div>
+                    <div class="iconcontainer">
+                        <img src="../Weather_Icons/cloudyIcon.svg" alt="Cloudy icon" class="icons">
+                    </div>
+                    <p class="disptop">Display Top</p>
+                    <div class="counter">
+                        <input type="text" name="counterval" id="countval" value="4" title="counterval" placeholder="counter">
+                        <div class="updown">
+                            <a href="#" class="quanplus"><img src="../General_Images_&_Icons/arrow-154-64.png" alt="uparrow"></a>
+                            <a href="#" class="quanplus"><img src="../General_Images_&_Icons/arrow-216-64.png" alt="uparrow"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="topcities">
+                <div class="topcity">
+                    <div class="cols">
+                        <p class="cityname">New Delhi</p>
+                        <p class="citytime">10:00 AM</p>
+                        <p class="citydate">2-MAR-2020</p>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">53%</p>
+                        </div>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">10%</p>
+                        </div>
+                    </div>
+                    <div class="cols">
+                        <div class="smallicons">
+                            <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
+                            <p class="citycelsius">25*C</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="topcity">
+                    <div class="cols">
+                        <p class="cityname">New Delhi</p>
+                        <p class="citytime">10:00 AM</p>
+                        <p class="citydate">2-MAR-2020</p>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">53%</p>
+                        </div>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">10%</p>
+                        </div>
+                    </div>
+                    <div class="cols">
+                        <div class="smallicons">
+                            <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
+                            <p class="citycelsius">25*C</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="topcity">
+                    <div class="cols">
+                        <p class="cityname">New Delhi</p>
+                        <p class="citytime">10:00 AM</p>
+                        <p class="citydate">2-MAR-2020</p>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">53%</p>
+                        </div>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">10%</p>
+                        </div>
+                    </div>
+                    <div class="cols">
+                        <div class="smallicons">
+                            <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
+                            <p class="citycelsius">25*C</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="topcity">
+                    <div class="cols">
+                        <p class="cityname">New Delhi</p>
+                        <p class="citytime">10:00 AM</p>
+                        <p class="citydate">2-MAR-2020</p>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">53%</p>
+                        </div>
+                        <div class="smallericons">
+                            <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="smallericoncont">
+                            <p class="citypercentage">10%</p>
+                        </div>
+                    </div>
+                    <div class="cols">
+                        <div class="smallicons">
+                            <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
+                            <p class="citycelsius">25*C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </body>
