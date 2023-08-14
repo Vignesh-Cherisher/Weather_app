@@ -4,7 +4,6 @@
         font-size: 20px;
         color: white;
         margin :0;
-        overflow : hidden;
         height: 100vh;
         background: rgb(0, 0, 0);
     }
@@ -27,7 +26,7 @@
     .topSection {
         position: inherit;
         display : flex;
-        height : 30%;
+        height : 40%;
         width : 100%;
     }
 
@@ -36,7 +35,7 @@
         display: flex;
         flex-direction: column;
         width : 10%;
-        height : 100%;
+        height : 80%;
     }
 
     .double {
@@ -44,7 +43,7 @@
         display: flex;
         flex-direction: column;
         width : 20%;
-        height : 100%;
+        height : 80%;
     }
 
     .half {
@@ -52,7 +51,7 @@
         flex-direction: column;
         justify-content: center;
         width : 50%;
-        height : 100%;
+        height : 80%;
     }
 
     .tomiddle {
@@ -237,7 +236,7 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        border-right: 1px solid rgba(255, 255, 255, 0.3);
+        border-right: 1px dotted rgba(255, 255, 255, 0.3);
     }
 
     .innercont2 {
@@ -453,5 +452,69 @@
 
     .citycelsius {
         font-size: 100%;
+    }
+
+    .midcontainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+    }
+
+    .swapicon {
+        display: flex;  
+        height: 30%;
+        width: 5%;
+    }
+
+    .leftarr {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 70%;
+    }
+
+    .lefticon {
+        aspect-ratio: 1/1;
+        height: 80%;   
+    }
+
+    .fltright {
+        justify-content: end;
+    }
+
+    .bottomsection {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: black;
+        width: 100%;
+        height: 35%;
+    }
+
+    .heading {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        height: 15%;
+        width: 85%;
+    }
+
+    .citiesacross {
+        font-size: 1.5vw;
+        color: white;
+    }
+
+    .sortcontainer {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .contname {
+        font-size: 1.2vw;
     }
 }
