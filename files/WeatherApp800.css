@@ -1,10 +1,14 @@
-@media screen and (max-width: 768px) and (min-width: 525px) {
-
+@media (525px <= width <= 1000px) {
     body {
+        font-size: 20px;
+        color: white;
         margin :0;
-        overflow : hidden;
         height: 100vh;
-        background: rgb(0, 0, 0);
+        background: rgb(0 0 0);
+    }
+
+    p {
+        margin: 0;
     }
 
     .container {
@@ -12,23 +16,46 @@
         top: 0;
         width :100%;
         height: 100%;
-    }
-
-    .topSection {
-        position: inherit;
-        display : flex;
-        height : 40%;
-        width : 100%;
+        background-color: grey;
         background-image: url("../General_Images_&_Icons/background.svg");
         background-size: cover;
+        background-blend-mode: multiply;
     }
 
-    .element {
+    .topsection {
+        position: inherit;
+        display : flex;
+        flex-direction:column;
+        height : 450px;
+        width : 100%;
+    }
+
+    .innercontainer {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 50%;
+    }
+
+    .elementcol {
         position: inherit;
         display: flex;
         flex-direction: column;
-        width : 10%;
+        justify-content: center;
+        width : 25%;
         height : 100%;
+    }
+
+    .elementrow {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 50%;
+    }
+
+    .gap-five {
+        margin: 5% 0;
     }
 
     .double {
@@ -36,15 +63,25 @@
         display: flex;
         flex-direction: column;
         width : 20%;
-        height : 100%;
+        height : 80%;
     }
 
-    .half {
+    .flexrow {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        height: 60%;
+    }
+
+    .flexcol {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width : 50%;
-        height : 100%;
+        height: 40%;
+    }
+
+    .half {
+        width : 100%;
     }
 
     .tomiddle {
@@ -52,15 +89,16 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
+        height: 70%;
+        margin:0 10%;
     }
 
     .subelement{
         position: inherit;
-        width: 100%;
-        height: 50%;
+        height: 100%;
     }
 
-    .subelement2{
+    .sub-element-second{
         justify-content: center;
         align-items: center;
         display: flex;
@@ -71,23 +109,22 @@
     }
 
     .rest{
-        position: inherit;
-        width: 100%;
-        height: 50%;
         display: flex;
         flex-direction: column;
+        height: 100%;
+        position: inherit;
     }
 
     .subelement img{
-        position: absolute;
-        width: 80%;
         aspect-ratio: 1/1;
-        min-height: 30px;
         bottom : -5px;
         left: 0;
+        max-height: 110px;
+        max-width: 110px;
+        min-height: 30px;
         min-width: 30px;
-        max-width: 60px;
-        max-height: 60px;
+        position: absolute;
+        width: 90%;
     }
 
     select {
@@ -95,80 +132,109 @@
         background-color: transparent;
     }
 
-    .drop-down {
-        margin: 0 10% 0 10%;
-        text-align: center;
-        border: none;
-        position: absolute;
-        font-size: 18px;
-        bottom: 0;
-        height:40%;
-        max-height: 50px;
-        width: 80%;
-        padding: 0 10px;
-        background-color: rgb(76, 76, 76);
-        color: rgb(255, 255, 151);
-        cursor: pointer;
-        line-height: 1.1;
+    .citiesform {
+        width: 100%;
+        height: 100%;
     }
 
-    #first_seg {
+    .drop-down {
+        appearance: none;
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 90% grey;
+        background-size: 8% 50%;
+        border: none;
+        bottom: 0;
+        box-sizing: border-box;
+        color: rgb(255 255 151);
+        cursor: pointer;
+        font-size:calc(14px + 2vw);
+        height:50%;
+        line-height: 1.5;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+
+    #first-seg {
         position: relative;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: end;
-        height: 60%;
+        height: 70%;
         width: 100%;
     }
 
-    .width70 {
-        position: relative;
-        width: 50%;
+    .height-hundred {
         height: 100%;
     }
 
-    .width30{
-        position: relative;
+    .width-thirty {
         width: 30%;
-        height: 100%;
     }
 
-    #second_seg {
+    .width-fifty{
+        width: 50%;
+    }
+
+    .width-forty {
+        width: 40%;
+    }
+
+    .width-sixty {
+        width: 60%;
+    }
+
+    .width-seventy {
+        width : 70%;
+    }
+
+    #second-seg {
         display: flex;
         align-items:start;
         height: 40%;
         width: 70%;
-        margin: 0 15% 0 15%;
     }
 
-    #am {
-        position: absolute;
-        right: 0;
-        bottom: 0;
-        width: 100%;
-        aspect-ratio: 1/1;
+    .timecontainer {
+        position:relative;
     }
 
-    #seconds {
-        font-size: x-small;
+    .amcontainer {
+        position: relative;
+    }
+
+    .datecontainer {
+        position:relative; 
     }
 
     .time {
         width: 100%;
         position: absolute;
-        bottom:-2px;
+        bottom:0;
         margin: 0;
-        font-size: 2.5vw;
-        color: rgb(231, 203, 63);
+        font-size: 3.5vw;
+        color: rgb(231 203 63);
+    }
+
+    #am {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50%;
+        aspect-ratio: 1/1;
+        max-width: 85px;
+    }
+
+    #seconds {
+        font-size: 2vw;
     }
 
     #date {
         font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        color: rgb(225, 220, 220);
-        font-size: 2vw;
+        color: rgb(225 220 220);
+        font-size: 1.5vw;
         width: 100%;
-        margin: 2px 0 0 0;
+        margin: 2px 0 0;
     }
 
     .innerspace {
@@ -189,10 +255,10 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        border-right: 1px solid rgba(255, 255, 255, 0.3);
+        border-right: 1px dotted rgba(255 255 255 / 30%);
     }
 
-    .innercont2 {
+    .inner-cont-second {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -201,16 +267,22 @@
         width: 100%;
     }
 
+    .heading-second {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.8vw;
+        color:rgb(216 205 205);
+    }
+
     .headings {
         font-family: Arial, Helvetica, sans-serif;
-        margin : 5px 0 0 0;
-        font-size: 8px;
-        color:rgb(216, 205, 205);
+        margin : 5px 0 0;
+        font-size: 2vw;
+        color:rgb(216 205 205);
     }
 
     .celfah {
-        font-size: large;
-        margin : 1vh 0 0 0;
+        font-size: 4vw;
+        margin : 1vh 0 0;
         color: white;
     }
 
@@ -225,15 +297,15 @@
         align-items: center;
     }
 
-    .innercont3 {
+    .inner-cont-third {
         height: 25%;
         color: white;
     }
 
     .weather {
-        margin-top: 5px;
-        width:15px;
-        height:15px;
+        margin: 0 0 0 5px;
+        aspect-ratio: 1/1;
+        width: 2vw;
     }
 
     .midsection {
@@ -242,14 +314,14 @@
         align-items: center;
         background: black;
         border-radius: 25px 25px 0 0;
-        height: 35%;
+        height: 450px;
         width: 100%;
     }
 
     .titlebar {
         position: relative;
         width: 100%;
-        height: 15%;
+        height: 10%;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -257,10 +329,10 @@
     }
 
     .centrwrd {
-        font-size: 1vw;
-        color: rgb(152, 152, 152);
-        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-weight: 100 !important;
+        font-size: calc(10px + 0.4vw);
+        color: rgb(152 152 152);
+        font-family: Trebuchet MS, Lucida Sans Unicode, Lucida Grande, Lucida Sans, Arial, sans-serif;
+        font-weight: 100 ;
         margin: 0;
     }
 
@@ -273,7 +345,7 @@
         right: 0;
         margin-right: 3%;
         height: 100%;
-        width: 20%;
+        width: 30%;
     }
 
     .iconcontainer{
@@ -285,17 +357,18 @@
 
     .icons {
         aspect-ratio: 1/1;
-        width : 1.5vw;
+        width : 2vw;
+        min-width: 15px;
     }
 
     .border_bottom {
-        border-bottom: 1px solid rgb(0, 195, 255);
+        border-bottom: 1px solid rgb(0 195 255);
     }
 
     .disptop {
         margin: 0;
-        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 0.7vw;
+        font-family: Trebuchet MS, Lucida Sans Unicode, Lucida Grande, Lucida Sans, Arial, sans-serif;
+        font-size: calc(6px + 0.2vw);
     }
 
     .counter {
@@ -310,30 +383,17 @@
     #countval {
         background-color: rgb(98, 98, 98);
         border: 0;
-        font-size: 0.8vw;
-        height: 0.8vw;
-        width: 20%;
+        font-size: calc(8px + 0.2vw);
+        height: 16px;
+        width: 40%;
         text-align: center;
         color: white;
     }
 
-    .updown {
-        background-color: rgb(98, 98, 98);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 1vw;
-        width: 20%;
-    }
-
-    .quanplus {
-        display: flex;
-        height : 50%;
-    }
-
-    .quanplus img {
-        height: 100%;
-        aspect-ratio: 1/1;
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button {  
+        opacity: 1;
+        height: 16px;
     }
 
     .topcities {
@@ -405,5 +465,34 @@
 
     .citycelsius {
         font-size: 100%;
+    }
+
+    .midcontainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+    }
+
+    .swapicon {
+        display: flex;  
+        justify-content: center;
+        height: 30%;
+        width: 5%;
+    }
+
+    .leftarr {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+    }
+
+    .lefticon {
+        aspect-ratio: 1/1;
+        width: 80%;
+        opacity: 0.5;   
     }
 }

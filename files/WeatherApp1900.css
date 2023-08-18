@@ -1,11 +1,14 @@
-@media screen and (min-width:769px) {
+* { 
+    overscroll-behavior: none;
+}
 
+@media (width >= 1000px)  {
     body {
         font-size: 20px;
         color: white;
         margin :0;
-        height: 100vh;
-        background: rgb(0, 0, 0);
+        height: 1125px;
+        background: black;
     }
 
     p {
@@ -23,19 +26,40 @@
         background-blend-mode: multiply;
     }
 
-    .topSection {
+    .topsection {
         position: inherit;
         display : flex;
-        height : 40%;
+        flex-direction: row;
+        height : 300px;
         width : 100%;
     }
 
-    .element {
+    .innercontainer {
+        display: flex;
+        flex-direction: column;
+        height: 85%;
+        width: 60%;
+    }
+    
+    .elementcol {
         position: inherit;
         display: flex;
         flex-direction: column;
-        width : 10%;
-        height : 80%;
+        justify-content: center;
+        width : 20%;
+        height : 100%;
+    }
+
+    .elementrow {
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        height: 115px;
+    }
+
+    .gap-five {
+        margin-bottom: 5%;
     }
 
     .double {
@@ -46,28 +70,38 @@
         height : 80%;
     }
 
-    .half {
+    .flexrow {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .flexcol {
         display: flex;
         flex-direction: column;
         justify-content: center;
-        width : 50%;
-        height : 80%;
     }
+
+    .half {
+        width : 50%;
+        height : 100%;
+    }
+
 
     .tomiddle {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
+        height: 50%;
+        margin:4% 2% 0;
     }
 
     .subelement{
         position: inherit;
-        width: 100%;
-        height: 50%;
+        height: 100%;
     }
 
-    .subelement2{
+    .sub-element-second{
         justify-content: center;
         align-items: center;
         display: flex;
@@ -79,22 +113,19 @@
 
     .rest{
         position: inherit;
-        width: 100%;
-        height: 50%;
+        height: 100%;
         display: flex;
         flex-direction: column;
     }
 
     .subelement img{
         position: absolute;
-        width: 80%;
+        width: 90%;
         aspect-ratio: 1/1;
-        min-height: 30px;
         bottom : -5px;
         left: 0;
-        min-width: 30px;
-        max-width: 100px;
-        max-height: 100px;
+        min-width: 80px;
+        max-width: 120px;
     }
 
     select {
@@ -102,24 +133,29 @@
         background-color: transparent;
     }
 
-    .drop-down {
-        box-sizing: border-box;
-        margin: 0 15% 0 15%;
-        border: none;
-        position: absolute;
-        font-size: 22px;
-        text-align: center;
-        bottom: 0;
-        height:40%;
-        max-height: 50px;
-        padding: 0 10px;
-        background-color: rgb(76, 76, 76);
-        color: rgb(255, 255, 151);
-        cursor: pointer;
-        line-height: 1.1;
+    .citiesform {
+        width: 100%;
+        height: 100%;
     }
 
-    #first_seg {
+    .drop-down {
+        appearance: none;
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 90% grey;
+        background-size: 10% 50%;
+        box-sizing: border-box;
+        border: none;
+        position: absolute;
+        font-size:calc(14px + 2vw);
+        text-align: center;
+        bottom: 0;
+        height:50%;
+        width: 100%;
+        color: rgb(255 255 151);
+        cursor: pointer;
+        line-height: 1.5;
+    }
+
+    #first-seg {
         position: relative;
         display: flex;
         flex-direction: row;
@@ -129,93 +165,78 @@
         width: 100%;
     }
 
-    .width30{
-        position: relative;
-        display: flex;
-        justify-content: center;
-        width: 30%;
+    .height-hundred {
         height: 100%;
     }
 
-    #second_seg {
+    .width-thirty {
+        width: 30%;
+    }
+
+    .width-fifty{
+        width: 50%;
+    }
+
+    .width-forty {
+        width: 40%;
+    }
+
+    .width-sixty {
+        width: 60%;
+    }
+
+    .width-seventy {
+        width : 70%;
+    }
+
+    #second-seg {
         display: flex;
         align-items:start;
         height: 40%;
         width: 70%;
-        margin: 0 15% 0 15%;
+        margin: 0 15%;
     }
 
-    @media screen and (max-width: 1039px) {
-        .width70 {
-            position: relative;
-            width: 50%;
-            height: 100%;
-        }
-
-        .drop-down {
-            width: 80%;
-        }
-
-        .time {
-            width: 100%;
-            position: absolute;
-            bottom:0;
-            margin: 0;
-            font-size: 25px;
-            color: rgb(231, 203, 63);
-        }
-
-        #am {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            aspect-ratio: 1/1;
-        }
-
-        #seconds {
-            font-size: small;
-        }
+    .timecontainer {
+        position:relative;
     }
 
-    @media screen and (min-width: 1040px) {
-        .width70 {
-            position: relative;
-            width: 40%;
-            height: 100%;
-        }
+    .amcontainer {
+        position: relative;
+    }
 
-        .drop-down {
-            width: 70%;
-        }
+    .datecontainer {
+        position:relative; 
+    }
 
-        .time {
-            width: 100%;
-            position: absolute;
-            bottom:0;
-            margin: 0;
-            font-size: 2.5vw;
-            color: rgb(231, 203, 63);
-        }
+    .time {
+        width: 100%;
+        position: absolute;
+        bottom:0;
+        margin: 0;
+        font-size: 2.5vw;
+        color: rgb(231 203 63);
+    }
 
-        #am {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            aspect-ratio: 1/1;
-            max-width: 60px;
-        }
+    #am {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 80%;
+        aspect-ratio: 1/1;
+        max-width: 85px;
+    }
 
-        #seconds {
-            font-size:medium;
-        }
+    #seconds {
+        font-size: 1.5vw;
     }
 
     #date {
         font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        color: rgb(225, 220, 220);
-        font-size: medium;
+        color: rgb(225 220 220);
+        font-size: 1.5vw;
         width: 100%;
-        margin: 2px 0 0 0;
+        margin: 2px 0 0;
     }
 
     .innerspace {
@@ -236,10 +257,10 @@
         flex-direction: column;
         align-items: center;
         width: 100%;
-        border-right: 1px dotted rgba(255, 255, 255, 0.3);
+        border-right: 1px dotted rgba(255 255 255 / 30%);
     }
 
-    .innercont2 {
+    .inner-cont-second {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -248,16 +269,22 @@
         width: 100%;
     }
 
+    .heading-second {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1.3vw;
+        color:rgb(216 205 205);
+    }
+
     .headings {
         font-family: Arial, Helvetica, sans-serif;
-        margin : 5px 0 0 0;
-        font-size: 12px;
-        color:rgb(216, 205, 205);
+        margin : 5px 0 0;
+        font-size: 1.5vw;
+        color:rgb(216 205 205);
     }
 
     .celfah {
-        font-size: x-large;
-        margin : 1vh 0 0 0;
+        font-size: 3vw;
+        margin : 1vh 0 0;
         color: white;
     }
 
@@ -272,15 +299,15 @@
         align-items: center;
     }
 
-    .innercont3 {
+    .inner-cont-third {
         height: 25%;
         color: white;
     }
 
     .weather {
-        margin-top: 5px;
-        width:15px;
-        height:15px;
+        margin: 0 0 0 5px;
+        aspect-ratio: 1/1;
+        width: 2vw;
     }
 
     .midsection {
@@ -289,12 +316,14 @@
         align-items: center;
         background: black;
         border-radius: 25px 25px 0 0;
-        height: 35%;
+        height: 375px;
         width: 100%;
     }
 
     .titlebar {
-        position: relative;
+        background-color: black;
+        position: sticky;
+        top:0;
         width: 100%;
         height: 15%;
         display: flex;
@@ -304,10 +333,10 @@
     }
 
     .centrwrd {
-        font-size: 1vw;
-        color: rgb(152, 152, 152);
-        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-weight: 100 !important;
+        font-size: calc(10px + 0.5vw);
+        color: rgb(152 152 152);
+        font-family: Trebuchet MS, Lucida Sans Unicode , Lucida Grande , Lucida Sans , Arial, sans-serif;
+        font-weight: 100;
         margin: 0;
     }
 
@@ -324,6 +353,7 @@
     }
 
     .iconcontainer{
+        min-width: 25px;
         width: 12%;
         height: 100%;
         display: flex;
@@ -336,13 +366,13 @@
     }
 
     .border_bottom {
-        border-bottom: 1px solid rgb(0, 195, 255);
+        border-bottom: 1px solid rgb(0 195 255);
     }
 
     .disptop {
         margin: 0;
         font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: 0.7vw;
+        font-size: calc(7px + 0.2vw);
     }
 
     .counter {
@@ -357,33 +387,22 @@
     #countval {
         background-color: rgb(98, 98, 98);
         border: 0;
-        font-size: 0.8vw;
-        height: 0.8vw;
-        width: 20%;
+        font-size: calc(6px + 0.5vw);
+        height: 16px;
+        width: 40%;
         text-align: center;
         color: white;
     }
 
-    .updown {
-        background-color: rgb(98, 98, 98);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 1vw;
-        width: 20%;
-    }
-
-    .quanplus {
-        display: flex;
-        height : 50%;
-    }
-
-    .quanplus img {
-        height: 100%;
-        aspect-ratio: 1/1;
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button {  
+        opacity: 1;
+        height: 16px;
     }
 
     .topcities {
+        overflow-x: auto;
+        white-space: nowrap;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -392,14 +411,23 @@
         width: 80%;
     }
 
+    ::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+        background: transparent;
+    }
+
     .topcity {
         background-image: url("../Icons_for_cities/kolkata.svg");
         background-size: cover;
         display: flex;
+        flex-shrink: 0;
         flex-direction: row;
         justify-content:space-between;
         width: 20%;
-        height: 80%;
+        min-width: 180px;
+        aspect-ratio: 1/1;
+        margin: 0 50px 0 0;
     }
 
     .cols {
@@ -411,15 +439,15 @@
     }
 
     .cityname {
-        font-size: 1vw;
+        font-size: calc(10px + 0.6vw);
     }
 
     .citydate {
-        font-size: 1vw;
+        font-size: calc(10px + 0.6vw);
     }
 
     .citytime {
-        font-size: 0.8vw;
+        font-size: calc(8px + 0.4vw);
     }
 
     .smallericons {
@@ -431,12 +459,12 @@
 
     .smallericoncont {
         aspect-ratio: 1/1;
-        height: 80%;
+        width: 15%;
     }
 
     .citypercentage {
         margin-left: 5px;
-        font-size: 0.8vw;
+        font-size: calc(8px + 0.4vw);
     }
 
     .smallicons {
@@ -447,11 +475,11 @@
 
     .smalliconcont {
         aspect-ratio: 1/1;
-        height: 80%;
+        width: 35%;
     }
 
     .citycelsius {
-        font-size: 100%;
+        font-size: calc(12px + 0.8vw);
     }
 
     .midcontainer {
@@ -465,6 +493,7 @@
 
     .swapicon {
         display: flex;  
+        justify-content: center;
         height: 30%;
         width: 5%;
     }
@@ -473,16 +502,13 @@
         display: flex;
         align-items: center;
         height: 100%;
-        width: 70%;
+        width: 100%;
     }
 
     .lefticon {
         aspect-ratio: 1/1;
-        height: 80%;   
-    }
-
-    .fltright {
-        justify-content: end;
+        width: 80%;
+        opacity: 0.5;   
     }
 
     .bottomsection {
@@ -491,7 +517,7 @@
         align-items: center;
         background-color: black;
         width: 100%;
-        height: 35%;
+        height: 450px;
     }
 
     .heading {
