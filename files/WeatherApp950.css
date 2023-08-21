@@ -1,5 +1,6 @@
-@media (width <= 525px){
-    body{
+@media (525px <= width <= 950px) {
+    body {
+        font-size: 20px;
         color: white;
         margin :0;
         height: 100vh;
@@ -25,7 +26,7 @@
         position: inherit;
         display : flex;
         flex-direction:column;
-        height : 375px;
+        height : 450px;
         width : 100%;
     }
 
@@ -88,8 +89,8 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        height: 80%;
-        margin:0 2%;
+        height: 70%;
+        margin:0 10%;
     }
 
     .subelement{
@@ -108,22 +109,22 @@
     }
 
     .rest{
-        position: inherit;
-        height: 100%;
         display: flex;
         flex-direction: column;
+        height: 100%;
+        position: inherit;
     }
 
     .subelement img{
-        position: absolute;
-        width: 90%;
         aspect-ratio: 1/1;
-        min-height: 30px;
         bottom : -5px;
         left: 0;
+        max-height: 110px;
+        max-width: 110px;
+        min-height: 30px;
         min-width: 30px;
-        max-width: 95px;
-        max-height: 95px;
+        position: absolute;
+        width: 90%;
     }
 
     select {
@@ -136,20 +137,20 @@
     }
 
     .drop-down {
-        box-sizing: border-box;
-        border: none;
-        position: absolute;
-        font-size:calc(8px + 3vw);
-        padding-left: 5px;
-        bottom: 0;
-        height:50%;
-        width: 100%;
         appearance: none;
-        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 97% #83838340;
-        background-size: 10% 30%;
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 90% #83838340;
+        background-size: 8% 50%;
+        border: none;
+        bottom: 0;
+        box-sizing: border-box;
         color: #fff;
         cursor: pointer;
+        font-size:calc(14px + 2vw);
+        height:50%;
         line-height: 1.5;
+        position: absolute;
+        padding-left: 10px;
+        width: 100%;
         font-weight: 100;
     }
 
@@ -157,7 +158,7 @@
         position: relative;
         display: flex;
         flex-direction: row;
-        justify-content: end;
+        justify-content: start;
         align-items: end;
         height: 70%;
         width: 100%;
@@ -165,10 +166,6 @@
 
     .height-hundred {
         height: 100%;
-    }
-
-    #half-width {
-        width: 50%;
     }
 
     .width-thirty {
@@ -194,9 +191,8 @@
     #second-seg {
         display: flex;
         align-items:start;
-        justify-content: center;
         height: 40%;
-        width: 100%;
+        width: 70%;
     }
 
     .timecontainer {
@@ -216,27 +212,30 @@
     }
 
     .time {
-        margin: 0;
-        font-size: calc(8px + 3.5vw);
+        position: relative;
+        font-size: calc(24px + 1vw);
         color: #ffe5b4;
     }
 
     #am {
         position: absolute;
-        left: 20%;
         bottom: 0;
-        width: 80%;
+        left: 0;
+        width: 50%;
         aspect-ratio: 1/1;
         max-width: 85px;
+        min-width: 60px;
+        margin-left: 5px;
     }
 
     #seconds {
-        font-size: calc(4px + 2vw);
+        font-size: calc(10px + 1vw);
     }
 
     #date {
         color: rgb(225 220 220);
-        font-size: calc(7px + 1vw);
+        font-size:calc(8px + 0.8vw);
+        width: 100%;
         margin: 2px 0 0;
     }
 
@@ -271,18 +270,19 @@
     }
 
     .heading-second {
-        font-size: clamp(7px, 2vw,14px);
+        font-size: 1.8vw;
         color:rgb(216 205 205);
     }
 
     .headings {
-        /* margin : 5px 0 0; */
-        font-size: calc(6px + 1vw);
+        margin : 5px 0 0;
+        font-size: 2vw;
         color:rgb(216 205 205);
+        font-weight: 100;
     }
 
     .celfah {
-        font-size: calc(10px + 2vw);
+        font-size: 4vw;
         margin : 1vh 0 0;
         color: white;
     }
@@ -307,9 +307,8 @@
         margin: 0 0 0 5px;
         aspect-ratio: 1/1;
         width: 2vw;
-        min-width: 13px;
     }
-    
+
     .midsection {
         display: flex;
         flex-direction: column;
@@ -326,9 +325,9 @@
         background-color: #121212;
         border-radius: 25px 25px 0 0;
         width: 100%;
-        height: 25%;
+        height: 20%;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
     }
@@ -345,8 +344,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        height: 50%;
-        width: 60%;
+        position: absolute;
+        right: 0;
+        margin-right: 3%;
+        height: 100%;
+        width: 30%;
     }
 
     .iconcontainer{
@@ -405,7 +407,7 @@
         justify-content: space-between;
         align-items: center;
         height: 85%;
-        width: 60%;
+        width: 80%;
     }
 
     ::-webkit-scrollbar {
@@ -489,7 +491,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        height: 60%;
+        height: 80%;
         width: 100%;
         align-items: center;
     }
@@ -498,7 +500,7 @@
         display: flex;  
         justify-content: center;
         height: 30%;
-        width: 7%;
+        width: 5%;
     }
 
     .leftarr {
@@ -511,7 +513,7 @@
     .lefticon {
         aspect-ratio: 1/1;
         width: 80%;
-        min-width: 17px;
+        min-width: 24px;
         opacity: 0.5;   
     }
 }

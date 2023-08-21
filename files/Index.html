@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather App</title>
-    <link rel="stylesheet" href="./WeatherApp800.css">
-    <link rel="stylesheet" href="./WeatherApp1900.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./WeatherApp950.css">
+    <link rel="stylesheet" href="./WeatherApp1440.css">
     <link rel="stylesheet" href="./WeatherAppMobile.css">
 </head>
 <body>
@@ -14,10 +17,10 @@
             <div class="half flexrow">
                 <div class="innercontainer">
                     <div class="elementrow gap-five">
-                        <div class="subelement width-thirty">
+                        <div class="subelement width-thirty" id="half-width">
                             <img src="../Icons_for_cities/kolkata.svg" alt="kolkata_image">
                         </div>
-                        <div class="subelement width-seventy">
+                        <div class="subelement width-seventy"  id="half-width">
                             <form action="#" method="post" class="citiesform">
                                 <select name ="cities" class="drop-down" title="cities">
                                     <option selected value = "kolkata">Kolkata</option>
@@ -33,12 +36,12 @@
                         <div class="subelement width-thirty"></div>
                         <div class ="rest width-seventy">
                             <div id="first-seg">
-                                <div class="width-fifty height-hundred timecontainer">
+                                <div class="width-sixty height-hundred timecontainer">
                                     <p class="time">
                                         10:10<span id="seconds">:44</span>
                                     </p>
                                 </div>
-                                <div class="width-fifty height-hundred amcontainer">
+                                <div class="width-forty height-hundred amcontainer">
                                     <img src="../General_Images_&_Icons/amState.svg" id="am" alt="AM">
                                 </div>
                             </div>
@@ -106,7 +109,7 @@
                             <img src="../Weather_Icons/cloudyIcon.svg" alt="cloudy" class="weather">
                         </div>
                         <div class="inner-cont-third">
-                            <p class="heading-second">6</p>
+                            <p class="headings">6</p>
                         </div>
                     </div>
                     <div class="hrscols">
@@ -133,7 +136,7 @@
                             <img src="../Weather_Icons/windyIcon.svg" alt="cloudy" class="weather">
                         </div>
                         <div class="inner-cont-third">
-                            <p class="heading-second">6</p>
+                            <p class="headings">6</p>
                         </div>
                     </div>
                     <div class="hrscols">
@@ -160,7 +163,7 @@
                             <img src="../Weather_Icons/rainyIcon.svg" alt="cloudy" class="weather">
                         </div>
                         <div class="inner-cont-third">
-                            <p class="heading-second">6</p>
+                            <p class="headings">6</p>
                         </div>
                     </div>
                     <div class="hrscols">
@@ -187,7 +190,7 @@
                             <img src="../Weather_Icons/cloudyIcon.svg" alt="cloudy" class="weather">
                         </div>
                         <div class="inner-cont-third">
-                            <p class="heading-second">6</p>
+                            <p class="headings">6</p>
                         </div>
                     </div>
                     <div class="hrscols">
@@ -214,7 +217,7 @@
                             <img src="../Weather_Icons/windyIcon.svg" alt="cloudy" class="weather">
                         </div>
                         <div class="inner-cont-third">
-                            <p class="heading-second">6</p>
+                            <p class="headings">6</p>
                         </div>
                     </div>
                     <div class="hrscols">
@@ -241,7 +244,7 @@
                             <img src="../Weather_Icons/cloudyIcon.svg" alt="cloudy" class="weather">
                         </div>
                         <div class="inner-cont-third">
-                            <p class="heading-second">6</p>
+                            <p class="headings">6</p>
                         </div>
                     </div>
                 </div>
@@ -288,7 +291,7 @@
                         <div class="cols">
                             <div class="smallicons">
                                 <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
-                                <p class="citycelsius">25*C</p>
+                                <p class="citycelsius">25&deg;C</p>
                             </div>
                         </div>
                     </div>
@@ -309,7 +312,7 @@
                         <div class="cols">
                             <div class="smallicons">
                                 <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
-                                <p class="citycelsius">25*C</p>
+                                <p class="citycelsius">25&deg;C</p>
                             </div>
                         </div>
                     </div>
@@ -330,7 +333,7 @@
                         <div class="cols">
                             <div class="smallicons">
                                 <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
-                                <p class="citycelsius">25*C</p>
+                                <p class="citycelsius">25&deg;C</p>
                             </div>
                         </div>
                     </div>
@@ -351,7 +354,7 @@
                         <div class="cols">
                             <div class="smallicons">
                                 <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
-                                <p class="citycelsius">25*C</p>
+                                <p class="citycelsius">25&deg;C</p>
                             </div>
                         </div>
                     </div>
@@ -372,7 +375,7 @@
                         <div class="cols">
                             <div class="smallicons">
                                 <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="smalliconcont">
-                                <p class="citycelsius">25*C</p>
+                                <p class="citycelsius">25&deg;C</p>
                             </div>
                         </div>
                     </div>
@@ -383,7 +386,7 @@
             </div>
         </div>
         <div class="bottomsection">
-            <div class="heading">
+            <div class="titlebar">
                 <p class="citiesacross">Cities around continents at a Glance</p>
                 <div class="sortcontainer">
                     <p class="contname">Continent Name</p>
@@ -401,7 +404,7 @@
                         <p class="contcitynametime">Delhi, 10:10 AM</p>
                     </div>
                     <div class="leftpart">
-                        <p class="contcelsius">38*C</p>
+                        <p class="contcelsius">38&deg;C</p>
                         <div class="conthumidity">
                             <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity Icon">
                             <p class="contpercent">53%</p>
