@@ -1,546 +1,637 @@
 * { 
+    font-family: Roboto, sans-serif;
     overscroll-behavior: none;
 }
 
-@media (width >= 1000px)  {
-    body {
-        font-size: 20px;
-        color: white;
-        margin :0;
-        height: 1125px;
-        background: black;
-    }
+body {
+    font-size: 20px;
+    color: white;
+    margin :0;
+    background: rgb(255 255 255);
+}
 
-    p {
-        margin: 0;
-    }
+p {
+    margin: 0;
+}
 
-    .container {
-        position: relative;
-        top: 0;
-        width :100%;
+.margin-left {
+    margin-left: 2%;
+}
+
+.app-container {
+    margin: 2%;
+    position: relative;
+    top: 0;
+    width :96%;
+    height: 98%;
+    background-color: grey;
+    background-image: url("../General_Images_&_Icons/background.svg");
+    background-size: cover;
+    background-blend-mode: multiply;
+}
+
+.header-section {
+    position: inherit;
+    display : flex;
+    width : 100%;
+}
+
+.column-transform {
+    position: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.row-transform {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50%;
+}
+
+.double {
+    position: inherit;
+    display: flex;
+    flex-direction: column;
+    width : 20%;
+    height : 80%;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.center-align {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.sub-element{
+    position: inherit;
+    height: 100%;
+}
+
+.sub-element-second{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: inherit;
+    width: 100%;
+    height: 50%;
+}
+
+.date-time-holder{
+    position: inherit;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.height-hundred {
+    height: 100%;
+}
+
+.width-thirty {
+    width: 30%;
+}
+
+.width-fifty{
+    width: 50%;
+}
+
+.width-forty {
+    width: 40%;
+}
+
+.width-sixty {
+    width: 60%;
+}
+
+.width-seventy {
+    width : 70%;
+}
+
+select {
+    background-color: transparent;
+}
+
+.cities-form {
+    width: 100%;
+    height: 100%;
+}
+
+.drop-down {
+    appearance: none;
+    box-sizing: border-box;
+    border: none;
+    position: absolute;
+    padding-left: 10px;
+    font-weight: 100;
+    bottom: 0;
+    height:45%;
+    width: 100%;
+    color: #fff;
+    cursor: text;
+}
+
+.drop-down:focus, .drop-down:hover {
+    outline: none;
+}
+
+.city-list {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    opacity: 0;
+}
+
+[list]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+
+#first-seg {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    width: 100%;
+}
+
+#second-seg {
+    display: flex;
+    align-items:start;
+    height: 40%;
+}
+
+.time-container {
+    display: flex;
+    width: fit-content;
+    align-items: start;
+    position:relative;
+    height: fit-content;
+}
+
+.am-container {
+    position: relative;
+}
+
+.datecontainer {
+    position:relative; 
+}
+
+.time {
+    position: relative;
+    margin: 0;
+    color: #ffe5b4;
+}
+
+#am {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    aspect-ratio: 1/1;
+    max-width: 85px;
+    margin-left: 8px;
+}
+
+#date {
+    color: rgb(225 220 220);
+    margin: 2px 0 0;
+}
+
+.for-spacing {
+    height: 20%;
+}
+
+.content-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    height: 70%;
+    width: 100%;
+}
+
+.element-border-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-right: 1px dotted rgba(255 255 255 / 30%);
+}
+
+.inner-cont-second {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 100%;
+}
+
+
+
+.weather-scale-columns {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content:center;
+    align-items: center;
+}
+
+.scale-content-holder {
+    height: 25%;
+    color: white;
+}
+
+.weather {
+    margin: 0 0 0 5px;
+    aspect-ratio: 1/1;
+    width: 2vw;
+}
+
+@media (width <= 525px){
+    html{
         height: 100%;
-        background-color: grey;
-        background-image: url("../General_Images_&_Icons/background.svg");
-        background-size: cover;
-        background-blend-mode: multiply;
     }
 
-    .topsection {
-        position: inherit;
-        display : flex;
-        flex-direction: row;
-        height : 300px;
+    body {
+        height: 140%;
+    }
+
+    #city-image {
+        width: 50%;
+    }
+
+    #city-selection {
+        width: 50%;
+    }
+
+    .header-section {
+        flex-direction:column;
+        height : 40%;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 50%;
+    }
+
+    ::placeholder {
+        white-space: pre-line;
+        position: relative;
+        top: -12px;
+        font-size: 18px;
+    }
+
+    #first-seg {
+        justify-content: end;
+        height: 70%;
+    }
+
+    #second-seg {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #seconds {
+        font-size: calc(4px + 2vw);
+    }
+
+    .scale-content {
+        font-size: clamp(7px, 2vw,14px);
+        color:rgb(216 205 205);
+    }
+
+    .forecast-name {
+        font-size: calc(6px + 1vw);
+        color:rgb(216 205 205);
+    }
+
+    .forecast-values {
+        font-size: calc(10px + 2vw);
+        margin : 1% 0 0;
+        color: white;
+    }
+
+    #date{
+        font-size: calc(7px + 1vw);
+    }
+
+    #am {
+        min-width: 30px;
+        width: 80%;
+    }
+
+    .column-transform {
+        height: 100%;
+        width : 25%;
+    }
+
+    .margin-five {
+        margin: 5% 0;
+    }
+
+    .flex-row {
+        justify-content: center;
+        height: 60%;
+    }
+
+    .flex-column {
+        height: 40%;
+    }
+
+    .split-half {
         width : 100%;
     }
 
-    .innercontainer {
-        display: flex;
-        flex-direction: column;
-        height: 85%;
-        width: 60%;
-    }
-    
-    .elementcol {
-        position: inherit;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width : 20%;
-        height : 100%;
-    }
-
-    .elementrow {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        width: 100%;
-        height: 115px;
-    }
-
-    .gap-five {
-        margin-bottom: 5%;
-    }
-
-    .double {
-        position: inherit;
-        display: flex;
-        flex-direction: column;
-        width : 20%;
-        height : 80%;
-    }
-
-    .flexrow {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .flexcol {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .half {
-        width : 50%;
-        height : 100%;
-    }
-
-
-    .tomiddle {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        height: 50%;
-        margin:4% 2% 0;
-    }
-
-    .subelement{
-        position: inherit;
-        height: 100%;
-    }
-
-    .sub-element-second{
-        justify-content: center;
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        position: inherit;
-        width: 100%;
-        height: 50%;
-    }
-
-    .rest{
-        position: inherit;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .subelement img{
+    .sub-element img{
         position: absolute;
         width: 90%;
         aspect-ratio: 1/1;
         bottom : -5px;
         left: 0;
-        min-width: 80px;
-        max-width: 120px;
+        min-width: 30px;
+        max-width: 95px;
     }
 
-    select {
-        opacity: 0.5;
-        background-color: transparent;
-    }
-
-    .citiesform {
-        width: 100%;
-        height: 100%;
+    .center-align {
+        height: 80%;
+        margin:0 2%;
     }
 
     .drop-down {
-        appearance: none;
-        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 90% grey;
-        background-size: 10% 50%;
-        box-sizing: border-box;
-        border: none;
-        position: absolute;
-        font-size:calc(14px + 2vw);
-        text-align: center;
-        bottom: 0;
-        height:50%;
-        width: 100%;
-        color: rgb(255 255 151);
-        cursor: pointer;
-        line-height: 1.5;
-    }
-
-    #first-seg {
-        position: relative;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: end;
-        height: 60%;
-        width: 100%;
-    }
-
-    .height-hundred {
-        height: 100%;
-    }
-
-    .width-thirty {
-        width: 30%;
-    }
-
-    .width-fifty{
-        width: 50%;
-    }
-
-    .width-forty {
-        width: 40%;
-    }
-
-    .width-sixty {
-        width: 60%;
-    }
-
-    .width-seventy {
-        width : 70%;
-    }
-
-    #second-seg {
-        display: flex;
-        align-items:start;
-        height: 40%;
-        width: 70%;
-        margin: 0 15%;
-    }
-
-    .timecontainer {
-        position:relative;
-    }
-
-    .amcontainer {
-        position: relative;
-    }
-
-    .datecontainer {
-        position:relative; 
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 96% #83838340;
+        font-size:calc(8px + 3vw);
+        background-size: 8% 30%;
     }
 
     .time {
-        width: 100%;
+        font-size: calc(8px + 3.5vw);
+    }
+
+    .weather {
+        min-width: 13px;
+    }
+}
+
+@media (525px <= width <= 950px) {
+    .margin-five {
+        margin: 5% 0;
+    }
+
+    html{
+        height: 100%;
+    }
+
+    body {
+        height: 150%;
+    }
+
+    #city-image {
+        width: 30%;
+    }
+
+    #city-selection {
+        width: 70%;
+    }
+
+    .header-section {
+        flex-direction:column;
+        height : 40%;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 50%;
+    }
+
+    .column-transform {
+        height: 100%;
+        width : 25%;
+    }
+
+    .flex-row {
+        justify-content: center;
+        height: 60%;
+    }
+
+    .flex-column {
+        height: 40%;
+    }
+
+    .split-half {
+        width : 100%;
+    }
+
+    .center-align {
+        margin: 0 10%;
+        height: 70%;
+    }
+
+    .sub-element img{
+        aspect-ratio: 1/1;
+        bottom : -5px;
+        left: 0;
+        max-width: 120px;
+        min-width: 80px;
         position: absolute;
-        bottom:0;
-        margin: 0;
-        font-size: 2.5vw;
-        color: rgb(231 203 63);
+        width: 90%;
+    }
+
+    .drop-down {
+        font-size:calc(14px + 2vw);
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 95% #83838340;
+        background-size: 6% 35%;
+    }    
+
+    #first-seg {
+        justify-content: start;
+        height: 70%;
+    }
+
+    #second-seg {
+        width: 70%;
+    }
+
+    .time {
+        font-size: calc(24px + 1vw);
     }
 
     #am {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 80%;
-        aspect-ratio: 1/1;
-        max-width: 85px;
-    }
-
-    #seconds {
-        font-size: 1.5vw;
+        min-width: 60px;
+        width: 50%;
     }
 
     #date {
-        font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-        color: rgb(225 220 220);
-        font-size: 1.5vw;
+        font-size:calc(8px + 0.8vw);
         width: 100%;
-        margin: 2px 0 0;
     }
 
-    .innerspace {
-        height: 20%;
+    #seconds {
+        font-size: calc(10px + 1vw);
     }
 
-    .innercont {
+    .scale-content {
+        font-size: 1.8vw;
+        color:rgb(216 205 205);
+    }
+
+    .forecast-name {
+        margin : 5px 0 0;
+        font-size: 2vw;
+        color:rgb(216 205 205);
+        font-weight: 100;
+    }
+
+    .forecast-values {
+        font-size: 4vw;
+        margin : 1vh 0 0;
+        color: white;
+    }
+}
+
+@media (width >= 950px)  {
+    html{
+        height: 100%;
+    }
+
+    body {
+        height: 150%;
+    }
+
+    .header-section {
+        flex-direction: row;
+        height : 30%;
+    }
+
+    .inner-container {
         display: flex;
         flex-direction: column;
-        justify-content: end;
-        align-items: center;
-        height: 70%;
-        width: 100%;
+        height: 100%;
+        width: 60%;
+    }
+    
+    ::placeholder {
+        font-size: 34px;
     }
 
-    .borright {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        border-right: 1px dotted rgba(255 255 255 / 30%);
+    @media (width <=1300px ) {
+        ::placeholder {
+            white-space: pre-line;
+            position: relative;
+            top: -15px;
+            font-size: 24px;
+        }
     }
 
-    .inner-cont-second {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 70%;
-        width: 100%;
+    .column-transform {
+        height: 100%;
+        width : 20%;
     }
 
-    .heading-second {
-        font-family: Arial, Helvetica, sans-serif;
+    .margin-five {
+        margin-bottom: 5%;
+    }
+
+    .split-half {
+        width : 50%;
+        height : 100%;
+    }
+
+    .center-align {
+        margin:4% 2% 0;
+        height: 50%;
+    }
+
+    .sub-element img{
+        aspect-ratio: 1/1;
+        bottom : -5px;
+        left: 0;
+        max-width: 140px;
+        min-width: 100px;
+        position: absolute;
+        width: 90%;
+    }
+
+    .drop-down {
+        font-size:calc(14px + 1.6vw);
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 90% #83838340;
+        background-size: 8% 40%;
+    }
+
+    #first-seg {
+        justify-content: start;
+        height: 60%;
+    }
+
+    #second-seg {
+        padding-left: 5%;
+        width: 70%;
+    }
+
+    .time {
+        font-size: calc(24px + 1vw);
+    }
+
+    #am {
+        width: 80%;
+    }
+
+    #date {
+        width: 100%;
+        font-size: calc(10px + 1vw);
+    }
+
+    #seconds {
+        font-size: calc(12px + 1vw);
+    }
+
+    .scale-content {
         font-size: 1.3vw;
         color:rgb(216 205 205);
     }
 
-    .headings {
-        font-family: Arial, Helvetica, sans-serif;
+    .forecast-name {
         margin : 5px 0 0;
         font-size: 1.5vw;
         color:rgb(216 205 205);
-    }
-
-    .celfah {
-        font-size: 3vw;
-        margin : 1vh 0 0;
-        color: white;
-    }
-
-    .hrscols {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        justify-content:center;
-        align-items: center;
-    }
-
-    .inner-cont-third {
-        height: 25%;
-        color: white;
-    }
-
-    .weather {
-        margin: 0 0 0 5px;
-        aspect-ratio: 1/1;
-        width: 2vw;
-    }
-
-    .midsection {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background: black;
-        border-radius: 25px 25px 0 0;
-        height: 375px;
-        width: 100%;
-    }
-
-    .titlebar {
-        background-color: black;
-        position: sticky;
-        top:0;
-        width: 100%;
-        height: 15%;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .centrwrd {
-        font-size: calc(10px + 0.5vw);
-        color: rgb(152 152 152);
-        font-family: Trebuchet MS, Lucida Sans Unicode , Lucida Grande , Lucida Sans , Arial, sans-serif;
         font-weight: 100;
-        margin: 0;
     }
 
-    .iconplace {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        position: absolute;
-        right: 0;
-        margin-right: 3%;
-        height: 100%;
-        width: 20%;
-    }
-
-    .iconcontainer{
-        min-width: 25px;
-        width: 12%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-    }
-
-    .icons {
-        aspect-ratio: 1/1;
-        width : 1.5vw;
-    }
-
-    .border_bottom {
-        border-bottom: 1px solid rgb(0 195 255);
-    }
-
-    .disptop {
-        margin: 0;
-        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-        font-size: calc(7px + 0.2vw);
-    }
-
-    .counter {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        width: 25%;
-        height: 100%;
-    }
-
-    #countval {
-        background-color: rgb(98, 98, 98);
-        border: 0;
-        font-size: calc(6px + 0.5vw);
-        height: 16px;
-        width: 40%;
-        text-align: center;
+    .forecast-values {
+        font-size: 3vw;
+        margin : 1% 0 0;
         color: white;
     }
 
-    input[type=number]::-webkit-inner-spin-button, 
-    input[type=number]::-webkit-outer-spin-button {  
-        opacity: 1;
-        height: 16px;
-    }
-
-    .topcities {
-        overflow-x: auto;
-        white-space: nowrap;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 85%;
-        width: 80%;
-    }
-
-    ::-webkit-scrollbar {
-        width: 0;
-        height: 0;
-        background: transparent;
-    }
-
-    .topcity {
-        background-image: url("../Icons_for_cities/kolkata.svg");
-        background-size: cover;
-        display: flex;
-        flex-shrink: 0;
-        flex-direction: row;
-        justify-content:space-between;
-        width: 20%;
-        min-width: 180px;
-        aspect-ratio: 1/1;
-        margin: 0 50px 0 0;
-    }
-
-    .cols {
-        margin: 5%;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        height: 70%;
-    }
-
-    .cityname {
-        font-size: calc(10px + 0.6vw);
-    }
-
-    .citydate {
-        font-size: calc(10px + 0.6vw);
-    }
-
-    .citytime {
-        font-size: calc(8px + 0.4vw);
-    }
-
-    .smallericons {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-    }
-
-    .smallericoncont {
-        aspect-ratio: 1/1;
-        width: 15%;
-    }
-
-    .citypercentage {
-        margin-left: 5px;
-        font-size: calc(8px + 0.4vw);
-    }
-
-    .smallicons {
-        height: 18%;
-        display: flex;
-        flex-direction: row;
-    }
-
-    .smalliconcont {
-        aspect-ratio: 1/1;
-        width: 35%;
-    }
-
-    .citycelsius {
-        font-size: calc(12px + 0.8vw);
-    }
-
-    .midcontainer {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
+    .row-transform {
         height: 100%;
-        width: 100%;
-        align-items: center;
     }
 
-    .swapicon {
-        display: flex;  
-        justify-content: center;
-        height: 30%;
-        width: 5%;
-    }
-
-    .leftarr {
-        display: flex;
-        align-items: center;
+    .flex-column {
         height: 100%;
-        width: 100%;
-    }
-
-    .lefticon {
-        aspect-ratio: 1/1;
-        width: 80%;
-        opacity: 0.5;   
-    }
-
-    .bottomsection {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: black;
-        width: 100%;
-        height: 450px;
-    }
-
-    .heading {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        height: 15%;
-        width: 85%;
-    }
-
-    .citiesacross {
-        font-size: 1.5vw;
-        color: white;
-    }
-
-    .sortcontainer {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-    }
-
-    .contname {
-        font-size: 1.2vw;
     }
 }

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Weather App</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="./WeatherAppTask1.css">
+        <link rel="stylesheet" href="./WeatherAppTask2.css">
+    </head>
+    <body>
+        <div class="margin-left" id="anchor-left">
+        </div>
+        <div class="app-container">
+            <section class = "header-section">
+                <div class="split-half flex-row">
+                    <div class="inner-container">
+                        <div class="row-transform margin-five">
+                            <div class="sub-element width-forty" id="city-image">
+                                <img src="../Icons_for_cities/kolkata.svg" alt="kolkata_image">
+                            </div>
+                            <div class="sub-element width-sixty" id="city-selection">
+                                <form action="#" method="post" class="cities-form">
+                                    <input autocomplete="off" list="cities" class="drop-down" name="cities" placeholder="Select a city">
+                                    <datalist name ="cities" class="city-list" id="cities" title="cities">
+                                        <option>Kolkata</option>
+                                        <option>Anadyr</option>
+                                        <option>Auckland</option>
+                                        <option>Dublin</option>
+                                        <option>Winnipeg</option>
+                                    </datalist>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row-transform">
+                            <div class="sub-element width-forty"></div>
+                            <div class ="date-time-holder width-sixty">
+                                <div id="first-seg">
+                                    <div class="width-sixty height-hundred time-container">
+                                        <p class="time">
+                                            10:10<span id="seconds">:44</span>
+                                        </p>
+                                    </div>
+                                    <div class="width-forty height-hundred am-container">
+                                        <img src="../General_Images_&_Icons/amState.svg" id="am" alt="AM">
+                                    </div>
+                                </div>
+                                <div id="second-seg">
+                                    <p id="date">01-Mar-2020</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-transform">
+                        <div class="sub-element-second">
+                            <div class="for-spacing">
+                            </div>
+                            <div class = "content-holder">
+                                <div class="element-border-right">
+                                    <p class="forecast-name">Temp&deg;C</p>
+                                    <p class="forecast-values">25 C</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sub-element-second">
+                            <div class = "inner-cont-second">
+                                <div class="element-border-right">
+                                    <p class="forecast-name">Temp F</p>
+                                    <p class="forecast-values">78 F</p>
+                                </div>
+                            </div>
+                            <div class="for-spacing">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column-transform">
+                        <div class="sub-element-second">
+                            <div class="for-spacing">
+                            </div>
+                            <div class = "content-holder">
+                                <p class="forecast-name">Humidity</p>
+                                <p class="forecast-values">
+                                    26<span style="opacity: 0.5;">%</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="sub-element-second">
+                            <div class = "inner-cont-second">
+                                <p class="forecast-name">Precipitation</p>
+                                <p class="forecast-values">
+                                    0<span style="opacity: 0.5;">%</span>
+                                </p>
+                            </div>
+                            <div class="for-spacing">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="split-half flex-column">
+                    <div class="center-align">
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content">NOW</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <img src="../Weather_Icons/cloudyIcon.svg" alt="cloudy" class="weather">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="forecast-name">6</p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content">11 AM</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <img src="../Weather_Icons/windyIcon.svg" alt="cloudy" class="weather">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="forecast-name">6</p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content">12 PM</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <img src="../Weather_Icons/rainyIcon.svg" alt="cloudy" class="weather">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="forecast-name">6</p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content">1 PM</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <img src="../Weather_Icons/cloudyIcon.svg" alt="cloudy" class="weather">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="forecast-name">6</p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content">2 PM</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <img src="../Weather_Icons/windyIcon.svg" alt="cloudy" class="weather">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="forecast-name">6</p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content"></p>
+                            </div>
+                        </div>
+                        <div class="weather-scale-columns">
+                            <div class="scale-content-holder">
+                                <p class="scale-content">3 PM</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="scale-content">|</p>
+                            </div>
+                            <div class="scale-content-holder">
+                                <img src="../Weather_Icons/cloudyIcon.svg" alt="cloudy" class="weather">
+                            </div>
+                            <div class="scale-content-holder">
+                                <p class="forecast-name">6</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="middle-section">
+                <div class="sticky-bar">
+                    <p class="sticky-bar-content">Top cities around world</p>
+                    <div class="icons-rack">
+                        <div class="icon-container" tabindex="1">
+                            <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny_icon" class="icons">
+                        </div>
+                        <div class="icon-container" tabindex="1">
+                            <img src="../Weather_Icons/snowflakeIcon.svg" alt="Winter icon" class="icons">
+                        </div>
+                        <div class="icon-container" tabindex="1">
+                            <img src="../Weather_Icons/cloudyIcon.svg" alt="Cloudy icon" class="icons">
+                        </div>
+                        <p class="icon-rack-text">Display Top</p>
+                        <div class="counter">
+                            <input type="number" name="counterval" id="counter-value" value="4" min="3" max="10" title="counterval" placeholder="counter">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-container">
+                    <div class="card-scroller" id="scroller-left">
+                        <a href="#anchor-one" class="card-scroller-align">
+                            <img src="../General_Images_&_Icons/icons8-left-arrow-50.png" alt="Left icon" class="card-scroller-icon">
+                        </a>
+                    </div>
+                    <div class="cards-rack">
+                        <div class="card-self" id="anchor-one">
+                            <div class="columns-card">
+                                <p class="city-name-card">New Delhi</p>
+                                <p class="city-time-card">10:00 AM</p>
+                                <p class="city-date-card">2-MAR-2020</p>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">53%</p>
+                                </div>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">10%</p>
+                                </div>
+                            </div>
+                            <div class="columns-card">
+                                <div class="celsius-holder-card">
+                                    <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="celsius-content-card">
+                                    <p class="celsius-value-card">25&deg;C</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-self">
+                            <div class="columns-card">
+                                <p class="city-name-card">New Delhi</p>
+                                <p class="city-time-card">10:00 AM</p>
+                                <p class="city-date-card">2-MAR-2020</p>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">53%</p>
+                                </div>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">10%</p>
+                                </div>
+                            </div>
+                            <div class="columns-card">
+                                <div class="celsius-holder-card">
+                                    <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="celsius-content-card">
+                                    <p class="celsius-value-card">25&deg;C</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-self">
+                            <div class="columns-card">
+                                <p class="city-name-card">New Delhi</p>
+                                <p class="city-time-card">10:00 AM</p>
+                                <p class="city-date-card">2-MAR-2020</p>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">53%</p>
+                                </div>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">10%</p>
+                                </div>
+                            </div>
+                            <div class="columns-card">
+                                <div class="celsius-holder-card">
+                                    <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="celsius-content-card">
+                                    <p class="celsius-value-card">25&deg;C</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-self">
+                            <div class="columns-card">
+                                <p class="city-name-card">New Delhi</p>
+                                <p class="city-time-card">10:00 AM</p>
+                                <p class="city-date-card">2-MAR-2020</p>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">53%</p>
+                                </div>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">10%</p>
+                                </div>
+                            </div>
+                            <div class="columns-card">
+                                <div class="celsius-holder-card">
+                                    <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="celsius-content-card">
+                                    <p class="celsius-value-card">25&deg;C</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-self" id="anchor-two">
+                            <div class="columns-card">
+                                <p class="city-name-card">New Delhi</p>
+                                <p class="city-time-card">10:00 AM</p>
+                                <p class="city-date-card">2-MAR-2020</p>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/humidityIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">53%</p>
+                                </div>
+                                <div class="icons-holder-card">
+                                    <img src="../Weather_Icons/precipitationIcon.svg" alt="Humidity icon" class="icon-content-card">
+                                    <p class="icon-value-card">10%</p>
+                                </div>
+                            </div>
+                            <div class="columns-card">
+                                <div class="celsius-holder-card">
+                                    <img src="../Weather_Icons/sunnyIcon.svg" alt="Sunny icon" class="celsius-content-card">
+                                    <p class="celsius-value-card">25&deg;C</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-scroller" id="scroller-right">
+                        <a href="#anchor-two" class="card-scroller-align">
+                            <img src="../General_Images_&_Icons/icons8-right-arrow-50.png" alt="Right icon" class="card-scroller-icon">
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </body>
+</html>
