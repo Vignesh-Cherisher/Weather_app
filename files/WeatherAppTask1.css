@@ -8,6 +8,7 @@ body {
     color: white;
     margin :0;
     background: rgb(255 255 255);
+    overflow-y: scroll;
 }
 
 p {
@@ -519,12 +520,12 @@ select {
     }
 
     body {
-        height: 150%;
+        height: 300%;
     }
 
     .header-section {
         flex-direction: row;
-        height : 30%;
+        height : 15%;
     }
 
     .inner-container {

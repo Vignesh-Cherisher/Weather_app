@@ -19,6 +19,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 1%;
+    z-index: 100;
 }
 
 .sticky-bar-content {
@@ -93,6 +94,15 @@ input[type="number"]::-webkit-outer-spin-button {
     align-items: center;
     height: 100%;
     width: 90%;
+    position: relative;
+}
+
+.card-overlay {
+    position: absolute;
+    width: 90%;
+    z-index: 2;
+    overflow: auto;
+    height: 100%;
 }
 
 ::-webkit-scrollbar {
@@ -110,6 +120,7 @@ input[type="number"]::-webkit-outer-spin-button {
     justify-content:space-between;
     aspect-ratio: 1/1;
     position: relative;
+    z-index: 3;
 }
 
 .card-self::before {    
@@ -377,7 +388,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media (width >= 950px) {
     .middle-section {
-        height: 40%;
+        height: 20%;
     }
 
     .sticky-bar {

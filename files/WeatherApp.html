@@ -23,7 +23,7 @@
                             </div>
                             <div class="sub-element width-sixty" id="city-selection">
                                 <form action="#" method="post" class="cities-form">
-                                    <input autocomplete="off" list="cities" class="drop-down" name="cities" placeholder="Select a city">
+                                    <input autocomplete="off" list="cities" class="drop-down" name="cities" placeholder="Select a city" temp="" onfocus="this.temp=this.value; this.value='';" onclick="this.temp=this.value; this.value='';">
                                     <datalist name ="cities" class="city-list" id="cities" title="cities">
                                         <option>Kolkata</option>
                                         <option>Anadyr</option>
@@ -278,7 +278,7 @@
                         </a>
                     </div>
                     <div class="cards-rack">
-                        <div class="card-self" id="anchor-one">
+                        <div class="card-self" id="anchor-one" onmousewheel="window.scrollBy(0,WheelEvent.);">
                             <div class="columns-card">
                                 <p class="city-name-card">New Delhi</p>
                                 <p class="city-time-card">10:00 AM</p>
@@ -384,6 +384,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-overlay"></div>
                     <div class="card-scroller" id="scroller-right">
                         <a href="#anchor-two" class="card-scroller-align">
                             <img src="../General_Images_&_Icons/icons8-right-arrow-50.png" alt="Right icon" class="card-scroller-icon">
