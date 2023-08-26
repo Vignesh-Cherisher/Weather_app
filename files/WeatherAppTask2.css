@@ -127,7 +127,9 @@ input[type="number"]::-webkit-outer-spin-button {
     content: "";
     background: #181818;
     background-image:url("../Icons_for_cities/kolkata.svg");
-    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right 0 bottom -10px;
+    background-size: 80% 90%;
     position: absolute;
     inset: 0;
     opacity: 0.5;
@@ -183,9 +185,11 @@ input[type="number"]::-webkit-outer-spin-button {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: 65%;
+    height: 70%;
     width: 100%;
     align-items: center;
+    position: relative;
+    overflow: visible;
 }
 
 .card-scroller {
@@ -218,7 +222,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media (width <= 525px) {
     .middle-section {
-        height: 30%;
+        height: 22%;
     }
 
     .card-container {
@@ -226,12 +230,12 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .sticky-bar{
-        height: 20%;
+        height: 30%;
         flex-direction: column;
     }
 
     .sticky-bar-content {
-        font-size: calc(10px + 0.4vw);
+        font-size: calc(10px + 0.8vw);
         font-weight: 300;
     }
 
@@ -246,17 +250,17 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .icon-rack-text {
-        font-size: calc(8px + 0.2vw);
+        font-size: calc(8px + 0.8vw);
         font-weight: 100;
     }
 
     #counter-value {
-        font-size: calc(8px + 0.2vw);
+        font-size: calc(10px + 1vw);
     }
 
     .card-self {
-        width: 24%;
-        min-width: 120px;
+        width: 40%;
+        min-width: 150px;
         padding: 1%;
         margin-right: 20px;
     }
@@ -267,17 +271,17 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .city-name-card {
         font-weight: 700;    
-        font-size: calc(9px + 0.6vw);
+        font-size: calc(9px + 1.5vw);
     }
 
     .city-date-card {
         font-weight: 700;
-        font-size: calc(7px + 0.5vw);
+        font-size: calc(9px + 1.3vw);
     }
 
     .city-time-card {
         font-weight: 700;      
-        font-size: calc(7px + 0.5vw);
+        font-size: calc(7px + 1vw);
     }
 
     .icon-content-card {
@@ -286,7 +290,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .icon-value-card {
-        font-size: calc(7px + 0.5vw);
+        font-size: calc(7px + 1vw);
     }
 
     .celsius-holder-card {
@@ -294,7 +298,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .celsius-value-card {
-        font-size: calc(10px + 0.6vw);
+        font-size: calc(10px + 1vw);
     }
 
     .card-scroller-icon {
@@ -304,11 +308,11 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media (525px <= width <= 950px) {
     .middle-section {
-        height: 35%;
+        height: 25%;
     }
 
     .sticky-bar {
-        height: 12%;
+        height: 20%;
     }
 
     .icons-rack {
@@ -325,7 +329,8 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .icon-rack-text {
-        font-size: calc(5px + 0.5vw);
+        white-space: nowrap;
+        font-size: calc(6px + 0.7vw);
         font-weight: 100;
     }
 
@@ -335,7 +340,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .card-container {
-        height: 60%;
+        height: 70%;
     }
 
     .card-self {
@@ -388,7 +393,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 @media (width >= 950px) {
     .middle-section {
-        height: 20%;
+        height: 30%;
     }
 
     .sticky-bar {
@@ -418,7 +423,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .icon-rack-text {
-        font-size: calc(7px + 0.2vw);
+        font-size: calc(7px + 0.5vw);
     }
 
     #counter-value {
@@ -428,7 +433,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .card-self {
         width: 20%;
-        min-width: 195px;
+        min-width: 220px;
         margin-right: 80px;
     }
 
