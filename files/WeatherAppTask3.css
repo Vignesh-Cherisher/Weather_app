@@ -1,4 +1,5 @@
 .bottom-section {
+    min-height: 40%;
     height: 40%;
     width: 100%;
     background-color: #121212;
@@ -11,10 +12,11 @@
     width: 90%;
     height: 10%;
     margin: 0 5%;
+    white-space: nowrap;
 }
 
 .tiles-heading {
-    width: 40%;
+    width: fit-content;
     height: fit-content;
     font-weight: 100;
     font-size: calc(14px + 1vw);
@@ -22,10 +24,9 @@
 }
 
 .sort-tiles-container {
-    width: 35%;
+    width: 40%;
     height: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
 }
 
@@ -33,8 +34,12 @@
     display: flex;
 }
 
+#tile-right-align {
+    justify-content: end;
+}
+
 .sort-icon {
-    margin: 0 10px;
+    padding-left: 10px;
     aspect-ratio: 1/1;
     width: 8%;
 }
@@ -56,9 +61,49 @@
 }
 
 .tile-self {
+    position: relative;
     display: grid;
     grid-template-areas: "a b"
                         "c d";
     background-color: #2E2E2E;
+    padding : 3%;
 }
 
+.continent-temperature, .continent-humidity-container{
+    justify-self: end;
+    width: fit-content;
+}
+
+.continent-humidity-container {
+    display: flex;
+    height: 80%;
+    align-items: center;
+    align-self: self-end;
+}
+
+.continent-name {
+    color: #FFF461;
+    font-weight: 400;
+}
+
+.continent-temperature {
+    font-weight: 500;
+    font-size: calc(18px + 0.5vw);
+}
+
+.continent-place-time {
+    height: fit-content;
+    align-self: self-end;
+    font-weight: 100;
+}
+
+.continent-humidity-icon {
+    height: 80%;
+    width: auto;
+}
+
+@media (525px <= width <= 950px) {
+    .bottom-section {
+        height: 60%;
+    }
+}
