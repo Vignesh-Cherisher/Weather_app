@@ -1,5 +1,4 @@
 .bottom-section {
-    min-height: 40%;
     height: 40%;
     width: 100%;
     background-color: #121212;
@@ -50,13 +49,14 @@
 }
 
 .tiles-container {
+    overflow-y: scroll;
     height: 80%;
     display: grid;
     grid-template-areas: "a b c"
                         "d e f"
                         "g h i"
                         "j k l";
-    margin: 1% 5%;
+    padding: 1% 5%;
     grid-gap: 6%;
 }
 
@@ -67,6 +67,11 @@
                         "c d";
     background-color: #2E2E2E;
     padding : 3%;
+}
+
+.tile-self:hover {
+    transform: scale(1.08);
+    box-shadow: rgba(61 227 0 / 33%) 0 4px 8px, rgba(0 255 76 / 13%) 0 14px 26px -6px, rgba(0 62 4 / 20%) 0 -6px 0 inset;
 }
 
 .continent-temperature, .continent-humidity-container{
@@ -102,8 +107,71 @@
     width: auto;
 }
 
+.icon-value-card {
+    font-size: calc( 12px + 0.5vw);
+}
+
 @media (525px <= width <= 950px) {
     .bottom-section {
-        height: 60%;
+        height: 45%;
+    }
+
+    .tiles-description-container {
+        flex-direction: column;
+    }
+
+    .sort-tiles-container {
+        width: 50%;
+    }
+
+    .tiles-container {
+        grid-template-areas: "a b"
+                             "c d"
+                             "e f"
+                             "g h"
+                             "i j"
+                             "k l";
+        gap: 3%;
+    }
+}
+
+@media (width <=525px) {
+    .bottom-section {
+        height: 65%;
+    }
+
+    .tiles-description-container {
+        flex-direction: column;
+        height: 8%;
+    }
+
+    .sort-tiles-container {
+        width: 80%;
+    }
+
+    .tiles-container {
+        height:75%;
+        grid-template-columns: 90vw;
+        grid-template-areas: none;
+        row-gap: 3%;
+        overflow-y: visible;
+        padding-bottom: 10%;
+    }
+
+    .tile-self {
+        justify-self: center;
+        width: 70%;
+    }
+
+    .continent-name, .continent-place-time {
+        font-size: calc(12px + 0.5vw);
+    }
+
+    .icon-value-card {
+        font-size: calc(9px + 0.5vw)
+    }
+
+    .continent-temperature {
+        font-size: calc(14px + 0.5vw);
     }
 }
