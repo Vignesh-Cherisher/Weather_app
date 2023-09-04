@@ -328,5 +328,20 @@
       "-66°C",
       "-71°C"
     ]
+  },
+  "nil": {
+    "url": "placeholder.png",
+      "cityName": "NIL",
+    "dateAndTime": "🙊/🙈/:-(, ♾:♾:♾ ?M",
+    "timeZone": "OutOfUniverse",
+    "temperature": "♾°C",
+    "humidity": "♾%",
+    "precipitation": "♾%",
+    "nextFiveHrs": [
+      "♾°C",
+      "♾°C",
+      "♾°C",
+      "♾°C"
+    ]
   }
 }

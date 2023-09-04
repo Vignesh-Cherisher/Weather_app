@@ -1,16 +1,52 @@
-let cityImage = document.querySelector('#city-image').firstChild
+let cityImage = document.querySelector('#city-image').children[0]
 const scrollable = document.getElementsByClassName('card-self')
 const scrollOverlay = document.getElementsByClassName('card-overlay')
 const scrollRack = document.querySelector('.cards-rack')
+let cityValue = document.querySelector('#cities')
+let cityInput = document.getElementsByClassName('drop-down')[0];
 
 /**
- * @returns {object} - json file data
+ *
  */
-async function fetchJson () {
-  const jsonData = await fetch('./data.json').then((res) => {return res.json()})
+( async () => {
+  const response = await fetch('./data.json')
+  const jsonData = await response.json()
+  datalistPopulate(jsonData)
+  citySelect(jsonData)
+})()
+
+function datalistPopulate(jsonData) { 
+  for(let city in jsonData) {
+    let option = document.createElement('option')
+    console.log(city)
+    option.value = jsonData[city].cityName
+    cityValue.appendChild(option)
+  }
 }
 
-fetchJson()
+function citySelect(jsonData){
+  cityInput.addEventListener("input", function(event){
+    let val = cityInput.value.toLowerCase()
+    changeCityImg(jsonData[val])
+    getCityTime(jsonData[val])
+  })
+  cityInput.addEventListener("click", () => {
+    cityInput.click();
+  })
+}
+
+function changeCityImg(cityName) {
+  if(cityName == "nil")
+    cityImage.src = '../Icons_for_cities/placeholder.png'
+  else {
+    let cityImgSource = cityName.url
+    cityImage.src = '../Icons_for_cities/' + cityImgSource
+  }
+}
+
+function getCityTime(cityTime) {
+  
+}
 
 /**
  * Method to scroll Middle section both Horizontally and Vertically
