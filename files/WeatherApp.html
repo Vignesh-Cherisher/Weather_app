@@ -22,7 +22,8 @@
                             </div>
                             <div class="sub-element width-sixty" id="city-selection">
                                 <form action="#" method="post" class="cities-form">
-                                    <input autocomplete="off" list="cities" class="drop-down" name="cities" value="NIL" placeholder="Select a City" onclick="this.temp=this.value; this.value='';">
+                                    <input autocomplete="off" list="cities" class="drop-down" name="cities" value="NIL" placeholder="Select a City">
+                                    <!-- temp="" onclick="this.temp=this.value; this.value='';" -->
                                     <datalist name ="cities" class="city-list" id="cities" title="cities">
                                     </datalist>
                                 </form>
@@ -34,7 +35,7 @@
                                 <div id="first-seg">
                                     <div class="width-sixty height-hundred time-container">
                                         <p class="time">
-                                            10:10<span id="seconds">:44</span>
+                                            <span>10:10</span><span id="seconds">:46</span>
                                         </p>
                                     </div>
                                     <div class="width-forty height-hundred am-container">
@@ -392,21 +393,21 @@
                 </div>
             </section>
             <section class="bottom-section">
-                <div class="tiles-description-container">
-                    <p class="tiles-heading">Cities across continents at a Glance</p>
-                    <div class="sort-tiles-container">
-                        <div class="sort-tiles">
+                <div class="bottom-container-description">
+                    <p class="bottom-container-heading">Cities across continents at a Glance</p>
+                    <div class="sort-bottom-container">
+                        <div class="sort-content-container">
                             <p class="sort-content">Continent Name</p>
                             <img src="../General_Images_&_Icons/arrowDown.svg" alt="Arrow-Down" class="sort-icon">
                         </div>
-                        <div class="sort-tiles" id="tile-right-align">
+                        <div class="sort-content-container" id="tile-right-align">
                             <p class="sort-content">Temperature</p>
                             <img src="../General_Images_&_Icons/arrowUp.svg" alt="Arrow-Up" class="sort-icon">
                         </div>
                     </div>
                 </div>
-                <div class="tiles-container">
-                    <div class="tile-self" id="tile-one">
+                <div class="continent-city-container">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -415,7 +416,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-two">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -424,7 +425,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-three">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -433,7 +434,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-four">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -442,7 +443,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-five">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -451,7 +452,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-six">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -460,7 +461,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-seven">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -469,7 +470,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-eight">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -478,7 +479,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-nine">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -487,7 +488,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-ten">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -496,7 +497,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-eleven">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>
@@ -505,7 +506,7 @@
                             <p class="icon-value-card">53%</p>
                         </div>
                     </div>
-                    <div class="tile-self" id="tile-twelve">
+                    <div class="continent-city-self">
                         <p class="continent-name">Asia</p>
                         <p class="continent-temperature">38&deg;C</p>
                         <p class="continent-place-time">Delhi, 10:10 AM</p>

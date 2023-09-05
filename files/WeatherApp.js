@@ -3,8 +3,13 @@ const scrollable = document.getElementsByClassName('card-self')
 const scrollOverlay = document.getElementsByClassName('card-overlay')
 const scrollRack = document.querySelector('.cards-rack')
 let cityValue = document.querySelector('#cities')
-let cityInput = document.getElementsByClassName('drop-down')[0];
+let cityInput = document.getElementsByClassName('drop-down')[0]
+let cityDate = document.querySelector('#date')
+let cityTime = document.querySelector('.time').children[0]
+let citySeconds = document.querySelector('#seconds')
+;
 
+//Asynchronous Function to load json Data
 /**
  *
  */
@@ -15,37 +20,67 @@ let cityInput = document.getElementsByClassName('drop-down')[0];
   citySelect(jsonData)
 })()
 
+//Method to add option values from json to Datalist
 function datalistPopulate(jsonData) { 
   for(let city in jsonData) {
     let option = document.createElement('option')
-    console.log(city)
     option.value = jsonData[city].cityName
     cityValue.appendChild(option)
   }
 }
 
+//Method to call Functions for updating values whenever City name is changed
 function citySelect(jsonData){
   cityInput.addEventListener("input", function(event){
     let val = cityInput.value.toLowerCase()
     changeCityImg(jsonData[val])
-    getCityTime(jsonData[val])
-  })
-  cityInput.addEventListener("click", () => {
-    cityInput.click();
+    updateCityDateTime(jsonData[val])
   })
 }
 
-function changeCityImg(cityName) {
-  if(cityName == "nil")
+//Changing City Image dynamically in top section
+function changeCityImg(jsonCityName) {
+  if(jsonCityName == "nil")
     cityImage.src = '../Icons_for_cities/placeholder.png'
   else {
-    let cityImgSource = cityName.url
+    let cityImgSource = jsonCityName.url
     cityImage.src = '../Icons_for_cities/' + cityImgSource
   }
 }
 
-function getCityTime(cityTime) {
-  
+//Method to get and parse time and Date of selected cities
+function updateCityDateTime(jsonCityName) {
+  let jsonDateTime = jsonCityName.dateAndTime
+  jsonDateTime = jsonDateTime.split(' ')
+  let jsonTime = jsonDateTime[1]
+  let jsonDate = jsonDateTime[0].slice(0,-1)
+  updateCityTime(jsonTime)
+  updateCityDate(jsonDate)
+}
+
+//Method to update City Time
+function updateCityTime(jsonTime){
+  if(isNaN(parseInt(jsonTime))){
+    cityTime.innerHTML = jsonTime
+    citySeconds.innerHTML = ''
+  }
+  else {
+    cityTime.innerHTML = jsonTime.slice(0, -3)
+    citySeconds.innerHTML = jsonTime.slice(-3)
+  }
+  runCityTime(jsonTime)
+}
+
+//Method to run Live Time of selected City
+function runCityTime(jsonTime){
+  jsonTime = jsonTime.split(':')
+  let liveTime = setTimeout(function(){ currentTime() }, 1000);
+  updatedCityTime(liveTime)
+}
+
+//Method to update City date
+function updateCityDate(jsonDate) {
+
 }
 
 /**
@@ -55,7 +90,6 @@ function getCityTime(cityTime) {
  */
 function yScroll (target, targetContainer) {
   target.addEventListener('wheel', (evt) => {
-    console.log(typeof (target), typeof (targetContainer))
     evt.preventDefault()
     if (evt.deltaY !== 0) {
       window.scrollBy({
@@ -67,6 +101,30 @@ function yScroll (target, targetContainer) {
     }
   })
 }
+
+//Method to blur and handle click event in Input tag for selecting city.
+function keepDatalistOptions(selector = '') {
+  // select all input fields by datalist attribute or by class/id
+  let datalistInputs = document.querySelectorAll(selector);
+  if (datalistInputs.length) {
+    for (let i = 0; i < datalistInputs.length; i++) {
+      let input = datalistInputs[i];
+      input.addEventListener("input", function(e) {
+        e.target.setAttribute("placeholder", e.target.value);
+        e.target.blur();
+      });
+      input.addEventListener("focus", function(e) {
+        e.target.setAttribute("placeholder", e.target.value);
+        e.target.value = "";
+      });
+      input.addEventListener("blur", function(e) {
+        e.target.value = e.target.getAttribute("placeholder");
+      });
+    }
+  }
+}
+
+keepDatalistOptions('.drop-down')
 
 for (let i = 0; i < scrollable.length; i++) {
   yScroll(scrollable[i], scrollRack)
