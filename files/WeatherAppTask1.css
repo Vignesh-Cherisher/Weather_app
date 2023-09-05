@@ -185,7 +185,7 @@ select {
     height: fit-content;
 }
 
-.am-container {
+.am-pm-container {
     position: relative;
 }
 
@@ -199,9 +199,18 @@ select {
     color: #ffe5b4;
 }
 
-#am {
+.am-pm {
     position: absolute;
     bottom: 0;
+    left: 0;
+    aspect-ratio: 1/1;
+    max-width: 85px;
+    margin-left: 8px;
+}
+
+.am-pm-nil {
+    position: absolute;
+    bottom: 10%;
     left: 0;
     aspect-ratio: 1/1;
     max-width: 85px;
@@ -337,9 +346,13 @@ select {
         font-size: calc(7px + 1vw);
     }
 
-    #am {
+    .am-pm {
         min-width: 30px;
         width: 80%;
+    }
+
+    .am-pm-nil {
+        width: 65%;
     }
 
     .column-transform {
@@ -480,9 +493,13 @@ select {
         font-size: calc(24px + 1vw);
     }
 
-    #am {
+    .am-pm {
         min-width: 60px;
         width: 50%;
+    }
+
+    .am-pm-nil {
+        width: 40%;
     }
 
     #date {
@@ -600,8 +617,12 @@ select {
         font-size: calc(24px + 1vw);
     }
 
-    #am {
+    .am-pm {
         width: 80%;
+    }
+
+    .am-pm-nil {
+        width: 60%;
     }
 
     #date {
