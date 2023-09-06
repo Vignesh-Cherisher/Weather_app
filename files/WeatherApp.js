@@ -19,6 +19,7 @@ let toggleAmPm = 0
   const response = await fetch('./data.json')
   const jsonData = await response.json()
   datalistPopulate(jsonData)
+  keepDatalistOptions('.drop-down',jsonData)
   changeCityImg(jsonData.nil)
   changeCityDateTime(jsonData.nil)
   citySelect(jsonData)
@@ -62,14 +63,12 @@ function changeCityDateTime(jsonCityName) {
     toggleAmPm = 0
   else
     toggleAmPm = 1
-  if(jsonCityName.cityName == "NIL"){
+  if(jsonCityName.cityName == "NIL")
     changeAmState(NaN)
-    console.log("success")
-  }
   else
     changeAmState(toggleAmPm)
   changeCityTime(jsonTime, jsonCityName.cityName)
-  changeCityDate(jsonDate)
+  changeCityDate(jsonDate,jsonCityName.cityName)
 }
 
 //Method to call functions to change City Time
@@ -82,7 +81,7 @@ function changeCityTime(jsonTime, cityName){
     updateCityTime(jsonTime)
     runCityTime(jsonTime, cityName)
   }
-}
+  }
 
 //Method to update city time
 function updateCityTime(liveTime){
@@ -114,12 +113,11 @@ function incrementSecond(liveTime) {
   }
   else 
     liveTime[2]++
+  //Convert each element to String and add leading zeroes if necessary
   liveTime.forEach((element,index) => {
     liveTime[index] = element.toString()
-    if(liveTime[index].length < 2 && index != 0){
-      console.log(liveTime[index]);
+    if(liveTime[index].length < 2 && index != 0)
       liveTime[index] = '0' + element
-    }
   });
   liveTime = liveTime.join(':')
   return liveTime
@@ -150,11 +148,10 @@ function incrementHour(liveTime) {
 //Method to set AM or PM icon for city
 function changeAmState(toggleAmPm) {
   if(isNaN(toggleAmPm)) {
-    cityAmPm.src = "../General_Images_&_Icons/ampmState.jpeg"
+    cityAmPm.src = "../General_Images_&_Icons/ampmState.png"
     cityAmPm.classList.remove('am-pm')
     cityAmPm.classList.add('am-pm-nil')
-    cityTime.style.color = "#fff"
-    citySeconds.style.color = "#fff"
+    cityTime.classList.add('time-gradient')
   }
   else if(!toggleAmPm){
     cityAmPm.src =  "../General_Images_&_Icons/amState.svg"
@@ -162,6 +159,7 @@ function changeAmState(toggleAmPm) {
     citySeconds.style.color = "#ffe5b4";
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
+    cityTime.classList.remove('time-gradient')
     toggleAmPm = !toggleAmPm
   }
   else {
@@ -170,13 +168,24 @@ function changeAmState(toggleAmPm) {
     citySeconds.style.color = "#1E90FF"
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
+    cityTime.classList.remove('time-gradient')
     toggleAmPm = !toggleAmPm
   }
 }
 
 //Method to update City date
-function changeCityDate(jsonDate) {
-
+function changeCityDate(jsonDate, cityName) {
+  if(cityName == "NIL"){
+    cityDate.innerHTML = jsonDate
+  }
+  else {
+    let dateParts = jsonDate.split('/')
+    console.log(dateParts)
+    let cityDateVar = new Date(+dateParts[2], dateParts[0]-1, +dateParts[1]);
+    cityDateVar = cityDateVar.toString().split(' ')
+    console.log(cityDateVar);
+    cityDate.innerHTML = cityDateVar[2] + '-' + cityDateVar[1] + '-' + cityDateVar[3]
+  }
 }
 
 /**
@@ -199,28 +208,33 @@ function yScroll (target, targetContainer) {
 }
 
 //Method to blur and handle click event in Input tag for selecting city.
-function keepDatalistOptions(selector = '') {
+function keepDatalistOptions(selector = '',jsonData) {
   // select all input fields by datalist attribute or by class/id
   let datalistInputs = document.querySelectorAll(selector);
   if (datalistInputs.length) {
     for (let i = 0; i < datalistInputs.length; i++) {
       let input = datalistInputs[i];
       input.addEventListener("input", function(e) {
-        e.target.setAttribute("placeholder", e.target.value);
-        e.target.blur();
+        for(let city in jsonData){
+          if(e.target.value == jsonData[city].cityName){
+            console.log("input")
+            e.target.setAttribute("placeholder", e.target.value);
+            e.target.blur();
+          }
+        }
       });
       input.addEventListener("focus", function(e) {
+        console.log("focus")
         e.target.setAttribute("placeholder", e.target.value);
         e.target.value = "";
       });
       input.addEventListener("blur", function(e) {
+        console.log("blur")
         e.target.value = e.target.getAttribute("placeholder");
       });
     }
   }
 }
-
-keepDatalistOptions('.drop-down')
 
 for (let i = 0; i < scrollable.length; i++) {
   yScroll(scrollable[i], scrollRack)
