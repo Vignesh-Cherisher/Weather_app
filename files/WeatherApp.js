@@ -8,6 +8,9 @@ let cityDate = document.querySelector('#date')
 let cityTime = document.querySelector('.time').children[0]
 let citySeconds = document.querySelector('#seconds')
 let cityAmPm = document.querySelector('#am-pm')
+let forecastedValues = document.querySelectorAll('.forecast-values')
+let forecastedTemperature = document.querySelectorAll('.forecast-temperature')
+let scaleTime = document.querySelectorAll('.scale-time')
 let toggleAmPm = 0
 ;
 
@@ -22,6 +25,8 @@ let toggleAmPm = 0
   keepDatalistOptions('.drop-down',jsonData)
   changeCityImg(jsonData.nil)
   changeCityDateTime(jsonData.nil)
+  changeForecastValues(jsonData.nil)
+  changeForecastTimeline(jsonData.nil)
   citySelect(jsonData)
 })()
 
@@ -37,25 +42,31 @@ function datalistPopulate(jsonData) {
 //Method to call Functions for updating values whenever City name is changed
 function citySelect(jsonData){
   cityInput.addEventListener("input", function(event){
-    let val = cityInput.value.toLowerCase()
-    changeCityImg(jsonData[val])
-    changeCityDateTime(jsonData[val])
+    for(let city in jsonData){
+      if(event.target.value == jsonData[city].cityName){
+        let val = cityInput.value.toLowerCase()
+        changeCityImg(jsonData[val])
+        changeCityDateTime(jsonData[val])
+        changeForecastValues(jsonData[val])
+        changeForecastTimeline(jsonData[val])
+      }
+    }
   })
 }
 
 //Changing City Image dynamically in top section
-function changeCityImg(jsonCityName) {
-  if(jsonCityName == "nil")
+function changeCityImg(jsonCityEntry) {
+  if(jsonCityEntry == "nil")
     cityImage.src = '../Icons_for_cities/placeholder.png'
   else {
-    let cityImgSource = jsonCityName.url
+    let cityImgSource = jsonCityEntry.url
     cityImage.src = '../Icons_for_cities/' + cityImgSource
   }
 }
 
 //Method to get and parse time and Date of selected cities
-function changeCityDateTime(jsonCityName) {
-  let jsonDateTime = jsonCityName.dateAndTime
+function changeCityDateTime(jsonCityEntry) {
+  let jsonDateTime = jsonCityEntry.dateAndTime
   jsonDateTime = jsonDateTime.split(' ')
   let jsonTime = jsonDateTime[1]
   let jsonDate = jsonDateTime[0].slice(0,-1)
@@ -63,12 +74,12 @@ function changeCityDateTime(jsonCityName) {
     toggleAmPm = 0
   else
     toggleAmPm = 1
-  if(jsonCityName.cityName == "NIL")
+  if(jsonCityEntry.cityName == "NIL")
     changeAmState(NaN)
   else
     changeAmState(toggleAmPm)
-  changeCityTime(jsonTime, jsonCityName.cityName)
-  changeCityDate(jsonDate,jsonCityName.cityName)
+  changeCityTime(jsonTime, jsonCityEntry.cityName)
+  changeCityDate(jsonDate,jsonCityEntry.cityName)
 }
 
 //Method to call functions to change City Time
@@ -180,11 +191,64 @@ function changeCityDate(jsonDate, cityName) {
   }
   else {
     let dateParts = jsonDate.split('/')
-    console.log(dateParts)
     let cityDateVar = new Date(+dateParts[2], dateParts[0]-1, +dateParts[1]);
     cityDateVar = cityDateVar.toString().split(' ')
-    console.log(cityDateVar);
     cityDate.innerHTML = cityDateVar[2] + '-' + cityDateVar[1] + '-' + cityDateVar[3]
+  }
+}
+
+//Method to update forecasted values
+function changeForecastValues(jsonCityEntry) {
+  forecastedValues[0].innerHTML = jsonCityEntry.temperature
+  if(jsonCityEntry.cityName == "NIL")
+    forecastedValues[1].innerHTML = jsonCityEntry.temperature.slice(0,-2) + ' F'
+  else {
+    let Fahrenheit = ((parseInt(jsonCityEntry.temperature) * 1.8) + 32).toFixed(0) + ' F'
+    forecastedValues[1].innerHTML = Fahrenheit;
+  }
+  forecastedValues[2].children[0].innerHTML = jsonCityEntry.humidity.slice(0,-1)
+  forecastedValues[3].children[0].innerHTML = jsonCityEntry.precipitation.slice(0,-1)
+}
+
+//Method to update timeline for forecasting next 5 hours
+function changeForecastTimeline(jsonCityEntry) {
+  if(jsonCityEntry.cityName != "NIL"){
+    changeTimelineHours()
+    changeTimelineTemperature(jsonCityEntry)
+  }
+  else{
+    for(let i = 0; i < scaleTime.length; i++){
+      scaleTime[i].innerHTML = "♾️"
+    }
+    for(let i = 0; i < forecastedTemperature.length; i++) {
+      forecastedTemperature[i].innerHTML = jsonCityEntry.nextFiveHrs[1]
+    }
+  }
+}
+
+//Method to change next 5 hours in Forecast Timeline
+function changeTimelineHours() {
+  let cityHour = parseInt(cityTime.innerHTML.slice(0,-3)) + 1
+  let forecastAmPm = []
+  forecastAmPm[0] = toggleAmPm
+  forecastAmPm[1] = (toggleAmPm ? " PM" : " AM");
+  for(let i = 0; i < scaleTime.length; i++){
+    if(cityHour > 12)
+      cityHour = 1;
+    if(cityHour == 12){
+      forecastAmPm[0] = !forecastAmPm[0]
+      forecastAmPm[1] = (forecastAmPm[0] ? " PM" : " AM");
+    }
+    scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
+    cityHour ++
+  }
+}
+
+//Method to change forecasted Temperature in Forecast Timeline
+function changeTimelineTemperature(jsonCityEntry) {
+  forecastedTemperature[0].innerHTML = jsonCityEntry.temperature
+  for(let i = 1; i < forecastedTemperature.length - 1; i++) {
+    forecastedTemperature[i].innerHTML = jsonCityEntry.nextFiveHrs[i-1]
   }
 }
 
@@ -217,19 +281,16 @@ function keepDatalistOptions(selector = '',jsonData) {
       input.addEventListener("input", function(e) {
         for(let city in jsonData){
           if(e.target.value == jsonData[city].cityName){
-            console.log("input")
             e.target.setAttribute("placeholder", e.target.value);
             e.target.blur();
           }
         }
       });
       input.addEventListener("focus", function(e) {
-        console.log("focus")
         e.target.setAttribute("placeholder", e.target.value);
         e.target.value = "";
       });
       input.addEventListener("blur", function(e) {
-        console.log("blur")
         e.target.value = e.target.getAttribute("placeholder");
       });
     }
