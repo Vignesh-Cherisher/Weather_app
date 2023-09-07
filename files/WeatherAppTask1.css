@@ -199,10 +199,7 @@ select {
 }
 
 .time-gradient {
-    background: linear-gradient(to right, #ffe5b4 60%, #1e90ff 40%),
-                -webkit-linear-gradient(#ffe5b4, #1e90ff);
-    background-clip: text;
-    -webkit-background-clip: text;
+    background: linear-gradient(to right, #ffe5b4 60%, #1e90ff 40%);
     -webkit-text-fill-color: transparent;
 }
 
