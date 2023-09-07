@@ -192,10 +192,17 @@ select {
     position:relative; 
 }
 
+.time-color-day {
+    color: #ffe5b4;
+}
+
+.time-color-night {
+    color: #1e90FF;
+}
+
 .time {
     position: relative;
     margin: 0;
-    color: #ffe5b4;
 }
 
 .time-gradient {
@@ -326,7 +333,7 @@ select {
         justify-content: center;
     }
 
-    #seconds {
+    .seconds {
         font-size: calc(4px + 2vw);
     }
 
@@ -511,7 +518,7 @@ select {
         width: 100%;
     }
 
-    #seconds {
+    .seconds {
         font-size: calc(10px + 1vw);
     }
 
@@ -634,7 +641,7 @@ select {
         font-size: calc(10px + 1vw);
     }
 
-    #seconds {
+    .seconds {
         font-size: calc(12px + 1vw);
     }
 

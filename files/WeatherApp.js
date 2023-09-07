@@ -5,14 +5,31 @@ const scrollRack = document.querySelector('.cards-rack')
 const cityValue = document.querySelector('#cities')
 const cityInput = document.getElementsByClassName('drop-down')[0]
 const cityDate = document.querySelector('#date')
-const cityTime = document.querySelector('.time').children[0]
-const citySeconds = document.querySelector('#seconds')
 const cityAmPm = document.querySelector('#am-pm')
 const forecastedValues = document.querySelectorAll('.forecast-values')
 const forecastedTemperature = document.querySelectorAll('.forecast-temperature')
 const scaleTime = document.querySelectorAll('.scale-time')
 const scaleWeatherIcon = document.querySelectorAll('.weather')
+const cityTimeWhole = document.querySelector('.time')
 let toggleAmPm = 0
+
+//Method to create span element for displaying
+/**
+ *
+ */
+function timeElementCreation (){
+  let timeSeconds = document.createElement('span')
+  timeSeconds.innerHTML = "10:10"
+  cityTimeWhole.appendChild(timeSeconds)
+  timeSeconds = document.createElement('span')
+  timeSeconds.innerHTML = ":46"
+  timeSeconds.classList.add("seconds")
+  cityTimeWhole.appendChild(timeSeconds)
+}
+
+timeElementCreation()
+const cityTime = document.querySelector('.time').children[0]
+const citySeconds = document.querySelector('.seconds')
 ;
 
 // Asynchronous Function to load json Data
@@ -195,19 +212,23 @@ function changeAmState (toggleAmPm) {
     cityTime.setAttribute('style', '-webkit-background-clip:text')
   } else if (!toggleAmPm) {
     cityAmPm.src = '../General_Images_&_Icons/amState.svg'
-    cityTime.style.color = '#ffe5b4'
+    cityTime.classList.add('time-color-day')
+    cityTime.classList.remove('time-color-night')
     citySeconds.style.color = '#ffe5b4'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
     cityTime.classList.remove('time-gradient')
+    cityTime.setAttribute('style', '-webkit-background-clip:unset; color: #ffe5b4')
     toggleAmPm = !toggleAmPm
   } else {
     cityAmPm.src = '../General_Images_&_Icons/pmState.svg'
-    cityTime.style.color = '#1E90FF'
+    cityTime.classList.add('time-color-night')
+    cityTime.classList.remove('time-color-day')
     citySeconds.style.color = '#1E90FF'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
     cityTime.classList.remove('time-gradient')
+    cityTime.setAttribute('style', '-webkit-background-clip: unset')
     toggleAmPm = !toggleAmPm
   }
 }
@@ -273,15 +294,35 @@ function changeTimelineHours () {
   const forecastAmPm = []
   forecastAmPm[0] = toggleAmPm
   forecastAmPm[1] = (toggleAmPm ? ' PM' : ' AM')
-  for (let i = 0; i < scaleTime.length; i++) {
-    if (cityHour > 12) { cityHour = 1 }
-    if (cityHour === 12) {
-      forecastAmPm[0] = !forecastAmPm[0]
-      forecastAmPm[1] = (forecastAmPm[0] ? ' PM' : ' AM')
+  let i = 0, j = 0
+  const interval = setInterval(function () {
+    if(i <= 2)
+      scaleTime[j].innerHTML = '---'
+    if(j>=2){
+      if (cityHour > 12) { cityHour = 1 }
+      if (cityHour === 12) {
+        forecastAmPm[0] = !forecastAmPm[0]
+        forecastAmPm[1] = (forecastAmPm[0] ? ' PM' : ' AM')
+      }
+      scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
+      cityHour++
+      i++
     }
-    scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
-    cityHour++
-  }
+    if(j<4)
+      j++
+    if(i==5){
+      clearInterval(interval);
+    }
+  }, 400)
+  // for (let i = 0; i < scaleTime.length; i++) {
+  //   if (cityHour > 12) { cityHour = 1 }
+  //   if (cityHour === 12) {
+  //     forecastAmPm[0] = !forecastAmPm[0]
+  //     forecastAmPm[1] = (forecastAmPm[0] ? ' PM' : ' AM')
+  //   }
+  //   scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
+  //   cityHour++
+  // }
 }
 
 // Method to change forecasted Temperature in Forecast Timeline
