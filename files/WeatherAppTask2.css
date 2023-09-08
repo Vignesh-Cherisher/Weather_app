@@ -1,0 +1,471 @@
+.middle-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #121212;
+    border-radius: 25px 25px 0 0;
+    width: 100%;
+}
+
+.sticky-bar {
+    background-color: #121212;
+    position: sticky;
+    top:0;
+    border-radius: 25px 25px 0 0;
+    width: 100%;
+    height: 15%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1%;
+    z-index: 100;
+}
+
+.sticky-bar-content {
+    font-size: calc(14px + 0.5vw);
+    font-weight: 100;
+    color: rgb(255 255 255);
+    margin: 0;
+}
+
+.icons-rack {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-container{
+    pointer-events:visible;
+    min-width: 25px;
+    width: 12%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.icon-container:focus{
+    border-bottom: 1px solid rgb(0 195 255);
+}
+
+.icon-container:hover {
+    filter:drop-shadow(0 0 12px rgb(149 149 149));
+}
+
+.icons {
+    aspect-ratio: 1/1;
+}
+
+.bottom-border {
+    border-bottom: 1px solid rgb(0 195 255);
+}
+
+.icon-rack-text {
+    margin: 0;
+}
+
+.counter {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 25%;
+    height: 100%;
+}
+
+#counter-value {
+    background-color: rgb(98 98 98);
+    border: 0;
+    height: 16px;
+    width: 40%;
+    text-align: center;
+    color: white;
+}
+
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button {  
+    opacity: 1;
+    height: 16px;
+}
+
+.cards-rack {
+    overflow-x: auto;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 90%;
+    position: relative;
+}
+
+.card-overlay {
+    position: absolute;
+    width: 90%;
+    z-index: 2;
+    overflow: auto;
+    height: 100%;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background: transparent;
+}
+
+.card-self {
+    background-color: #181818;
+    background-size: cover;
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: row;
+    justify-content:space-between;
+    aspect-ratio: 1/1;
+    position: relative;
+    z-index: 3;
+}
+
+.card-self:hover {
+    box-shadow: rgba(255 255 255 / 40%) 0 2px 4px, rgba(230 230 230 / 30%) 0 7px 13px -3px, rgba(202 202 202 / 20%) 0 -3px 0 inset;
+    transform: scale(1.02);
+}
+
+.card-bg-image {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    opacity: 0.5;
+    aspect-ratio: 1/1;
+    width: 70%;
+}
+
+.columns-card {
+    margin: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 70%;
+}
+
+.city-date-card, .city-name-card, .city-time-card, .celsius-value-card, .celsius-content-card {
+    position: relative;
+}
+
+.icons-holder-card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+}
+
+.icon-content-card {
+    position: relative;
+    aspect-ratio: 1/1;
+}
+
+.icon-value-card {
+    position: relative;
+    opacity: 0.75;
+    margin-left: 5px;
+}
+
+.celsius-holder-card {
+    display: flex;
+    flex-direction: row;
+}
+
+.celsius-content-card {
+    aspect-ratio: 1/1;
+    width: 35%;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 65%;
+    width: 100%;
+    align-items: center;
+    position: relative;
+    overflow: visible;
+}
+
+.card-scroller {
+    display: flex;  
+    justify-content: center;
+    height: 30%;
+    width: fit-content;
+}
+
+.card-scroller-align {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+}
+
+.card-scroller-icon {
+    aspect-ratio: 1/1;
+    width: 100%;
+    opacity: 0.5;   
+}
+
+#scroller-left{
+    margin:0 1%;
+}
+
+#scroller-right {
+    margin:0 1%;
+}
+
+@media (width <= 525px) {
+    .middle-section {
+        height: 15%;
+    }
+
+    .card-container {
+        height: 60%;
+    }
+
+    .sticky-bar{
+        height: 30%;
+        flex-direction: column;
+    }
+
+    .sticky-bar-content {
+        font-size: calc(10px + 0.8vw);
+        font-weight: 300;
+    }
+
+    .icons-rack {
+        height: 50%;
+        width: 60%;
+    }
+
+    .icons {
+        width : 2vw;
+        min-width: 15px;
+    }
+
+    .icon-rack-text {
+        font-size: calc(8px + 0.8vw);
+        font-weight: 100;
+    }
+
+    #counter-value {
+        font-size: calc(10px + 1vw);
+    }
+
+    .card-self {
+        width: 40%;
+        min-width: 150px;
+        padding: 1%;
+        margin-right: 20px;
+    }
+
+    .columns-card {
+        height: 80%;
+    }
+
+    .city-name-card {
+        font-weight: 700;    
+        font-size: calc(9px + 1.5vw);
+    }
+
+    .city-date-card {
+        font-weight: 700;
+        font-size: calc(9px + 1.3vw);
+    }
+
+    .city-time-card {
+        font-weight: 700;      
+        font-size: calc(7px + 1vw);
+    }
+
+    .icon-content-card {
+        width: 20%;
+        min-width: 15px;
+    }
+
+    .icon-value-card {
+        font-size: calc(7px + 1vw);
+    }
+
+    .celsius-holder-card {
+        height: 18%;
+    }
+
+    .celsius-value-card {
+        font-size: calc(10px + 1vw);
+    }
+
+    .card-scroller-icon {
+        min-width: 17px;
+    }
+}
+
+@media (525px <= width <= 950px) {
+    .middle-section {
+        height: 25%;
+    }
+
+    .sticky-bar {
+        height: 20%;
+    }
+
+    .icons-rack {
+        position: absolute;
+        right: 0;
+        margin-right: 2%;
+        height: 100%;
+        width: 30%;
+    }
+
+    .icons {
+        width : 2vw;
+        min-width: 15px;
+    }
+
+    .icon-rack-text {
+        white-space: nowrap;
+        font-size: calc(6px + 0.7vw);
+        font-weight: 100;
+    }
+
+    #counter-value {
+        min-width: 28px;
+        font-size: calc(8px + 0.2vw);
+    }
+
+    .card-container {
+        height: 70%;
+    }
+
+    .card-self {
+        width: 24%;
+        min-width: 180px;
+        padding: 1%;
+        margin-right: 50px;
+    }
+
+    .columns-card {
+        height: 80%;
+    }
+
+    .city-name-card {
+        font-weight: 700;    
+        font-size: calc(9px + 0.6vw);
+    }
+    
+    .city-date-card {
+        font-weight: 700;
+        font-size: calc(7px + 0.5vw);
+    }
+
+    .city-time-card {
+        font-weight: 700;      
+        font-size: calc(7px + 0.5vw);
+    }
+
+    .icon-content-card {
+        width: 20%;
+        min-width: 15px;
+    }
+
+    .icon-value-card {
+        font-size: calc(7px + 0.5vw);
+    }
+
+    .celsius-holder-card {
+        height: 18%;
+    }
+
+    .celsius-value-card {
+        font-size: calc(10px + 0.6vw);
+    }
+
+    .card-scroller-icon {
+        min-width: 17px;
+    }
+}
+
+@media (width >= 950px) {
+    .middle-section {
+        height: 30%;
+    }
+
+    .sticky-bar {
+        height: 15%;
+    }
+
+    .sticky-bar-content {
+        font-size: calc(14px + 0.5vw);
+        font-weight: 100;
+    }
+
+    .icons-rack {
+        position: absolute;
+        right: 0;
+        margin-right: 5%;
+        height: 100%;
+        width: 20%;
+    }
+
+    .icon-container {
+        min-width: 25px;
+    }
+
+    .icons {
+        width : 100%;
+        min-width: 15px;
+    }
+
+    .icon-rack-text {
+        font-size: calc(7px + 0.5vw);
+    }
+
+    #counter-value {
+        min-width: 30px;
+        font-size: calc(6px + 0.5vw);
+    }
+
+    .card-self {
+        width: 20%;
+        min-width: 220px;
+        margin-right: 80px;
+    }
+
+    .columns-card {
+        height: 70%;
+    }
+
+    .city-name-card {
+        font-size: calc(10px + 0.6vw);
+    }
+    
+    .city-date-card {
+        font-size: calc(10px + 0.6vw);
+    }
+
+    .city-time-card {
+        font-size: calc(8px + 0.4vw);
+    }
+    
+    .icon-content-card {
+        width: 15%;
+    }
+
+    .icon-value-card {
+        font-size: calc(8px + 0.4vw);
+    }
+
+    .celsius-holder-card {
+        height: 18%;
+    }
+
+    .celsius-value-card {
+        font-size: calc(12px + 0.8vw);
+    }
+}

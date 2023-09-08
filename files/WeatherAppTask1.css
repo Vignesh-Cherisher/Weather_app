@@ -1,0 +1,676 @@
+* { 
+    font-family: Roboto, sans-serif;
+    overscroll-behavior: none;
+    margin: 0;
+}
+
+body {
+    font-size: 20px;
+    color: rgb(255 255 255);
+    margin :0;
+    background: #121212;
+    overflow-x: hidden;
+}
+
+p {
+    margin: 0;
+}
+
+.app-container {
+    position: relative;
+    top: 0;
+    width :100%;
+    height: 100%;
+    background-color: grey;
+    background-image: url("../General_Images_&_Icons/background.svg");
+    background-size: cover;
+    background-blend-mode: multiply;
+}
+
+.header-section {
+    padding: 1%;
+    position: inherit;
+    display : flex;
+    width : 100%;
+    box-sizing: border-box;
+}
+
+.column-transform {
+    position: inherit;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.row-transform {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 50%;
+}
+
+.double {
+    position: inherit;
+    display: flex;
+    flex-direction: column;
+    width : 20%;
+    height : 80%;
+}
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.center-align {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.sub-element{
+    position: inherit;
+    height: 100%;
+}
+
+.sub-element-second{
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    position: inherit;
+    width: 100%;
+    height: 50%;
+}
+
+.date-time-holder{
+    position: inherit;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.height-hundred {
+    height: 100%;
+}
+
+.width-thirty {
+    width: 30%;
+}
+
+.width-fifty{
+    width: 50%;
+}
+
+.width-forty {
+    width: 40%;
+}
+
+.width-sixty {
+    width: 60%;
+}
+
+.width-seventy {
+    width : 70%;
+}
+
+select {
+    background-color: transparent;
+}
+
+.cities-form {
+    width: 100%;
+    height: 100%;
+}
+
+.drop-down {
+    appearance: none;
+    box-sizing: border-box;
+    border: none;
+    position: absolute;
+    padding-left: 10px;
+    font-weight: 100;
+    bottom: 0;
+    height:35%;
+    width: 90%;
+    color: #fff;
+    cursor: text;
+}
+
+.drop-down:focus, .drop-down:hover {
+    outline: none;
+}
+
+.city-list {
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+[list]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+  }
+
+#first-seg {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: end;
+    width: 100%;
+}
+
+#second-seg {
+    display: flex;
+    align-items:start;
+    height: 40%;
+}
+
+.time-container {
+    display: flex;
+    width: fit-content;
+    align-items: start;
+    position: relative;
+    height: fit-content;
+}
+
+.am-pm-container {
+    position: relative;
+}
+
+.datecontainer {
+    position:relative; 
+}
+
+.time-color-day {
+    color: #ffe5b4;
+}
+
+.time-color-night {
+    color: #1e90FF;
+}
+
+.time {
+    position: relative;
+    margin: 0;
+}
+
+.alert-city-not-found {
+    color: red;
+    position: relative;
+    font-size: small;
+    background-color: #4545454d;
+}
+
+.time-gradient {
+    background: linear-gradient(to right, #ffe5b4 60%, #1e90ff 40%);
+    -webkit-text-fill-color: transparent;
+}
+
+.am-pm {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    aspect-ratio: 1/1;
+    max-width: 85px;
+    margin-left: 8px;
+}
+
+.am-pm-nil {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+    aspect-ratio: 1/1;
+    max-width: 85px;
+    margin-left: 8px;
+}
+
+#date {
+    color: rgb(225 220 220);
+    margin: 2px 0 0;
+}
+
+.for-spacing {
+    height: 20%;
+}
+
+.content-holder {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
+    height: 70%;
+    width: 100%;
+}
+
+.element-border-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    border-right: 1px dotted rgba(255 255 255 / 30%);
+}
+
+.inner-cont-second {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+    width: 100%;
+}
+
+
+
+.weather-scale-columns {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content:center;
+    align-items: center;
+}
+
+.scale-content-holder {
+    height: 25%;
+    color: white;
+}
+
+.weather {
+    margin: 0 0 0 5px;
+    aspect-ratio: 1/1;
+    width: 2vw;
+}
+
+@media (width <= 525px){
+    html{
+        height: 100%;
+    }
+
+    body {
+        height: 260%;
+    }
+
+    #city-image {
+        width: 50%;
+    }
+
+    #city-selection {
+        width: 50%;
+    }
+
+    .header-section {
+        flex-direction:column;
+        height : 20%;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 50%;
+    }
+
+    ::placeholder {
+        white-space: pre-line;
+        position: relative;
+        top: -12px;
+        font-size: 15px;
+    }
+
+    #first-seg {
+        justify-content: end;
+        height: 70%;
+    }
+
+    #second-seg {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .seconds {
+        font-size: calc(4px + 2vw);
+    }
+
+    .scale-content {
+        font-size: clamp(7px, 2vw,14px);
+        color:rgb(216 205 205);
+    }
+
+    .forecast-name {
+        font-size: calc(6px + 1vw);
+        color:rgb(216 205 205);
+    }
+
+    .forecast-values {
+        font-size: calc(10px + 2vw);
+        margin : 1% 0 0;
+        color: white;
+    }
+
+    #date{
+        font-size: calc(7px + 1vw);
+    }
+
+    .am-pm {
+        min-width: 30px;
+        width: 80%;
+    }
+
+    .am-pm-nil {
+        width: 65%;
+    }
+
+    .column-transform {
+        height: 100%;
+        width : 25%;
+    }
+
+    .margin-five {
+        margin: 5% 0;
+    }
+
+    .flex-row {
+        justify-content: center;
+        height: 60%;
+    }
+
+    .flex-column {
+        height: 40%;
+    }
+
+    .split-half {
+        width : 100%;
+    }
+
+    .sub-element img{
+        position: absolute;
+        width: 90%;
+        aspect-ratio: 1/1;
+        bottom : -5px;
+        left: 0;
+        min-width: 30px;
+        max-width: 95px;
+    }
+
+    .center-align {
+        height: 80%;
+        margin:0 2%;
+    }
+
+    .drop-down {
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 96% #83838340;
+        font-size:calc(8px + 3vw);
+        background-size: 8% 30%;
+    }
+
+    .time {
+        font-size: calc(8px + 3.5vw);
+    }
+
+    .weather {
+        min-width: 13px;
+    }
+}
+
+@media (525px <= width <= 950px) {
+    .margin-five {
+        margin: 5% 0;
+    }
+
+    html{
+        height: 100%;
+    }
+
+    body {
+        height: 200%;
+    }
+
+    #city-image {
+        width: 30%;
+    }
+
+    #city-selection {
+        width: 70%;
+    }
+
+    .header-section {
+        flex-direction:column;
+        height : 30%;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 50%;
+    }
+
+    .column-transform {
+        height: 100%;
+        width : 25%;
+    }
+
+    .flex-row {
+        justify-content: center;
+        height: 60%;
+    }
+
+    .flex-column {
+        height: 40%;
+    }
+
+    .split-half {
+        width : 100%;
+    }
+
+    .center-align {
+        margin: 0 10%;
+        height: 90%;
+    }
+
+    .sub-element img{
+        aspect-ratio: 1/1;
+        bottom : -5px;
+        left: 0;
+        max-width: 120px;
+        min-width: 80px;
+        position: absolute;
+        width: 90%;
+    }
+
+    .drop-down {
+        font-size:calc(14px + 2vw);
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 95% #83838340;
+        background-size: 6% 35%;
+        height: 60%;
+    }    
+
+    #first-seg {
+        justify-content: start;
+        height: 70%;
+    }
+
+    #second-seg {
+        width: 70%;
+    }
+
+    .time {
+        font-size: calc(24px + 1vw);
+    }
+
+    .am-pm {
+        min-width: 60px;
+        width: 50%;
+    }
+
+    .am-pm-nil {
+        width: 40%;
+    }
+
+    #date {
+        font-size:calc(8px + 0.8vw);
+        width: 100%;
+    }
+
+    .seconds {
+        font-size: calc(10px + 1vw);
+    }
+
+    .scale-content {
+        font-size: 1.8vw;
+        color:rgb(216 205 205);
+    }
+
+    .forecast-name {
+        margin : 5px 0 0;
+        font-size: 2vw;
+        color:rgb(216 205 205);
+        font-weight: 100;
+    }
+
+    .forecast-values {
+        font-size: 4vw;
+        margin : 1vh 0 0;
+        color: white;
+    }
+}
+
+@media (width >= 950px)  {
+    html{
+        height: 100%;
+    }
+
+    body {
+        height: 200%;
+    }
+
+    .header-section {
+        flex-direction: row;
+        height : 30%;
+    }
+
+    .inner-container {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 60%;
+    }
+    
+    ::placeholder {
+        font-size: 32px;
+    }
+
+    @media (950px <= width <=1300px ) {
+        ::placeholder {
+            white-space: pre-line;
+            position: relative;
+            font-size: 28px;
+            top: -15px;
+        }
+
+        .drop-down {
+            height: 40%;
+        }
+    }
+
+    .column-transform {
+        height: 100%;
+        width : 20%;
+    }
+
+    .margin-five {
+        margin-bottom: 5%;
+    }
+
+    .split-half {
+        width : 50%;
+        height : 100%;
+    }
+
+    .center-align {
+        margin:4% 2% 0;
+        height: 50%;
+    }
+
+    .sub-element img{
+        aspect-ratio: 1/1;
+        bottom : -5px;
+        left: 0;
+        max-width: 140px;
+        min-width: 100px;
+        position: absolute;
+        width: 95%;
+    }
+
+    .drop-down {
+        font-size:calc(14px + 1.6vw);
+        background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 90% #83838340;
+        background-size: 8% 40%;
+    }
+
+    #first-seg {
+        justify-content: start;
+        height: 60%;
+    }
+
+    #second-seg {
+        padding-left: 5%;
+        width: 70%;
+    }
+
+    .time {
+        font-size: calc(24px + 1vw);
+    }
+
+    .am-pm {
+        width: 80%;
+    }
+
+    .am-pm-nil {
+        width: 60%;
+    }
+
+    #date {
+        width: 100%;
+        font-size: calc(10px + 1vw);
+    }
+
+    .seconds {
+        font-size: calc(12px + 1vw);
+    }
+
+    .scale-content {
+        font-size: 1.3vw;
+        color:rgb(216 205 205);
+    }
+
+    .forecast-name {
+        margin : 5px 0 0;
+        font-size: 1.5vw;
+        color:rgb(216 205 205);
+        font-weight: 100;
+    }
+
+    .forecast-values {
+        font-size: 3vw;
+        margin : 1% 0 0;
+        color: white;
+    }
+
+    .flex-column {
+        height: 100%;
+    }
+}

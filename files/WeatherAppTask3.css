@@ -1,0 +1,181 @@
+.bottom-section {
+    height: 40%;
+    width: 100%;
+    background-color: #121212;
+}
+
+.bottom-container-description {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 90%;
+    height: 10%;
+    margin: 0 5%;
+    white-space: nowrap;
+}
+
+.bottom-container-heading {
+    width: fit-content;
+    height: fit-content;
+    font-weight: 100;
+    font-size: calc(14px + 1vw);
+    display: inline;
+}
+
+.sort-bottom-container {
+    width: 30%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.sort-content-container{
+    display: flex;
+}
+
+#tile-right-align {
+    justify-content: end;
+}
+
+.sort-icon {
+    padding-left: 4%;
+    aspect-ratio: 1/1;
+    width: 8%;
+}
+
+.sort-content {
+    font-weight: 100;
+    font-size: calc(10px + 0.8vw);
+}
+
+.continent-city-container {
+    overflow-y: scroll;
+    height: 80%;
+    display: grid;
+    grid-template-areas: "a b c"
+                        "d e f"
+                        "g h i"
+                        "j k l";
+    padding: 1% 5%;
+    grid-gap: 6%;
+}
+
+.continent-city-self {
+    position: relative;
+    display: grid;
+    grid-template-areas: "a b"
+                        "c d";
+    background-color: #2E2E2E;
+    padding : 3%;
+}
+
+.continent-city-self:hover {
+    transform: scale(1.08);
+    box-shadow: rgba(61 227 0 / 33%) 0 4px 8px, rgba(0 255 76 / 13%) 0 14px 26px -6px, rgba(0 62 4 / 20%) 0 -6px 0 inset;
+}
+
+.continent-temperature, .continent-humidity-container{
+    justify-self: end;
+    width: fit-content;
+}
+
+.continent-humidity-container {
+    display: flex;
+    height: 80%;
+    align-items: center;
+    align-self: self-end;
+}
+
+.continent-name {
+    color: #FFF461;
+    font-weight: 400;
+}
+
+.continent-temperature {
+    font-weight: 500;
+    font-size: calc(18px + 0.5vw);
+}
+
+.continent-place-time {
+    height: fit-content;
+    align-self: self-end;
+    font-weight: 100;
+}
+
+.continent-humidity-icon {
+    height: 80%;
+    width: auto;
+}
+
+.icon-value-card {
+    font-size: calc( 12px + 0.5vw);
+}
+
+@media (525px <= width <= 950px) {
+    .bottom-section {
+        height: 45%;
+    }
+
+    .bottom-container-description {
+        flex-direction: column;
+    }
+
+    .sort-bottom-container {
+        width: 100%;
+    }
+
+    .continent-city-container {
+        grid-template-areas: "a b"
+                             "c d"
+                             "e f"
+                             "g h"
+                             "i j"
+                             "k l";
+        gap: 3%;
+    }
+
+    .sort-icon {
+        width: 4%;
+    }
+}
+
+@media (width <=525px) {
+    .bottom-section {
+        height: 65%;
+    }
+
+    .bottom-container-description {
+        flex-direction: column;
+        height: 8%;
+    }
+
+    .sort-bottom-container {
+        width: 80%;
+    }
+
+    .continent-city-container {
+        height:75%;
+        grid-template-columns: 90vw;
+        grid-template-areas: none;
+        row-gap: 3%;
+        overflow-y: visible;
+        padding-bottom: 10%;
+    }
+
+    .continent-city-self {
+        justify-self: center;
+        width: 70%;
+    }
+
+    .continent-name, .continent-place-time {
+        font-size: calc(12px + 0.5vw);
+    }
+
+    .icon-value-card {
+        font-size: calc(9px + 0.5vw)
+    }
+
+    .continent-temperature {
+        font-size: calc(14px + 0.5vw);
+    }
+}
