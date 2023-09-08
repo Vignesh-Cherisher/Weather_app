@@ -354,17 +354,17 @@
   "nil": {
     "url": "placeholder.png",
     "cityName": "NIL",
-    "dateAndTime": "∞/∞/∞, ♾:♾:♾ ?M",
-    "timeZone": "OutOfUniverse",
-    "temperature": "♾°C",
-    "humidity": "♾%",
-    "precipitation": "♾%",
+    "dateAndTime": "NIL, NIL ?M",
+    "timeZone": "NIL",
+    "temperature": "NIL",
+    "humidity": "NIL",
+    "precipitation": "NIL",
     "nextFiveHrs": [
-      "♾°C",
-      "♾°C",
-      "♾°C",
-      "♾°C",
-      "♾°C"
+      "NIL",
+      "NIL",
+      "NIL",
+      "NIL",
+      "NIL"
     ]
   }
 }

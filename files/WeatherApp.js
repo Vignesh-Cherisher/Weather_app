@@ -235,7 +235,7 @@ function changeAmState (toggleAmPm) {
     cityAmPm.src = '../General_Images_&_Icons/ampmState.png'
     cityAmPm.classList.remove('am-pm')
     cityAmPm.classList.add('am-pm-nil')
-    cityTime.classList.add('time-gradient')
+    cityTime.classList.add('time-nil')
     cityTime.setAttribute('style', '-webkit-background-clip:text')
   } else if (!toggleAmPm) {
     cityAmPm.src = '../General_Images_&_Icons/amState.svg'
@@ -244,7 +244,7 @@ function changeAmState (toggleAmPm) {
     citySeconds.style.color = '#ffe5b4'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
-    cityTime.classList.remove('time-gradient')
+    cityTime.classList.remove('time-nil')
     cityTime.setAttribute('style', '-webkit-background-clip:unset; color: #ffe5b4')
     toggleAmPm = !toggleAmPm
   } else {
@@ -254,7 +254,7 @@ function changeAmState (toggleAmPm) {
     citySeconds.style.color = '#1E90FF'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
-    cityTime.classList.remove('time-gradient')
+    cityTime.classList.remove('time-nil')
     cityTime.setAttribute('style', '-webkit-background-clip: unset')
     toggleAmPm = !toggleAmPm
   }
@@ -284,12 +284,20 @@ function changeCityDate (jsonDate, cityName) {
  */
 function changeForecastValues (jsonCityEntry) {
   forecastedValues[0].innerHTML = jsonCityEntry.temperature
-  if (jsonCityEntry.cityName === 'NIL') { forecastedValues[1].innerHTML = jsonCityEntry.temperature.slice(0, -2) + ' F' } else {
+  if (jsonCityEntry.cityName === 'NIL') { 
+    forecastedValues[1].innerHTML = jsonCityEntry.temperature 
+    forecastedValues[2].children[0].innerHTML = jsonCityEntry.humidity
+    forecastedValues[3].children[0].innerHTML = jsonCityEntry.precipitation
+    forecastedValues[2].children[1].innerHTML = ''
+    forecastedValues[3].children[1].innerHTML = ''
+  } else {
     const fahrenheit = ((parseInt(jsonCityEntry.temperature) * 1.8) + 32).toFixed(0) + ' F'
     forecastedValues[1].innerHTML = fahrenheit
+    forecastedValues[2].children[0].innerHTML = jsonCityEntry.humidity.slice(0, -1)
+    forecastedValues[3].children[0].innerHTML = jsonCityEntry.precipitation.slice(0, -1)
+    forecastedValues[2].children[1].innerHTML = '%'
+    forecastedValues[3].children[1].innerHTML = '%'
   }
-  forecastedValues[2].children[0].innerHTML = jsonCityEntry.humidity.slice(0, -1)
-  forecastedValues[3].children[0].innerHTML = jsonCityEntry.precipitation.slice(0, -1)
 }
 
 // Method to update timeline for forecasting next 5 hours
@@ -304,7 +312,7 @@ function changeForecastTimeline (jsonCityEntry) {
     changeTimelineIcon(jsonCityEntry)
   } else {
     for (let i = 0; i < scaleTime.length; i++) {
-      scaleTime[i].innerHTML = '♾️'
+      scaleTime[i].innerHTML = 'NIL'
     }
     for (let i = 0; i < forecastedTemperature.length; i++) {
       forecastedTemperature[i].innerHTML = jsonCityEntry.nextFiveHrs[1]
@@ -331,17 +339,20 @@ function changeTimelineHours () {
         forecastAmPm[0] = !forecastAmPm[0]
         forecastAmPm[1] = (forecastAmPm[0] ? ' PM' : ' AM')
       }
-      scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
-      cityHour++
+      if(i===0) { scaleTime[i].innerHTML = 'NOW' }
+      else {
+        scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
+        cityHour++ 
+      }
       i++
     }
-    if(j<4)
+    if(j<6)
       j++
-    if(i==5){
+    if(i===6){
       clearInterval(interval);
     }
   }, 400)
-  // for (let i = 0; i < scaleTime.length; i++) {
+  // for (let i = 1; i < scaleTime.length; i++) {
   //   if (cityHour > 12) { cityHour = 1 }
   //   if (cityHour === 12) {
   //     forecastAmPm[0] = !forecastAmPm[0]
