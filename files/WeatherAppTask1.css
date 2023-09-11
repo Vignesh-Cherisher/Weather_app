@@ -180,7 +180,7 @@ select {
     display: flex;
     width: fit-content;
     align-items: start;
-    position:relative;
+    position: relative;
     height: fit-content;
 }
 
@@ -205,9 +205,16 @@ select {
     margin: 0;
 }
 
-.time-gradient {
-    background: linear-gradient(to right, #ffe5b4 60%, #1e90ff 40%);
-    -webkit-text-fill-color: transparent;
+.alert-city-not-found {
+    color: red;
+    position: relative;
+    font-size: small;
+    background-color: #4545454d;
+}
+
+.time-nil {
+    color: white;
+    font-size: 56px;
 }
 
 .am-pm {
@@ -224,8 +231,9 @@ select {
     bottom: 10%;
     left: 0;
     aspect-ratio: 1/1;
-    max-width: 85px;
+    max-width: 30px;
     margin-left: 8px;
+    width: 5%;
 }
 
 #date {
@@ -360,10 +368,6 @@ select {
     .am-pm {
         min-width: 30px;
         width: 80%;
-    }
-
-    .am-pm-nil {
-        width: 65%;
     }
 
     .column-transform {
@@ -509,10 +513,6 @@ select {
         width: 50%;
     }
 
-    .am-pm-nil {
-        width: 40%;
-    }
-
     #date {
         font-size:calc(8px + 0.8vw);
         width: 100%;
@@ -630,10 +630,6 @@ select {
 
     .am-pm {
         width: 80%;
-    }
-
-    .am-pm-nil {
-        width: 60%;
     }
 
     #date {
