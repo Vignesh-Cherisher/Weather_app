@@ -10,10 +10,10 @@ const forecastedValues = document.querySelectorAll('.forecast-values')
 const forecastedTemperature = document.querySelectorAll('.forecast-temperature')
 const scaleTime = document.querySelectorAll('.scale-time')
 const scaleWeatherIcon = document.querySelectorAll('.weather')
-const cityTimeWhole = document.querySelector('.time')
+const cityTimeContainer = document.querySelector('.time')
 const alertCityNotFound = document.querySelector('.alert-city-not-found')
 let toggleAmPm = 0
-let notFoundCity = 0
+let cityNotFound = 0
 
 //Method to create span element for displaying
 /**
@@ -22,17 +22,29 @@ let notFoundCity = 0
 function timeElementCreation (){
   let timeSeconds = document.createElement('span')
   timeSeconds.innerHTML = "10:10"
-  cityTimeWhole.appendChild(timeSeconds)
+  cityTimeContainer.appendChild(timeSeconds)
   timeSeconds = document.createElement('span')
   timeSeconds.innerHTML = ":46"
   timeSeconds.classList.add("seconds")
-  cityTimeWhole.appendChild(timeSeconds)
+  cityTimeContainer.appendChild(timeSeconds)
 }
 
 timeElementCreation()
 const cityTime = document.querySelector('.time').children[0]
 const citySeconds = document.querySelector('.seconds')
 ;
+
+// Method to call functions to update city details
+/**
+ * 
+ */
+function cityUpdateFunctions(val) {
+  changeCityImg(val)
+  changeCityDateTime(val)
+  changeForecastValues(val)
+  changeForecastTimeline(val)
+  createCard(val)
+}
 
 // Asynchronous Function to load json Data
 /**
@@ -43,10 +55,7 @@ const citySeconds = document.querySelector('.seconds')
   const jsonData = await response.json()
   datalistPopulate(jsonData)
   keepDatalistOptions('.drop-down', jsonData)
-  changeCityImg(jsonData.nil)
-  changeCityDateTime(jsonData.nil)
-  changeForecastValues(jsonData.nil)
-  changeForecastTimeline(jsonData.nil)
+  cityUpdateFunctions(jsonData.nil)
   citySelect(jsonData)
 })()
 
@@ -74,10 +83,7 @@ function citySelect (jsonData) {
       if (event.target.value === jsonData[city].cityName) {
         notFoundCity = 1
         const val = cityInput.value.toLowerCase()
-        changeCityImg(jsonData[val])
-        changeCityDateTime(jsonData[val])
-        changeForecastValues(jsonData[val])
-        changeForecastTimeline(jsonData[val])
+        cityUpdateFunctions(jsonData[val])
       }
     }
     if(notFoundCity)
@@ -90,10 +96,7 @@ function citySelect (jsonData) {
         if (e.target.value === jsonData[city].cityName) {
           notFoundCity = 1
           const val = cityInput.value.toLowerCase()
-          changeCityImg(jsonData[val])
-          changeCityDateTime(jsonData[val])
-          changeForecastValues(jsonData[val])
-          changeForecastTimeline(jsonData[val])
+          cityUpdateFunctions(jsonData[val])
         }
         else
           notFoundCity = 0
@@ -156,9 +159,9 @@ function changeCityTime (jsonTime, cityName) {
  *
  * @param {object} liveTime - to pass Time object for live time
  */
-function updateCityTime (liveTime) {
-  cityTime.innerHTML = liveTime.slice(0, -3)
-  citySeconds.innerHTML = liveTime.slice(-3)
+function updateCityTime(liveTime) {
+    cityTime.innerHTML = liveTime.slice(0, -3)
+    citySeconds.innerHTML = liveTime.slice(-3)  
 }
 
 // Method to run Live Time of selected City
@@ -167,7 +170,7 @@ function updateCityTime (liveTime) {
  * @param {object} liveTime - to pass Time object for live time
  * @param {string} cityName - to pass selected city name
  */
-function runCityTime (liveTime, cityName) {
+function runCityTime (liveTime, cityName ) {
   liveTime = liveTime.split(':')
   liveTime.forEach((element, index) => {
     liveTime[index] = parseInt(element)
@@ -236,7 +239,6 @@ function changeAmState (toggleAmPm) {
     cityAmPm.classList.remove('am-pm')
     cityAmPm.classList.add('am-pm-nil')
     cityTime.classList.add('time-nil')
-    cityTime.setAttribute('style', '-webkit-background-clip:text')
   } else if (!toggleAmPm) {
     cityAmPm.src = '../General_Images_&_Icons/amState.svg'
     cityTime.classList.add('time-color-day')
@@ -245,7 +247,6 @@ function changeAmState (toggleAmPm) {
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
     cityTime.classList.remove('time-nil')
-    cityTime.setAttribute('style', '-webkit-background-clip:unset; color: #ffe5b4')
     toggleAmPm = !toggleAmPm
   } else {
     cityAmPm.src = '../General_Images_&_Icons/pmState.svg'
@@ -255,7 +256,6 @@ function changeAmState (toggleAmPm) {
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
     cityTime.classList.remove('time-nil')
-    cityTime.setAttribute('style', '-webkit-background-clip: unset')
     toggleAmPm = !toggleAmPm
   }
 }
@@ -317,6 +317,10 @@ function changeForecastTimeline (jsonCityEntry) {
     for (let i = 0; i < forecastedTemperature.length; i++) {
       forecastedTemperature[i].innerHTML = jsonCityEntry.nextFiveHrs[1]
     }
+    for (let i = 0; i < scaleWeatherIcon.length; i++){
+      scaleWeatherIcon[i].src = "../General_Images_&_Icons/alert.png"
+      scaleWeatherIcon[i].setAttribute('style', 'filter:grayscale(1);')
+    }
   }
 }
 
@@ -331,9 +335,8 @@ function changeTimelineHours () {
   forecastAmPm[1] = (toggleAmPm ? ' PM' : ' AM')
   let i = 0, j = 0
   const interval = setInterval(function () {
-    if(i <= 2)
-      scaleTime[j].innerHTML = '---'
-    if(j>=2){
+    scaleTime[j].innerHTML = '---'
+    if(j>=1){
       if (cityHour > 12) { cityHour = 1 }
       if (cityHour === 12) {
         forecastAmPm[0] = !forecastAmPm[0]
@@ -346,21 +349,12 @@ function changeTimelineHours () {
       }
       i++
     }
-    if(j<6)
+    if(j<5)
       j++
     if(i===6){
       clearInterval(interval);
     }
-  }, 400)
-  // for (let i = 1; i < scaleTime.length; i++) {
-  //   if (cityHour > 12) { cityHour = 1 }
-  //   if (cityHour === 12) {
-  //     forecastAmPm[0] = !forecastAmPm[0]
-  //     forecastAmPm[1] = (forecastAmPm[0] ? ' PM' : ' AM')
-  //   }
-  //   scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
-  //   cityHour++
-  // }
+  }, 200)
 }
 
 // Method to change forecasted Temperature in Forecast Timeline
@@ -385,7 +379,20 @@ function changeTimelineIcon (jsonCityEntry) {
   cityTemperature[0] = parseInt(jsonCityEntry.temperature)
   for (let i = 0; i < jsonCityEntry.nextFiveHrs.length; i++) { cityTemperature[i + 1] = parseInt(jsonCityEntry.nextFiveHrs[i]) }
   for (let i = 0; i < cityTemperature.length; i++) {
-    if (cityTemperature[i] > 29) { scaleWeatherIcon[i].src = '../Weather_Icons/sunnyIcon.svg' } else if ((cityTemperature[i] <= 29) && (cityTemperature[i] >= 23)) { scaleWeatherIcon[i].src = '../Weather_Icons/cloudyIcon.svg' } else if ((cityTemperature[i] <= 22) && (cityTemperature[i] >= 18)) { scaleWeatherIcon[i].src = '../Weather_Icons/windyIcon.svg' } else { scaleWeatherIcon[i].src = '../Weather_Icons/precipitationIcon.svg' }
+    switch (true) {
+      case cityTemperature[i] > 29:
+        scaleWeatherIcon[i].src = '../Weather_Icons/sunnyIcon.svg'
+        break
+      case (cityTemperature[i] <= 29) && (cityTemperature[i] >= 23):
+        scaleWeatherIcon[i].src = '../Weather_Icons/cloudyIcon.svg'
+        break
+      case (cityTemperature[i] <= 22) && (cityTemperature[i] >= 18):
+        scaleWeatherIcon[i].src = '../Weather_Icons/windyIcon.svg'
+        break
+      default:
+        scaleWeatherIcon[i].src = '../Weather_Icons/rainyIcon.svg'
+    }
+    scaleWeatherIcon[i].setAttribute('style', 'filter:grayscale(0);')
   }
 }
 
@@ -444,3 +451,59 @@ for (let i = 0; i < scrollable.length; i++) {
 }
 
 yScroll(scrollOverlay[0], scrollRack)
+
+//'-------------------------------------------------------------------------------------------------------'
+
+const cardRack = document.querySelector('.cards-rack')
+
+function startTime(val, cardCityTime) {
+  if (val == 'NIL') {
+    
+  }
+  else {
+    let liveTime = new Date().toLocaleString([], { timeZone: val });
+    let today = new Date(liveTime);
+    let h = today.getHours();
+    let m = today.getMinutes();
+    
+    function checkTime(i) {
+      if (i < 10) { i = "0" + i; }
+      return i;
+    }
+
+    let ampm = "";
+    if (true) {
+      ampm = h >= 12 ? "pm" : "am";
+      h = h % 12;
+      h = h ? h : 12;
+    }
+
+    h = checkTime(h)
+    m = checkTime(h)
+
+    cardCityTime.innerHTML = h + ":" + m  + ampm;
+    return cardCityTime.innerHTML
+  }
+}
+
+function createCard(jsonCityEntry) {
+  const card = document.createElement('div')
+  card.classList.add('card-self')
+  const cardBgImage = document.createElement('img')
+  cardBgImage.src = "../Icons_for_cities/" + jsonCityEntry.url
+  cardBgImage.classList.add('card-bg-image')
+  card.appendChild(cardBgImage)
+  const cardFirstColumn = document.createElement('div')
+  cardFirstColumn.classList.add('columns-card')
+  card.appendChild(cardFirstColumn)
+  const cardCityName = document.createElement('p')
+  cardCityName.classList.add('city-name-card')
+  cardCityName.innerHTML = jsonCityEntry.cityName
+  cardFirstColumn.appendChild(cardCityName)
+  const cardCityTime = document.createElement('p')
+  cardCityTime.classList.add('city-time-card')
+  cardCityTime.innerHTML = startTime(jsonCityEntry.timeZone, cardCityTime)
+  cardFirstColumn.appendChild(cardCityTime)
+  cardRack.appendChild(card)
+}
+
