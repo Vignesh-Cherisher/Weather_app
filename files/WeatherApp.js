@@ -597,12 +597,13 @@ function addFilterIconsListener(jsonData) {
 }
 
 function filterOnClick(iconValue, jsonData) {
-  let cityTemperatureMap = []
+  let filteredCityArray= []
   for (let city in jsonData) {
     if (!iconValue) {
       if ((parseInt(jsonData[city].temperature) > 29) && (parseInt(jsonData[city].humidity) < 50) && (parseInt(jsonData[city].precipitation) >= 50 )) {
-        console.log(jsonData[city]);
+        filteredCityArray.push(city)
       }
+      else if((parseInt(jsonData[city].temperature) < 29 && (parseInt(jsonData[city].temperature)) >= 20) && (parseInt(jsonData[city].humidity) < 50) && (parseInt(jsonData[city].precipitation) >= 50 ))
     }
   }
 }
