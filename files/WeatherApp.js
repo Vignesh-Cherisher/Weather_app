@@ -12,6 +12,7 @@ const scaleTime = document.querySelectorAll('.scale-time')
 const scaleWeatherIcon = document.querySelectorAll('.weather')
 const cityTimeContainer = document.querySelector('.time')
 const alertCityNotFound = document.querySelector('.alert-city-not-found')
+const filterIcons = document.querySelectorAll('.icons')
 let toggleAmPm = 0
 let cityNotFound = 0
 
@@ -55,7 +56,8 @@ function cityUpdateFunctions(val) {
   const jsonData = await response.json()
   datalistPopulate(jsonData)
   keepDatalistOptions('.drop-down', jsonData)
-  cityUpdateFunctions(jsonData.nil)
+  addFilterIconsListener(jsonData)
+  cityUpdateFunctions(jsonData.nome)
   citySelect(jsonData)
 })()
 
@@ -243,7 +245,7 @@ function changeAmState (toggleAmPm) {
     cityAmPm.src = '../General_Images_&_Icons/amState.svg'
     cityTime.classList.add('time-color-day')
     cityTime.classList.remove('time-color-night')
-    citySeconds.style.color = '#ffe5b4'
+    citySeconds.style.color = '#FFD7DB'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
     cityTime.classList.remove('time-nil')
@@ -252,7 +254,7 @@ function changeAmState (toggleAmPm) {
     cityAmPm.src = '../General_Images_&_Icons/pmState.svg'
     cityTime.classList.add('time-color-night')
     cityTime.classList.remove('time-color-day')
-    citySeconds.style.color = '#1E90FF'
+    citySeconds.style.color = '#BFBFF6'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
     cityTime.classList.remove('time-nil')
@@ -456,54 +458,152 @@ yScroll(scrollOverlay[0], scrollRack)
 
 const cardRack = document.querySelector('.cards-rack')
 
-function startTime(val, cardCityTime) {
+// Method to return livetime for provided Timezone
+function startTime(val) {
   if (val == 'NIL') {
-    
+
   }
   else {
     let liveTime = new Date().toLocaleString([], { timeZone: val });
-    let today = new Date(liveTime);
-    let h = today.getHours();
-    let m = today.getMinutes();
-    
+    let liveTimeToDateObject = new Date(liveTime);
+    let liveTimeHour = liveTimeToDateObject.getHours();
+    let liveTimeMinute = liveTimeToDateObject.getMinutes();
     function checkTime(i) {
       if (i < 10) { i = "0" + i; }
       return i;
     }
-
     let ampm = "";
     if (true) {
-      ampm = h >= 12 ? "pm" : "am";
-      h = h % 12;
-      h = h ? h : 12;
+      ampm = liveTimeHour >= 12 ? "PM" : "AM";
+      liveTimeHour = liveTimeHour % 12;
+      liveTimeHour = liveTimeHour ? liveTimeHour : 12;
     }
-
-    h = checkTime(h)
-    m = checkTime(h)
-
-    cardCityTime.innerHTML = h + ":" + m  + ampm;
-    return cardCityTime.innerHTML
+    liveTimeHour = checkTime(liveTimeHour)
+    liveTimeMinute = checkTime(liveTimeMinute)
+    let timeToString = liveTimeHour + ":" + liveTimeMinute + ' ' + ampm;
+    return timeToString
   }
 }
 
+// Method to update live time whenever a new card is created
+function runTimeForCards(val,cityCardTime) {
+  cityCardTime.innerHTML = startTime(val);
+  t = setInterval(function () {
+    if (!(startTime(val) === undefined)) {
+      cityCardTime.innerHTML = startTime(val);
+    }
+  }, 1000)
+}
+
+function swapDateParts(liveDate) {
+  let temp = liveDate[0]
+  liveDate[0] = liveDate[1]
+  liveDate[1] = temp
+  liveDate = liveDate.join([separator = '/'])
+  return liveDate
+}
+
+// Method to update Date for respective city
+function getDate(val) {
+  let liveDate = new Date().toLocaleDateString([], { timeZone: val });
+  liveDate = liveDate.split('/')
+  liveDate = swapDateParts(liveDate)
+  let liveDateToDateObject = new Date(liveDate).toLocaleString("en-GB", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+  let date = liveDateToDateObject.split(' ')
+  date[1] = date[1].toUpperCase()
+  date = date.join([separator = '-'])
+  return date
+}
+
+// Method to update Date for selected card
+function getDateForCards(val, cityCardDate) {
+  cityCardDate.innerHTML = getDate(val);
+  t = setInterval(function () {
+    cityCardDate.innerHTML = getDate(val);
+  }, 10000)
+}
+
+// Method to create a card to display city details.
 function createCard(jsonCityEntry) {
   const card = document.createElement('div')
-  card.classList.add('card-self')
   const cardBgImage = document.createElement('img')
-  cardBgImage.src = "../Icons_for_cities/" + jsonCityEntry.url
-  cardBgImage.classList.add('card-bg-image')
-  card.appendChild(cardBgImage)
   const cardFirstColumn = document.createElement('div')
+  const cardSecondColumn = document.createElement('div')
+  const cityCardName = document.createElement('p')
+  const cityCardTime = document.createElement('p')
+  const cityCardDate = document.createElement('p')
+  const cityCardCelsiusHolder = document.createElement('div')
+  const cityCardCelsiusIcon = document.createElement('img')
+  const cityCardCelsiusValue = document.createElement('p')
+
+  card.classList.add('card-self')
+  cardBgImage.classList.add('card-bg-image')
   cardFirstColumn.classList.add('columns-card')
-  card.appendChild(cardFirstColumn)
-  const cardCityName = document.createElement('p')
-  cardCityName.classList.add('city-name-card')
-  cardCityName.innerHTML = jsonCityEntry.cityName
-  cardFirstColumn.appendChild(cardCityName)
-  const cardCityTime = document.createElement('p')
-  cardCityTime.classList.add('city-time-card')
-  cardCityTime.innerHTML = startTime(jsonCityEntry.timeZone, cardCityTime)
-  cardFirstColumn.appendChild(cardCityTime)
+  cardSecondColumn.classList.add('columns-card')
+  cityCardName.classList.add('city-name-card')
+  cityCardTime.classList.add('city-time-card')
+  cityCardDate.classList.add('city-date-card')
+  cityCardCelsiusHolder.classList.add('celsius-holder-card')
+  cityCardCelsiusIcon.classList.add('celsius-content-card')
+  cityCardCelsiusValue.classList.add('celsius-value-card')
+
+  cardBgImage.src = "../Icons_for_cities/" + jsonCityEntry.url
+  cityCardName.innerHTML = jsonCityEntry.cityName
+  runTimeForCards(jsonCityEntry.timeZone, cityCardTime)
+  getDateForCards(jsonCityEntry.timeZone, cityCardDate)
+  cityCardCelsiusIcon.src = "../Weather_Icons/sunnyIcon.svg"
+  cityCardCelsiusValue.innerHTML = jsonCityEntry.temperature;
+
+
+  card.append(cardBgImage, cardFirstColumn, cardSecondColumn)
+  cardFirstColumn.append(cityCardName, cityCardTime, cityCardDate)
+  cardSecondColumn.appendChild(cityCardCelsiusHolder)
+  cityCardCelsiusHolder.append(cityCardCelsiusIcon, cityCardCelsiusValue)
+
+  for (let i = 0; i < 2; i++){
+    const cityCardIconHolder = document.createElement('div')
+    const cityCardWeatherIcon = document.createElement('img')
+    const cityCardIconValue = document.createElement('p')
+
+    cityCardIconHolder.classList.add('icons-holder-card')
+    cityCardWeatherIcon.classList.add('icon-content-card')
+    cityCardIconValue.classList.add('icon-value-card')
+    if (i) {
+      cityCardWeatherIcon.src = "../Weather_Icons/precipitationIcon.svg"
+      cityCardIconValue.innerHTML = jsonCityEntry.precipitation;
+    }
+    else {
+      cityCardWeatherIcon.src = "../Weather_Icons/humidityIcon.svg"
+      cityCardIconValue.innerHTML = jsonCityEntry.humidity;
+    }
+
+    cardFirstColumn.appendChild(cityCardIconHolder)
+    cityCardIconHolder.append(cityCardWeatherIcon, cityCardIconValue)
+  }
+  
   cardRack.appendChild(card)
 }
 
+function addFilterIconsListener(jsonData) {
+  filterIcons.forEach( (element,index) => {
+    element.addEventListener('click', () => {
+      filterOnClick(index, jsonData)
+    })
+  })
+}
+
+function filterOnClick(iconValue, jsonData) {
+  let filteredCityArray= []
+  for (let city in jsonData) {
+    if (!iconValue) {
+      if ((parseInt(jsonData[city].temperature) > 29) && (parseInt(jsonData[city].humidity) < 50) && (parseInt(jsonData[city].precipitation) >= 50 )) {
+        filteredCityArray.push(city)
+      }
+      else if((parseInt(jsonData[city].temperature) < 29 && (parseInt(jsonData[city].temperature)) >= 20) && (parseInt(jsonData[city].humidity) < 50) && (parseInt(jsonData[city].precipitation) >= 50 ))
+    }
+  }
+}
