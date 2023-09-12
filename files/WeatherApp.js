@@ -13,6 +13,8 @@ const scaleWeatherIcon = document.querySelectorAll('.weather')
 const cityTimeContainer = document.querySelector('.time')
 const alertCityNotFound = document.querySelector('.alert-city-not-found')
 const filterIcons = document.querySelectorAll('.icons')
+const filterIconContainer = document.querySelectorAll('.icon-container')
+const cardContainer = document.querySelector('.cards-rack')
 let toggleAmPm = 0
 let cityNotFound = 0
 
@@ -44,7 +46,6 @@ function cityUpdateFunctions(val) {
   changeCityDateTime(val)
   changeForecastValues(val)
   changeForecastTimeline(val)
-  createCard(val)
 }
 
 // Asynchronous Function to load json Data
@@ -57,6 +58,7 @@ function cityUpdateFunctions(val) {
   datalistPopulate(jsonData)
   keepDatalistOptions('.drop-down', jsonData)
   addFilterIconsListener(jsonData)
+  makeSunnyFilterIconDefault()
   cityUpdateFunctions(jsonData.nome)
   citySelect(jsonData)
 })()
@@ -588,22 +590,78 @@ function createCard(jsonCityEntry) {
   cardRack.appendChild(card)
 }
 
+// Method to add click listener and call filter function on icon click
 function addFilterIconsListener(jsonData) {
   filterIcons.forEach( (element,index) => {
     element.addEventListener('click', () => {
+      for (let i = 0; i < 3; i++){
+        if (i === index) {
+          filterIconContainer[i].classList.add('active-filter-icon')
+        }
+        else {
+          filterIconContainer[i].classList.remove('active-filter-icon')
+        }
+      }
       filterOnClick(index, jsonData)
     })
   })
 }
 
+// Method to filter cities based on given conditions for creating Cards
 function filterOnClick(iconValue, jsonData) {
-  let filteredCityArray= []
-  for (let city in jsonData) {
-    if (!iconValue) {
-      if ((parseInt(jsonData[city].temperature) > 29) && (parseInt(jsonData[city].humidity) < 50) && (parseInt(jsonData[city].precipitation) >= 50 )) {
-        filteredCityArray.push(city)
+  let cityValueMap = new Map()
+  let sortedMap
+  let filteredCityArray = []
+  switch (iconValue) {
+    case 0:
+      for (let city in jsonData) {
+        cityValueMap.set(city, parseInt(jsonData[city].temperature))
       }
-      else if((parseInt(jsonData[city].temperature) < 29 && (parseInt(jsonData[city].temperature)) >= 20) && (parseInt(jsonData[city].humidity) < 50) && (parseInt(jsonData[city].precipitation) >= 50 ))
-    }
+      sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
+      for(let [key,value] of sortedMap) {
+        if (sortedMap.get(key) > 29) {
+          filteredCityArray.push(key)
+        }
+        else { break }
+      }
+      break
+    case 1:
+      for (let city in jsonData) {
+        cityValueMap.set(city, parseInt(jsonData[city].precipitation))
+      }
+      sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
+      for(let [key,value] of sortedMap) {
+        if ((20 <= parseInt(jsonData[key].temperature) && parseInt(jsonData[key].temperature) < 29) && (parseInt(jsonData[key].humidity) > 50) && (parseInt(jsonData[key].precipitation) < 50)) {
+          filteredCityArray.push(key)
+        }
+      }
+      break
+    case 2:
+      for (let city in jsonData) {
+        cityValueMap.set(city, parseInt(jsonData[city].humidity))
+      }
+      sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
+      for(let [key,value] of sortedMap) {
+        if ((parseInt(jsonData[key].temperature) < 20) && (parseInt(jsonData[key].humidity) >= 50)) {
+          filteredCityArray.push(key)
+        }
+      }
+      break
   }
+  callCreateCard(filteredCityArray, jsonData)
+}
+
+// Method to call create card for filtered cities
+function callCreateCard(citiesList, jsonData) {
+  cardContainer.innerHTML = ''
+  cardContainer.setAttribute('style','padding-left:20px;')
+  citiesList.forEach(element => {
+    createCard(jsonData[element]);
+  })
+}
+
+// Method to set sunny icon as default icon and filter the cards based on it
+function makeSunnyFilterIconDefault() {
+  filterIcons[0].click()
+  filterIconContainer[0].classList.add('active-filter-icon')
 }
