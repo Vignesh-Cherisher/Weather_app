@@ -1,9 +1,8 @@
 export const filterIcons = document.querySelectorAll('.icons');
 export const filterIconContainer = document.querySelectorAll('.icon-container');
-export const cardContainer = document.querySelector('.cards-rack');
 export const cardRack = document.querySelector('.cards-rack')
 const scrollOverlay = document.getElementsByClassName('card-overlay')
-
+const spinner = document.querySelector('#counter-value')
 
 // Method to return livetime for provided Timezone
 export function startTime(val) {
@@ -123,11 +122,9 @@ export function createCard(jsonCityEntry) {
       cityCardWeatherIcon.src = "../Weather_Icons/humidityIcon.svg"
       cityCardIconValue.innerHTML = jsonCityEntry.humidity;
     }
-
     cardFirstColumn.appendChild(cityCardIconHolder)
     cityCardIconHolder.append(cityCardWeatherIcon, cityCardIconValue)
   }
-  
   cardRack.appendChild(card)
   yScroll(card,cardRack)
 }
@@ -190,16 +187,7 @@ export function filterOnClick(iconValue, jsonData) {
       }
       break
   }
-  callCreateCard(filteredCityArray, jsonData)
-}
-
-// Method to call create card for filtered cities
-export function callCreateCard(citiesList, jsonData) {
-  cardContainer.innerHTML = ''
-  cardContainer.setAttribute('style','padding-left: 40px;')
-  citiesList.forEach(element => {
-    createCard(jsonData[element]);
-  })
+  getSpinnerValue(filteredCityArray, jsonData)
 }
 
 // Method to set sunny icon as default icon and filter the cards based on it
@@ -228,3 +216,51 @@ function yScroll (target, targetContainer) {
 }
 
 yScroll(scrollOverlay[0], cardRack)
+
+// Method to get current Spinner Value
+export function getSpinnerValue(citiesList, jsonData) {
+  let spinnerValue = spinner.value
+  spinner.addEventListener('change', (e) => {
+    if (e.target.value < 3) {
+      e.target.value = 3
+    }
+    else if (e.target.value > 10) {
+      e.target.value = 10
+    }
+    spinnerValue = e.target.value
+    adjustFilteredArray(citiesList, jsonData, spinnerValue)
+  })
+  adjustFilteredArray(citiesList, jsonData, spinnerValue)
+}
+
+// Method to call create card for filtered cities
+function adjustFilteredArray(citiesList, jsonData, spinnerValue) {
+  cardRack.innerHTML = ''
+  cardRack.setAttribute('style', 'padding-left:10px')
+  citiesList.forEach((element, index) => {
+    if (parseInt(spinnerValue) <= index) {
+      return
+    }
+    else {
+      createCard(jsonData[element]);
+    }
+  })
+  changeCardRackStyle()
+}
+
+window.onresize = function () {
+  changeCardRackStyle()
+}
+
+// Method to style Card Rack according to its width: 
+function changeCardRackStyle() {
+  let cardRackWidth = cardRack.scrollWidth - cardRack.clientWidth
+  if (cardRackWidth <= 0) {
+    cardRack.classList.add('flex-space-evenly')
+    cardRack.classList.remove('flex-space-between')
+  }
+  else {
+    cardRack.classList.add('flex-space-between')
+    cardRack.classList.remove('flex-space-evenly')
+  }
+}

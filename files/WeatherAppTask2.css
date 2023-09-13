@@ -78,26 +78,20 @@
 
 #counter-value {
     background-color: rgb(98 98 98);
-    border: 0;
     height: 20px;
-    width: 50%;
-    text-align: center;
+    width: 40%;
+    text-align: left;
     color: white;
 }
 
 input[type="number"]::-webkit-inner-spin-button, 
 input[type="number"]::-webkit-outer-spin-button {  
-    -webkit-appearance: none;
-    background: #fff url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJCAYAAADgkQYQAAAAKUlEQVQYlWNgwAT/sYhhKPiPT+F/LJgEsHv37v+EMGkmkuImoh2NoQAANlcun/q4OoYAAAAASUVORK5CYII=) no-repeat center center;
+    opacity: 1;
+    height: 12px;
     position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 1em;
-    border-left: 1px solid #bbb;
-    opacity: .5;
-    /* opacity: 1;
-    height: 20px; */
+    right: 3px;
+    bottom: 4px;
+    transform: scale(1.6);
 }
 
 .cards-rack {
@@ -105,11 +99,19 @@ input[type="number"]::-webkit-outer-spin-button {
     white-space: nowrap;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
     align-items: center;
     height: 100%;
-    width: 90%;
+    width: 80%;
+    box-sizing: border-box;
     position: relative;
+}
+
+.flex-space-between {
+    justify-content: space-between;
+}
+
+.flex-space-evenly {
+    justify-content: space-evenly;
 }
 
 .card-overlay {
@@ -266,7 +268,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     #counter-value {
-        font-size: calc(10px + 1vw);
+        font-size: calc(8px + 1vw);
     }
 
     .card-self {
@@ -336,18 +338,20 @@ input[type="number"]::-webkit-outer-spin-button {
 
     .icons {
         width : 2vw;
-        min-width: 15px;
+        min-width: 20px;
+        height: 50%;
     }
 
     .icon-rack-text {
         white-space: nowrap;
         font-size: calc(6px + 0.7vw);
         font-weight: 100;
+        right: -2%;
     }
 
     #counter-value {
-        min-width: 28px;
-        font-size: calc(8px + 0.2vw);
+        min-width: 25px;
+        font-size: calc(6px + 0.7vw);
     }
 
     .card-container {
