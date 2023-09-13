@@ -207,8 +207,9 @@ select {
 
 .alert-city-not-found {
     color: red;
-    position: relative;
+    position: absolute;
     font-size: small;
+    bottom: 60%;
     background-color: #4545454d;
 }
 
@@ -231,9 +232,8 @@ select {
     bottom: 10%;
     left: 0;
     aspect-ratio: 1/1;
-    max-width: 30px;
     margin-left: 8px;
-    width: 5%;
+    width: 0;
 }
 
 #date {
@@ -411,6 +411,15 @@ select {
         background: url("../General_Images_&_Icons/arrow-216-64.png") no-repeat 96% #83838340;
         font-size:calc(8px + 3vw);
         background-size: 8% 30%;
+        height: 40%;
+    }
+
+    .alert-city-not-found {
+        bottom: 40%;
+    }
+
+    .time-nil {
+        font-size: 24px;
     }
 
     .time {
@@ -577,6 +586,14 @@ select {
         .drop-down {
             height: 40%;
         }
+
+        .alert-city-not-found {
+            bottom: 50%;
+        }
+    }
+
+    .alert-city-not-found {
+        bottom: 45%;
     }
 
     .column-transform {

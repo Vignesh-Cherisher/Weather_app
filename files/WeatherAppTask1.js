@@ -1,7 +1,6 @@
+import * as middleSection from './WeatherAppTask2.js'
+
 const cityImage = document.querySelector('#city-image').children[0]
-const scrollable = document.getElementsByClassName('card-self')
-const scrollOverlay = document.getElementsByClassName('card-overlay')
-const scrollRack = document.querySelector('.cards-rack')
 const cityValue = document.querySelector('#cities')
 const cityInput = document.getElementsByClassName('drop-down')[0]
 const cityDate = document.querySelector('#date')
@@ -12,11 +11,8 @@ const scaleTime = document.querySelectorAll('.scale-time')
 const scaleWeatherIcon = document.querySelectorAll('.weather')
 const cityTimeContainer = document.querySelector('.time')
 const alertCityNotFound = document.querySelector('.alert-city-not-found')
-const filterIcons = document.querySelectorAll('.icons')
-const filterIconContainer = document.querySelectorAll('.icon-container')
-const cardContainer = document.querySelector('.cards-rack')
 let toggleAmPm = 0
-let cityNotFound = 0
+let cityNotFound = 1
 
 //Method to create span element for displaying
 /**
@@ -57,10 +53,9 @@ function cityUpdateFunctions(val) {
   const jsonData = await response.json()
   datalistPopulate(jsonData)
   keepDatalistOptions('.drop-down', jsonData)
-  addFilterIconsListener(jsonData)
-  makeSunnyFilterIconDefault()
+  middleSection.addFilterIconsListener(jsonData)
+  middleSection.makeSunnyFilterIconDefault()
   cityUpdateFunctions(jsonData.nome)
-  citySelect(jsonData)
 })()
 
 // Method to add option values from json to Datalist
@@ -74,44 +69,6 @@ function datalistPopulate (jsonData) {
     option.value = jsonData[city].cityName
     cityValue.appendChild(option)
   }
-}
-
-// Method to call Functions for updating values whenever City name is changed
-/**
- *
- * @param {object} jsonData - Data loaded from json
- */
-function citySelect (jsonData) {
-  cityInput.addEventListener('input', function (event) {
-    for (const city in jsonData) {
-      if (event.target.value === jsonData[city].cityName) {
-        notFoundCity = 1
-        const val = cityInput.value.toLowerCase()
-        cityUpdateFunctions(jsonData[val])
-      }
-    }
-    if(notFoundCity)
-      alertCityNotFound.innerHTML = ""
-  })    
-  cityInput.addEventListener(('keypress'),function(e) {
-    if(e.key === 'Enter'){
-      e.preventDefault()
-      for (const city in jsonData) {
-        if (e.target.value === jsonData[city].cityName) {
-          notFoundCity = 1
-          const val = cityInput.value.toLowerCase()
-          cityUpdateFunctions(jsonData[val])
-        }
-        else
-          notFoundCity = 0
-      }
-      if(notFoundCity === 0){
-        alertCityNotFound.innerHTML = "City Not in List!"
-      }
-    }
-    if(notFoundCity)
-      alertCityNotFound.innerHTML = ""
-  })
 }
 
 // Changing City Image dynamically in top section
@@ -153,8 +110,10 @@ function changeCityTime (jsonTime, cityName) {
     cityTime.innerHTML = jsonTime
     citySeconds.innerHTML = ''
   } else {
-    updateCityTime(jsonTime)
-    runCityTime(jsonTime, cityName)
+    if (cityName !== cityInput.placeholder) {
+      updateCityTime(jsonTime)
+      runCityTime(jsonTime, cityName)
+    }
   }
 }
 
@@ -239,7 +198,7 @@ function incrementHour (liveTime) {
  */
 function changeAmState (toggleAmPm) {
   if (isNaN(toggleAmPm)) {
-    cityAmPm.src = '../General_Images_&_Icons/ampmState.png'
+    cityAmPm.src = ''
     cityAmPm.classList.remove('am-pm')
     cityAmPm.classList.add('am-pm-nil')
     cityTime.classList.add('time-nil')
@@ -400,25 +359,6 @@ function changeTimelineIcon (jsonCityEntry) {
   }
 }
 
-/**
- * Method to scroll Middle section both Horizontally and Vertically
- * @param {object} target - target element
- * @param {object} targetContainer - underlying container
- */
-function yScroll (target, targetContainer) {
-  target.addEventListener('wheel', (evt) => {
-    evt.preventDefault()
-    if (evt.deltaY !== 0) {
-      window.scrollBy({
-        top: evt.deltaY
-      })
-    }
-    if (evt.deltaX !== 0) {
-      targetContainer.scrollLeft += evt.deltaX
-    }
-  })
-}
-
 // Method to blur and handle click event in Input tag for selecting city.
 /**
  *
@@ -431,12 +371,29 @@ function keepDatalistOptions (selector = '', jsonData) {
   if (datalistInputs.length) {
     for (let i = 0; i < datalistInputs.length; i++) {
       const input = datalistInputs[i]
-      input.addEventListener('input', function (e) {
+      input.addEventListener('change', function (e) {
+        console.log(e.target.placeholder, e.target.value);
         for (const city in jsonData) {
           if (e.target.value === jsonData[city].cityName) {
+            const val = cityInput.value.toLowerCase()
+            cityUpdateFunctions(jsonData[val])
             e.target.setAttribute('placeholder', e.target.value)
             e.target.blur()
+            cityNotFound = 0
+            break
           }
+          else {
+            cityNotFound = 1
+          }
+        }
+        if (!cityNotFound) {
+          alertCityNotFound.innerHTML = ""
+        }
+        else {
+          e.target.value = 'NIL'
+          e.target.setAttribute('placeholder', e.target.value)
+          cityNotFound = 0
+          cityUpdateFunctions(jsonData.nil)
         }
       })
       input.addEventListener('focus', function (e) {
@@ -446,222 +403,34 @@ function keepDatalistOptions (selector = '', jsonData) {
       input.addEventListener('blur', function (e) {
         e.target.value = e.target.getAttribute('placeholder')
       })
+      input.addEventListener(('keypress'), function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault()
+          for (const city in jsonData) {
+            if (e.target.value === jsonData[city].cityName) {
+              cityNotFound = 0
+              const val = cityInput.value.toLowerCase()
+              cityUpdateFunctions(jsonData[val])
+              break
+            }
+            else {
+              cityNotFound = 1
+            }
+          }
+          if (cityNotFound) {
+            alertCityNotFound.innerHTML =`City '${e.target.value}' Not in List!`
+            e.target.value = 'Not Found'
+            e.target.setAttribute('placeholder', e.target.value)
+            e.target.blur()
+            cityUpdateFunctions(jsonData.nil)
+          }
+          else {
+            alertCityNotFound.innerHTML = ""
+          }
+        }
+      })
     }
   }
 }
-
-for (let i = 0; i < scrollable.length; i++) {
-  yScroll(scrollable[i], scrollRack)
-}
-
-yScroll(scrollOverlay[0], scrollRack)
 
 //'-------------------------------------------------------------------------------------------------------'
-
-const cardRack = document.querySelector('.cards-rack')
-
-// Method to return livetime for provided Timezone
-function startTime(val) {
-  if (val == 'NIL') {
-
-  }
-  else {
-    let liveTime = new Date().toLocaleString([], { timeZone: val });
-    let liveTimeToDateObject = new Date(liveTime);
-    let liveTimeHour = liveTimeToDateObject.getHours();
-    let liveTimeMinute = liveTimeToDateObject.getMinutes();
-    function checkTime(i) {
-      if (i < 10) { i = "0" + i; }
-      return i;
-    }
-    let ampm = "";
-    if (true) {
-      ampm = liveTimeHour >= 12 ? "PM" : "AM";
-      liveTimeHour = liveTimeHour % 12;
-      liveTimeHour = liveTimeHour ? liveTimeHour : 12;
-    }
-    liveTimeHour = checkTime(liveTimeHour)
-    liveTimeMinute = checkTime(liveTimeMinute)
-    let timeToString = liveTimeHour + ":" + liveTimeMinute + ' ' + ampm;
-    return timeToString
-  }
-}
-
-// Method to update live time whenever a new card is created
-function runTimeForCards(val,cityCardTime) {
-  cityCardTime.innerHTML = startTime(val);
-  t = setInterval(function () {
-    if (!(startTime(val) === undefined)) {
-      cityCardTime.innerHTML = startTime(val);
-    }
-  }, 1000)
-}
-
-function swapDateParts(liveDate) {
-  let temp = liveDate[0]
-  liveDate[0] = liveDate[1]
-  liveDate[1] = temp
-  liveDate = liveDate.join([separator = '/'])
-  return liveDate
-}
-
-// Method to update Date for respective city
-function getDate(val) {
-  let liveDate = new Date().toLocaleDateString([], { timeZone: val });
-  liveDate = liveDate.split('/')
-  liveDate = swapDateParts(liveDate)
-  let liveDateToDateObject = new Date(liveDate).toLocaleString("en-GB", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-  let date = liveDateToDateObject.split(' ')
-  date[1] = date[1].toUpperCase()
-  date = date.join([separator = '-'])
-  return date
-}
-
-// Method to update Date for selected card
-function getDateForCards(val, cityCardDate) {
-  cityCardDate.innerHTML = getDate(val);
-  t = setInterval(function () {
-    cityCardDate.innerHTML = getDate(val);
-  }, 10000)
-}
-
-// Method to create a card to display city details.
-function createCard(jsonCityEntry) {
-  const card = document.createElement('div')
-  const cardBgImage = document.createElement('img')
-  const cardFirstColumn = document.createElement('div')
-  const cardSecondColumn = document.createElement('div')
-  const cityCardName = document.createElement('p')
-  const cityCardTime = document.createElement('p')
-  const cityCardDate = document.createElement('p')
-  const cityCardCelsiusHolder = document.createElement('div')
-  const cityCardCelsiusIcon = document.createElement('img')
-  const cityCardCelsiusValue = document.createElement('p')
-
-  card.classList.add('card-self')
-  cardBgImage.classList.add('card-bg-image')
-  cardFirstColumn.classList.add('columns-card')
-  cardSecondColumn.classList.add('columns-card')
-  cityCardName.classList.add('city-name-card')
-  cityCardTime.classList.add('city-time-card')
-  cityCardDate.classList.add('city-date-card')
-  cityCardCelsiusHolder.classList.add('celsius-holder-card')
-  cityCardCelsiusIcon.classList.add('celsius-content-card')
-  cityCardCelsiusValue.classList.add('celsius-value-card')
-
-  cardBgImage.src = "../Icons_for_cities/" + jsonCityEntry.url
-  cityCardName.innerHTML = jsonCityEntry.cityName
-  runTimeForCards(jsonCityEntry.timeZone, cityCardTime)
-  getDateForCards(jsonCityEntry.timeZone, cityCardDate)
-  cityCardCelsiusIcon.src = "../Weather_Icons/sunnyIcon.svg"
-  cityCardCelsiusValue.innerHTML = jsonCityEntry.temperature;
-
-
-  card.append(cardBgImage, cardFirstColumn, cardSecondColumn)
-  cardFirstColumn.append(cityCardName, cityCardTime, cityCardDate)
-  cardSecondColumn.appendChild(cityCardCelsiusHolder)
-  cityCardCelsiusHolder.append(cityCardCelsiusIcon, cityCardCelsiusValue)
-
-  for (let i = 0; i < 2; i++){
-    const cityCardIconHolder = document.createElement('div')
-    const cityCardWeatherIcon = document.createElement('img')
-    const cityCardIconValue = document.createElement('p')
-
-    cityCardIconHolder.classList.add('icons-holder-card')
-    cityCardWeatherIcon.classList.add('icon-content-card')
-    cityCardIconValue.classList.add('icon-value-card')
-    if (i) {
-      cityCardWeatherIcon.src = "../Weather_Icons/precipitationIcon.svg"
-      cityCardIconValue.innerHTML = jsonCityEntry.precipitation;
-    }
-    else {
-      cityCardWeatherIcon.src = "../Weather_Icons/humidityIcon.svg"
-      cityCardIconValue.innerHTML = jsonCityEntry.humidity;
-    }
-
-    cardFirstColumn.appendChild(cityCardIconHolder)
-    cityCardIconHolder.append(cityCardWeatherIcon, cityCardIconValue)
-  }
-  
-  cardRack.appendChild(card)
-}
-
-// Method to add click listener and call filter function on icon click
-function addFilterIconsListener(jsonData) {
-  filterIcons.forEach( (element,index) => {
-    element.addEventListener('click', () => {
-      for (let i = 0; i < 3; i++){
-        if (i === index) {
-          filterIconContainer[i].classList.add('active-filter-icon')
-        }
-        else {
-          filterIconContainer[i].classList.remove('active-filter-icon')
-        }
-      }
-      filterOnClick(index, jsonData)
-    })
-  })
-}
-
-// Method to filter cities based on given conditions for creating Cards
-function filterOnClick(iconValue, jsonData) {
-  let cityValueMap = new Map()
-  let sortedMap
-  let filteredCityArray = []
-  switch (iconValue) {
-    case 0:
-      for (let city in jsonData) {
-        cityValueMap.set(city, parseInt(jsonData[city].temperature))
-      }
-      sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
-      for(let [key,value] of sortedMap) {
-        if (sortedMap.get(key) > 29) {
-          filteredCityArray.push(key)
-        }
-        else { break }
-      }
-      break
-    case 1:
-      for (let city in jsonData) {
-        cityValueMap.set(city, parseInt(jsonData[city].precipitation))
-      }
-      sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
-      for(let [key,value] of sortedMap) {
-        if ((20 <= parseInt(jsonData[key].temperature) && parseInt(jsonData[key].temperature) < 29) && (parseInt(jsonData[key].humidity) > 50) && (parseInt(jsonData[key].precipitation) < 50)) {
-          filteredCityArray.push(key)
-        }
-      }
-      break
-    case 2:
-      for (let city in jsonData) {
-        cityValueMap.set(city, parseInt(jsonData[city].humidity))
-      }
-      sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
-      for(let [key,value] of sortedMap) {
-        if ((parseInt(jsonData[key].temperature) < 20) && (parseInt(jsonData[key].humidity) >= 50)) {
-          filteredCityArray.push(key)
-        }
-      }
-      break
-  }
-  callCreateCard(filteredCityArray, jsonData)
-}
-
-// Method to call create card for filtered cities
-function callCreateCard(citiesList, jsonData) {
-  cardContainer.innerHTML = ''
-  cardContainer.setAttribute('style','padding-left:20px;')
-  citiesList.forEach(element => {
-    createCard(jsonData[element]);
-  })
-}
-
-// Method to set sunny icon as default icon and filter the cards based on it
-function makeSunnyFilterIconDefault() {
-  filterIcons[0].click()
-  filterIconContainer[0].classList.add('active-filter-icon')
-}
