@@ -1,17 +1,20 @@
-export const filterIcons = document.querySelectorAll('.icons');
-export const filterIconContainer = document.querySelectorAll('.icon-container');
-export const cardRack = document.querySelector('.cards-rack')
+const filterIcons = document.querySelectorAll('.icons');
+const filterIconContainer = document.querySelectorAll('.icon-container');
+const cardRack = document.querySelector('.cards-rack')
 const scrollOverlay = document.getElementsByClassName('card-overlay')
 const spinner = document.querySelector('#counter-value')
+const cardScrollerIcon = document.querySelectorAll('.card-scroller-icon')
+let setIntervalFlag = 0;
 
 // Method to return livetime for provided Timezone
-export function startTime(val) {
+export function startTime(val, cityTime, citySeconds) {
   let liveTime = new Date().toLocaleString([], { timeZone: val });
   liveTime = liveTime.split('/')
   liveTime = swapDateParts(liveTime)
   let liveTimeToDateObject = new Date(liveTime);
   let liveTimeHour = liveTimeToDateObject.getHours();
   let liveTimeMinute = liveTimeToDateObject.getMinutes();
+
   function checkTime(i) {
     if (i < 10) { i = "0" + i; }
     return i;
@@ -24,19 +27,23 @@ export function startTime(val) {
   }
   liveTimeHour = checkTime(liveTimeHour)
   liveTimeMinute = checkTime(liveTimeMinute)
+  if (cityTime !== undefined) {
+    let liveTimeSeconds = liveTimeToDateObject.getSeconds();
+    liveTimeSeconds = checkTime(liveTimeSeconds)
+    citySeconds.innerHTML = ':' + liveTimeSeconds
+    cityTime.innerHTML = liveTimeHour + ":" + liveTimeMinute
+    if (ampm == "AM") {
+      return 1
+    }
+    else {
+      return 0
+    }
+  }
   let timeToString = liveTimeHour + ":" + liveTimeMinute + ' ' + ampm;
   return timeToString
 }
 
-// Method to update live time whenever a new card is created
-export function runTimeForCards(val,cityCardTime) {
-  cityCardTime.innerHTML = startTime(val);
-  let t = setInterval(function () {
-    if (!(startTime(val) === undefined)) {
-      cityCardTime.innerHTML = startTime(val);
-    }
-  }, 1000)
-}
+
 
 export function swapDateParts(liveDate) {
   let temp = liveDate[0]
@@ -47,8 +54,8 @@ export function swapDateParts(liveDate) {
 }
 
 // Method to update Date for respective city
-export function getDate(val) {
-  let liveDate = new Date().toLocaleDateString([], { timeZone: val });
+export function getDate(cityTimeZone, flag) {
+  let liveDate = new Date().toLocaleDateString([], { timeZone: cityTimeZone });
   liveDate = liveDate.split('/')
   liveDate = swapDateParts(liveDate)
   let liveDateToDateObject = new Date(liveDate).toLocaleString("en-GB", {
@@ -57,21 +64,29 @@ export function getDate(val) {
     year: "numeric",
   });
   let date = liveDateToDateObject.split(' ')
-  date[1] = date[1].toUpperCase()
+  if (flag === undefined) {
+    date[1] = date[1].toUpperCase()
+  }
   date = date.join( '-' )
   return date
 }
 
-// Method to update Date for selected card
-export function getDateForCards(val, cityCardDate) {
-  cityCardDate.innerHTML = getDate(val);
+// Method to update live time whenever a new card is created
+function runTimeDateForCards(val,cityCardTime, cityCardDate) {
+  cityCardTime.innerHTML = startTime(val);
   let t = setInterval(function () {
-    cityCardDate.innerHTML = getDate(val);
-  }, 10000)
+    if (setIntervalFlag == 1) {
+      clearInterval(t)
+    }
+    if (!(startTime(val) === undefined)) {
+      cityCardTime.innerHTML = startTime(val);
+      cityCardDate.innerHTML = getDate(val);
+    }
+  }, 100)
 }
 
 // Method to create a card to display city details.
-export function createCard(jsonCityEntry) {
+function createCard(jsonCityEntry) {
   const card = document.createElement('div')
   const cardBgImage = document.createElement('img')
   const cardFirstColumn = document.createElement('div')
@@ -96,8 +111,7 @@ export function createCard(jsonCityEntry) {
 
   cardBgImage.src = "../Icons_for_cities/" + jsonCityEntry.url
   cityCardName.innerHTML = jsonCityEntry.cityName
-  runTimeForCards(jsonCityEntry.timeZone, cityCardTime)
-  getDateForCards(jsonCityEntry.timeZone, cityCardDate)
+  runTimeDateForCards(jsonCityEntry.timeZone, cityCardTime, cityCardDate)
   cityCardCelsiusIcon.src = "../Weather_Icons/sunnyIcon.svg"
   cityCardCelsiusValue.innerHTML = jsonCityEntry.temperature;
 
@@ -129,7 +143,7 @@ export function createCard(jsonCityEntry) {
   yScroll(card,cardRack)
 }
 
-// Method to add click listener and call filter export function on icon click
+// Method to add click listener and call filter function on icon click
 export function addFilterIconsListener(jsonData) {
   filterIcons.forEach( (element,index) => {
     element.addEventListener('click', () => {
@@ -141,13 +155,17 @@ export function addFilterIconsListener(jsonData) {
           filterIcons[i].classList.remove('active-filter-icon')
         }
       }
-      filterOnClick(index, jsonData)
+      setIntervalFlag = 1
+      setTimeout(() => {
+        setIntervalFlag = 0
+        filterOnClick(index, jsonData)
+      }, "100")
     })
   })
 }
 
 // Method to filter cities based on given conditions for creating Cards
-export function filterOnClick(iconValue, jsonData) {
+function filterOnClick(iconValue, jsonData) {
   let cityValueMap = new Map()
   let sortedMap
   let filteredCityArray = []
@@ -157,37 +175,56 @@ export function filterOnClick(iconValue, jsonData) {
         cityValueMap.set(city, parseInt(jsonData[city].temperature))
       }
       sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
-      for(let [key,value] of sortedMap) {
-        if (sortedMap.get(key) > 29) {
-          filteredCityArray.push(key)
-        }
-        else { break }
+      for(let [key] of sortedMap) {
+        filteredCityArray.push(jsonData[key])
       }
+      filteredCityArray = filteredCityArray.filter(filterOnSunny)
       break
     case 1:
       for (let city in jsonData) {
         cityValueMap.set(city, parseInt(jsonData[city].precipitation))
       }
       sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
-      for(let [key,value] of sortedMap) {
-        if ((20 <= parseInt(jsonData[key].temperature) && parseInt(jsonData[key].temperature) < 29) && (parseInt(jsonData[key].humidity) > 50) && (parseInt(jsonData[key].precipitation) < 50)) {
-          filteredCityArray.push(key)
-        }
+      for(let [key] of sortedMap) {
+        filteredCityArray.push(jsonData[key])
       }
+      filteredCityArray = filteredCityArray.filter(filterOnSnow)
       break
     case 2:
       for (let city in jsonData) {
         cityValueMap.set(city, parseInt(jsonData[city].humidity))
       }
       sortedMap = new Map([...cityValueMap.entries()].sort((a, b) => b[1] - a[1]));
-      for(let [key,value] of sortedMap) {
+      for(let [key] of sortedMap) {
         if ((parseInt(jsonData[key].temperature) < 20) && (parseInt(jsonData[key].humidity) >= 50)) {
           filteredCityArray.push(key)
         }
       }
+      for(let [key] of sortedMap) {
+        filteredCityArray.push(jsonData[key])
+      }
+      filteredCityArray = filteredCityArray.filter(filterOnCloudy)
       break
   }
+  filteredCityArray.forEach( (element,index) => {
+    filteredCityArray[index] = filteredCityArray[index].cityName.toLowerCase()
+  })
   getSpinnerValue(filteredCityArray, jsonData)
+}
+
+// Filter method to filter for Sunny Weather
+function filterOnSunny(cityPair) {
+  return (parseInt(cityPair.temperature)) > 29
+}
+
+// Filter method to filter for Snowy Weather
+function filterOnSnow(cityPair) {
+  return (20 <= parseInt(cityPair.temperature) && parseInt(cityPair.temperature) < 29) && (parseInt(cityPair.humidity) > 50) && (parseInt(cityPair.precipitation) < 50)
+}
+
+// Filter method to filter for Cloudy Weather
+function filterOnCloudy(cityPair) {
+  return ((parseInt(cityPair.temperature) < 20) && (parseInt(cityPair.humidity) >= 50))
 }
 
 // Method to set sunny icon as default icon and filter the cards based on it
@@ -218,7 +255,7 @@ function yScroll (target, targetContainer) {
 yScroll(scrollOverlay[0], cardRack)
 
 // Method to get current Spinner Value
-export function getSpinnerValue(citiesList, jsonData) {
+function getSpinnerValue(citiesList, jsonData) {
   let spinnerValue = spinner.value
   spinner.addEventListener('change', (e) => {
     if (e.target.value < 3) {
@@ -236,7 +273,6 @@ export function getSpinnerValue(citiesList, jsonData) {
 // Method to call create card for filtered cities
 function adjustFilteredArray(citiesList, jsonData, spinnerValue) {
   cardRack.innerHTML = ''
-  cardRack.setAttribute('style', 'padding-left:10px')
   citiesList.forEach((element, index) => {
     if (parseInt(spinnerValue) <= index) {
       return
@@ -246,6 +282,7 @@ function adjustFilteredArray(citiesList, jsonData, spinnerValue) {
     }
   })
   changeCardRackStyle()
+  scrollOnClick()
 }
 
 window.onresize = function () {
@@ -256,11 +293,38 @@ window.onresize = function () {
 function changeCardRackStyle() {
   let cardRackWidth = cardRack.scrollWidth - cardRack.clientWidth
   if (cardRackWidth <= 0) {
+    cardScrollerIcon[0].style.display = 'none'
+    cardScrollerIcon[1].style.display = 'none'
     cardRack.classList.add('flex-space-evenly')
     cardRack.classList.remove('flex-space-between')
   }
   else {
+    cardScrollerIcon[0].style.display = 'block'
+    cardScrollerIcon[1].style.display = 'block'
     cardRack.classList.add('flex-space-between')
     cardRack.classList.remove('flex-space-evenly')
   }
+}
+
+// Method to scroll the cards on clicking arrow icons
+function scrollOnClick() {
+  cardScrollerIcon.forEach((element, index) => {
+    element.addEventListener('click', () => {
+      let cardMargin = (getComputedStyle(cardRack.children[0]).marginLeft)
+      let cardWidth = cardRack.children[0].getBoundingClientRect().width + 2 * parseInt(cardMargin)
+      console.log(cardWidth);
+      if(index){
+        cardRack.scrollBy({
+          left: cardWidth,
+          behavior: "smooth"
+        });
+      }
+      else {
+        cardRack.scrollBy({
+          left: -cardWidth,
+          behavior: "smooth"
+        });
+      }
+    })
+  })
 }

@@ -20,10 +20,10 @@ let cityNotFound = 1
  */
 function timeElementCreation (){
   let timeSeconds = document.createElement('span')
-  timeSeconds.innerHTML = "10:10"
+  timeSeconds.innerHTML = ""
   cityTimeContainer.appendChild(timeSeconds)
   timeSeconds = document.createElement('span')
-  timeSeconds.innerHTML = ":46"
+  timeSeconds.innerHTML = ""
   timeSeconds.classList.add("seconds")
   cityTimeContainer.appendChild(timeSeconds)
 }
@@ -39,7 +39,8 @@ const citySeconds = document.querySelector('.seconds')
  */
 function cityUpdateFunctions(val) {
   changeCityImg(val)
-  changeCityDateTime(val)
+  updateCityDateTime(val)
+  updateTimelineHours()
   changeForecastValues(val)
   changeForecastTimeline(val)
 }
@@ -83,112 +84,33 @@ function changeCityImg (jsonCityEntry) {
   }
 }
 
-// Method to get and parse time and Date of selected cities
-/**
- *
- * @param {object} jsonCityEntry - Specific City's key value pairs
- */
-function changeCityDateTime (jsonCityEntry) {
-  let jsonDateTime = jsonCityEntry.dateAndTime
-  jsonDateTime = jsonDateTime.split(' ')
-  const jsonTime = jsonDateTime[1]
-  const jsonDate = jsonDateTime[0].slice(0, -1)
-  if (jsonDateTime[2] === 'AM') { toggleAmPm = 0 } else { toggleAmPm = 1 }
-  if (jsonCityEntry.cityName === 'NIL') { changeAmState(NaN) } else { changeAmState(toggleAmPm) }
-  changeCityTime(jsonTime, jsonCityEntry.cityName)
-  changeCityDate(jsonDate, jsonCityEntry.cityName)
-}
-
-// Method to call functions to change City Time
-/**
- *
- * @param {string} jsonTime - to pass selected city time
- * @param {string} cityName - to pass selected city name
- */
-function changeCityTime (jsonTime, cityName) {
-  if (isNaN(parseInt(jsonTime))) {
-    cityTime.innerHTML = jsonTime
+// Method to update City Time based on TimeZone
+function updateCityDateTime(jsonEntry) {
+  let cityName = jsonEntry.cityName
+  if (cityName === "NIL") {
+    cityTime.innerHTML = "NIL"
     citySeconds.innerHTML = ''
-  } else {
-    if (cityName !== cityInput.placeholder) {
-      updateCityTime(jsonTime)
-      runCityTime(jsonTime, cityName)
-    }
+    toggleAmPm = "NIL"
+    changeAmState(toggleAmPm)
+    cityDate.innerHTML = ''
   }
-}
-
-// Method to update city time
-/**
- *
- * @param {object} liveTime - to pass Time object for live time
- */
-function updateCityTime(liveTime) {
-    cityTime.innerHTML = liveTime.slice(0, -3)
-    citySeconds.innerHTML = liveTime.slice(-3)  
-}
-
-// Method to run Live Time of selected City
-/**
- *
- * @param {object} liveTime - to pass Time object for live time
- * @param {string} cityName - to pass selected city name
- */
-function runCityTime (liveTime, cityName ) {
-  liveTime = liveTime.split(':')
-  liveTime.forEach((element, index) => {
-    liveTime[index] = parseInt(element)
-  })
-  const interval = setInterval(function () {
-    if ((cityName !== cityInput.value) && (cityName !== cityInput.placeholder)) {
-      cityName = cityInput.value
-      clearInterval(interval)
-    } else { updateCityTime(incrementSecond(liveTime)) }
-  }, 1000)
-}
-
-// Method to increment Second
-/**
- * @returns {object} - return live time after updation
- * @param {object} liveTime - to pass Time object for live time
- */
-function incrementSecond (liveTime) {
-  if (liveTime[2] >= 59) {
-    incrementMinute(liveTime)
-    liveTime[2] = 0
-  } else { liveTime[2]++ }
-  // Convert each element to String and add leading zeroes if necessary
-  liveTime.forEach((element, index) => {
-    liveTime[index] = element.toString()
-    if (liveTime[index].length < 2 && index !== 0) { liveTime[index] = '0' + element }
-  })
-  liveTime = liveTime.join(':')
-  return liveTime
-}
-
-// Method to increment Minute
-/**
- * @returns {object} - return live time after updation
- * @param {object} liveTime - to pass Time object for live time
- */
-function incrementMinute (liveTime) {
-  if (liveTime[1] >= 59) {
-    incrementHour(liveTime)
-    liveTime[1] = 0
-  } else { liveTime[1]++ }
-  return liveTime
-}
-
-// Method to increment Hour
-/**
- * @returns {object} - return live time after updation
- * @param {object} liveTime - to pass Time object for live time
- */
-function incrementHour (liveTime) {
-  if (liveTime[0] >= 12) {
-    changeAmState(!toggleAmPm)
-    liveTime[0] = 1
-  } else { liveTime[0]++ }
-  return liveTime
+  else {
+    let cityTimeZone = jsonEntry.timeZone
+    toggleAmPm = middleSection.startTime(cityTimeZone, cityTime, citySeconds)
+    changeAmState(toggleAmPm)
+    cityDate.innerHTML = middleSection.getDate(cityTimeZone, 1)
+    const interval = setInterval(function () {
+      if ((cityName !== cityInput.value) && (cityName !== cityInput.placeholder)) {
+        cityName = cityInput.value
+        clearInterval(interval)
+      } else {
+        toggleAmPm = middleSection.startTime(cityTimeZone, cityTime, citySeconds)
+        changeAmState(toggleAmPm)
+        cityDate.innerHTML = middleSection.getDate(cityTimeZone, 1)
+        // changeTimelineHours()
+      }
+    }, 1000)
+  }
 }
 
 // Method to set AM or PM icon for city
@@ -206,37 +128,18 @@ function changeAmState (toggleAmPm) {
     cityAmPm.src = '../General_Images_&_Icons/amState.svg'
     cityTime.classList.add('time-color-day')
     cityTime.classList.remove('time-color-night')
+    cityTime.classList.remove('time-nil')
     citySeconds.style.color = '#FFD7DB'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
-    cityTime.classList.remove('time-nil')
-    toggleAmPm = !toggleAmPm
   } else {
     cityAmPm.src = '../General_Images_&_Icons/pmState.svg'
     cityTime.classList.add('time-color-night')
     cityTime.classList.remove('time-color-day')
+    cityTime.classList.remove('time-nil')
     citySeconds.style.color = '#BFBFF6'
     cityAmPm.classList.add('am-pm')
     cityAmPm.classList.remove('am-pm-nil')
-    cityTime.classList.remove('time-nil')
-    toggleAmPm = !toggleAmPm
-  }
-}
-
-// Method to update City date
-/**
- *
- * @param {object} jsonDate - to pass selected city date
- * @param {string} cityName - to pass selected city name
- */
-function changeCityDate (jsonDate, cityName) {
-  if (cityName === 'NIL') {
-    cityDate.innerHTML = jsonDate
-  } else {
-    const dateParts = jsonDate.split('/')
-    let cityDateVar = new Date(+dateParts[2], dateParts[0] - 1, +dateParts[1])
-    cityDateVar = cityDateVar.toString().split(' ')
-    cityDate.innerHTML = cityDateVar[2] + '-' + cityDateVar[1] + '-' + cityDateVar[3]
   }
 }
 
@@ -433,4 +336,16 @@ function keepDatalistOptions (selector = '', jsonData) {
   }
 }
 
+function updateTimelineHours() {
+  let currentHour = cityTime.innerHTML.split(':')
+  currentHour = currentHour[0]
+  cityTime.addEventListener('change', function (e) {
+    let hourChangeIndicator = cityTime.innerHTML.split(':')
+    hourChangeIndicator = hourChangeIndicator[0]
+    if (hourChangeIndicator !== currentHour) {
+      currentHour = hourChangeIndicator
+      changeTimelineHours()
+    }
+  })
+}
 //'-------------------------------------------------------------------------------------------------------'

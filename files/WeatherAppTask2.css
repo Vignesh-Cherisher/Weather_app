@@ -116,7 +116,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .card-overlay {
     position: absolute;
-    width: 90%;
+    width: 80%;
     z-index: 2;
     overflow: auto;
     height: 100%;
@@ -190,8 +190,9 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .celsius-content-card {
+    max-width: 22px;
     aspect-ratio: 1/1;
-    width: 35%;
+    width: 50%;
 }
 
 .card-container {
@@ -208,21 +209,15 @@ input[type="number"]::-webkit-outer-spin-button {
 .card-scroller {
     display: flex;  
     justify-content: center;
-    height: 30%;
-    width: fit-content;
-}
-
-.card-scroller-align {
-    display: flex;
-    align-items: center;
-    height: 100%;
+    height: 20%;
     width: fit-content;
 }
 
 .card-scroller-icon {
     aspect-ratio: 1/1;
     width: 100%;
-    opacity: 0.5;   
+    opacity: 0.5;
+    cursor: pointer;
 }
 
 #scroller-left{
@@ -275,7 +270,7 @@ input[type="number"]::-webkit-outer-spin-button {
         width: 40%;
         min-width: 150px;
         padding: 1%;
-        margin-right: 20px;
+        margin: 0 10px;
     }
 
     .columns-card {
@@ -311,7 +306,8 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .celsius-value-card {
-        font-size: calc(10px + 1vw);
+        top: 2px;
+        font-size: calc(6px + 1vw);
     }
 
     .card-scroller-icon {
@@ -362,7 +358,7 @@ input[type="number"]::-webkit-outer-spin-button {
         width: 24%;
         min-width: 180px;
         padding: 1%;
-        margin-right: 50px;
+        margin: 0 25px;
     }
 
     .columns-card {
@@ -402,7 +398,7 @@ input[type="number"]::-webkit-outer-spin-button {
     }
 
     .card-scroller-icon {
-        min-width: 17px;
+        min-width: 50px;
     }
 }
 
@@ -449,7 +445,7 @@ input[type="number"]::-webkit-outer-spin-button {
     .card-self {
         width: 20%;
         min-width: 220px;
-        margin-right: 80px;
+        margin: 0 40px;
     }
 
     .columns-card {
