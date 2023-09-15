@@ -1,7 +1,7 @@
 const filterIcons = document.querySelectorAll('.icons')
 const cardRack = document.querySelector('.cards-rack')
 const scrollOverlay = document.getElementsByClassName('card-overlay')
-const spinner = document.querySelector('#counter-value')
+const cardCardCount = document.querySelector('#counter-value')
 const cardScrollerIcon = document.querySelectorAll('.card-scroller-icon')
 let setIntervalFlag = 0
 
@@ -315,8 +315,8 @@ yScroll(scrollOverlay[0], cardRack)
  * @param {object} jsonData - Data loaded from json
  */
 function getSpinnerValue (citiesList, jsonData) {
-  let spinnerValue = spinner.value
-  spinner.addEventListener('change', (e) => {
+  let spinnerValue = cardCardCount.value
+  cardCardCount.addEventListener('change', (e) => {
     if (e.target.value < 3) {
       e.target.value = 3
     } else if (e.target.value > 10) {

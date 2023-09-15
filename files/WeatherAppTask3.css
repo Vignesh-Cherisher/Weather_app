@@ -41,6 +41,7 @@
     padding-left: 4%;
     aspect-ratio: 1/1;
     width: 8%;
+    cursor: pointer;
 }
 
 .sort-content {
