@@ -14,30 +14,30 @@ const alertCityNotFound = document.querySelector('.alert-city-not-found')
 let toggleAmPm = 0
 let cityNotFound = 1
 
-//Method to create span element for displaying
+// Method to create span element for displaying
 /**
  *
  */
-function timeElementCreation (){
+function timeElementCreation () {
   let timeSeconds = document.createElement('span')
-  timeSeconds.innerHTML = ""
+  timeSeconds.innerHTML = ''
   cityTimeContainer.appendChild(timeSeconds)
   timeSeconds = document.createElement('span')
-  timeSeconds.innerHTML = ""
-  timeSeconds.classList.add("seconds")
+  timeSeconds.innerHTML = ''
+  timeSeconds.classList.add('seconds')
   cityTimeContainer.appendChild(timeSeconds)
 }
 
 timeElementCreation()
 const cityTime = document.querySelector('.time').children[0]
 const citySeconds = document.querySelector('.seconds')
-;
 
 // Method to call functions to update city details
 /**
- * 
+ *
+ * @param {object} val - Specific City's key value pairs
  */
-function cityUpdateFunctions(val) {
+function cityUpdateFunctions (val) {
   changeCityImg(val)
   updateCityDateTime(val)
   updateTimelineHours()
@@ -85,17 +85,20 @@ function changeCityImg (jsonCityEntry) {
 }
 
 // Method to update City Time based on TimeZone
-function updateCityDateTime(jsonEntry) {
+/**
+ *
+ * @param {object} jsonEntry - Specific City's key value pairs
+ */
+function updateCityDateTime (jsonEntry) {
   let cityName = jsonEntry.cityName
-  if (cityName === "NIL") {
-    cityTime.innerHTML = "NIL"
+  if (cityName === 'NIL') {
+    cityTime.innerHTML = 'NIL'
     citySeconds.innerHTML = ''
-    toggleAmPm = "NIL"
+    toggleAmPm = 'NIL'
     changeAmState(toggleAmPm)
     cityDate.innerHTML = ''
-  }
-  else {
-    let cityTimeZone = jsonEntry.timeZone
+  } else {
+    const cityTimeZone = jsonEntry.timeZone
     toggleAmPm = middleSection.startTime(cityTimeZone, cityTime, citySeconds)
     changeAmState(toggleAmPm)
     cityDate.innerHTML = middleSection.getDate(cityTimeZone, 1)
@@ -150,8 +153,8 @@ function changeAmState (toggleAmPm) {
  */
 function changeForecastValues (jsonCityEntry) {
   forecastedValues[0].innerHTML = jsonCityEntry.temperature
-  if (jsonCityEntry.cityName === 'NIL') { 
-    forecastedValues[1].innerHTML = jsonCityEntry.temperature 
+  if (jsonCityEntry.cityName === 'NIL') {
+    forecastedValues[1].innerHTML = jsonCityEntry.temperature
     forecastedValues[2].children[0].innerHTML = jsonCityEntry.humidity
     forecastedValues[3].children[0].innerHTML = jsonCityEntry.precipitation
     forecastedValues[2].children[1].innerHTML = ''
@@ -183,8 +186,8 @@ function changeForecastTimeline (jsonCityEntry) {
     for (let i = 0; i < forecastedTemperature.length; i++) {
       forecastedTemperature[i].innerHTML = jsonCityEntry.nextFiveHrs[1]
     }
-    for (let i = 0; i < scaleWeatherIcon.length; i++){
-      scaleWeatherIcon[i].src = "../General_Images_&_Icons/alert.png"
+    for (let i = 0; i < scaleWeatherIcon.length; i++) {
+      scaleWeatherIcon[i].src = '../General_Images_&_Icons/alert.png'
       scaleWeatherIcon[i].setAttribute('style', 'filter:grayscale(1);')
     }
   }
@@ -199,26 +202,24 @@ function changeTimelineHours () {
   const forecastAmPm = []
   forecastAmPm[0] = toggleAmPm
   forecastAmPm[1] = (toggleAmPm ? ' PM' : ' AM')
-  let i = 0, j = 0
+  let i = 0; let j = 0
   const interval = setInterval(function () {
     scaleTime[j].innerHTML = '---'
-    if(j>=1){
+    if (j >= 1) {
       if (cityHour > 12) { cityHour = 1 }
       if (cityHour === 12) {
         forecastAmPm[0] = !forecastAmPm[0]
         forecastAmPm[1] = (forecastAmPm[0] ? ' PM' : ' AM')
       }
-      if(i===0) { scaleTime[i].innerHTML = 'NOW' }
-      else {
+      if (i === 0) { scaleTime[i].innerHTML = 'NOW' } else {
         scaleTime[i].innerHTML = cityHour + forecastAmPm[1]
-        cityHour++ 
+        cityHour++
       }
       i++
     }
-    if(j<5)
-      j++
-    if(i===6){
-      clearInterval(interval);
+    if (j < 5) { j++ }
+    if (i === 6) {
+      clearInterval(interval)
     }
   }, 200)
 }
@@ -275,7 +276,6 @@ function keepDatalistOptions (selector = '', jsonData) {
     for (let i = 0; i < datalistInputs.length; i++) {
       const input = datalistInputs[i]
       input.addEventListener('change', function (e) {
-        console.log(e.target.placeholder, e.target.value);
         for (const city in jsonData) {
           if (e.target.value === jsonData[city].cityName) {
             const val = cityInput.value.toLowerCase()
@@ -284,15 +284,13 @@ function keepDatalistOptions (selector = '', jsonData) {
             e.target.blur()
             cityNotFound = 0
             break
-          }
-          else {
+          } else {
             cityNotFound = 1
           }
         }
         if (!cityNotFound) {
-          alertCityNotFound.innerHTML = ""
-        }
-        else {
+          alertCityNotFound.innerHTML = ''
+        } else {
           e.target.value = 'NIL'
           e.target.setAttribute('placeholder', e.target.value)
           cityNotFound = 0
@@ -315,20 +313,18 @@ function keepDatalistOptions (selector = '', jsonData) {
               const val = cityInput.value.toLowerCase()
               cityUpdateFunctions(jsonData[val])
               break
-            }
-            else {
+            } else {
               cityNotFound = 1
             }
           }
           if (cityNotFound) {
-            alertCityNotFound.innerHTML =`City '${e.target.value}' Not in List!`
+            alertCityNotFound.innerHTML = `City '${e.target.value}' Not in List!`
             e.target.value = 'Not Found'
             e.target.setAttribute('placeholder', e.target.value)
             e.target.blur()
             cityUpdateFunctions(jsonData.nil)
-          }
-          else {
-            alertCityNotFound.innerHTML = ""
+          } else {
+            alertCityNotFound.innerHTML = ''
           }
         }
       })
@@ -336,7 +332,11 @@ function keepDatalistOptions (selector = '', jsonData) {
   }
 }
 
-function updateTimelineHours() {
+// Method to update Timeline Hours respective to live city time
+/**
+ *
+ */
+function updateTimelineHours () {
   let currentHour = cityTime.innerHTML.split(':')
   currentHour = currentHour[0]
   cityTime.addEventListener('change', function (e) {
@@ -348,4 +348,4 @@ function updateTimelineHours() {
     }
   })
 }
-//'-------------------------------------------------------------------------------------------------------'
+// '-------------------------------------------------------------------------------------------------------'
