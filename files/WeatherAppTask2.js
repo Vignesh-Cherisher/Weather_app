@@ -323,9 +323,9 @@ function getSpinnerValue (citiesList, jsonData) {
       e.target.value = 10
     }
     spinnerValue = e.target.value
-    adjustFilteredArray(citiesList, jsonData, spinnerValue)
+    createCards(citiesList, jsonData, spinnerValue)
   })
-  adjustFilteredArray(citiesList, jsonData, spinnerValue)
+  createCards(citiesList, jsonData, spinnerValue)
 }
 
 // Method to call create card for filtered cities
@@ -335,7 +335,7 @@ function getSpinnerValue (citiesList, jsonData) {
  * @param {object} jsonData - Data loaded from json
  * @param {number} spinnerValue - Current value of counter input
  */
-function adjustFilteredArray (citiesList, jsonData, spinnerValue) {
+function createCards (citiesList, jsonData, spinnerValue) {
   cardRack.innerHTML = ''
   citiesList.forEach((element, index) => {
     if (parseInt(spinnerValue) > index) {

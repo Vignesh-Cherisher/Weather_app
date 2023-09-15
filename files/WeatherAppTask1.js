@@ -44,7 +44,6 @@ function cityUpdateFunctions (val) {
   updateTimelineHours()
   changeForecastValues(val)
   changeForecastTimeline(val)
-  bottomSection.createContinentCard(val)
 }
 
 // Asynchronous Function to load json Data
@@ -58,6 +57,7 @@ function cityUpdateFunctions (val) {
   keepDatalistOptions('.drop-down', jsonData)
   middleSection.addFilterIconsListener(jsonData)
   middleSection.makeSunnyFilterIconDefault()
+  bottomSection.sortOnClick(jsonData)
   cityUpdateFunctions(jsonData.nome)
 })()
 
