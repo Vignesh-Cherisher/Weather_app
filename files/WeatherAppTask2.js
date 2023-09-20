@@ -38,14 +38,16 @@ export function startTime (cityTimeZone, cityTime, citySeconds) {
   liveTimeHour = checkTime(liveTimeHour)
   liveTimeMinute = checkTime(liveTimeMinute)
   if (cityTime !== undefined) {
-    let liveTimeSeconds = liveTimeToDateObject.getSeconds()
-    liveTimeSeconds = checkTime(liveTimeSeconds)
-    citySeconds.innerHTML = ':' + liveTimeSeconds
-    cityTime.innerHTML = liveTimeHour + ':' + liveTimeMinute
-    if (ampm === 'AM') {
-      return 0
-    } else {
-      return 1
+    if(citySeconds !== undefined) {
+      let liveTimeSeconds = liveTimeToDateObject.getSeconds()
+      liveTimeSeconds = checkTime(liveTimeSeconds)
+      citySeconds.innerHTML = ':' + liveTimeSeconds
+      cityTime.innerHTML = liveTimeHour + ':' + liveTimeMinute
+      if (ampm === 'AM') {
+        return 0
+      } else {
+        return 1
+      }
     }
   }
   const timeToString = liveTimeHour + ':' + liveTimeMinute + ' ' + ampm

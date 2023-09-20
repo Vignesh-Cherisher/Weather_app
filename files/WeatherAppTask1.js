@@ -55,6 +55,7 @@ function cityUpdateFunctions (val) {
   const response = await fetch('./data.json')
   const jsonData = await response.json()
   datalistPopulate(jsonData)
+  setTimeMap(jsonData)
   keepDatalistOptions('.drop-down', jsonData)
   timeMap(jsonData)
   middleSection.addFilterIconsListener(jsonData)
