@@ -14,6 +14,7 @@ const cityTimeContainer = document.querySelector('.time')
 const alertCityNotFound = document.querySelector('.alert-city-not-found')
 let toggleAmPm = 0
 let cityNotFound = 1
+let cityTimeMap = new Map()
 
 // Method to create span element for displaying
 /**
@@ -55,6 +56,7 @@ function cityUpdateFunctions (val) {
   const jsonData = await response.json()
   datalistPopulate(jsonData)
   keepDatalistOptions('.drop-down', jsonData)
+  timeMap(jsonData)
   middleSection.addFilterIconsListener(jsonData)
   middleSection.makeSunnyFilterIconDefault()
   bottomSection.sortOnClick(jsonData)
@@ -349,5 +351,53 @@ function updateTimelineHours () {
       changeTimelineHours()
     }
   })
+}
+
+function timeMap(jsonData) {
+  for (const city in jsonData) {
+    let cityStartTime = startTime(jsonData[city].timeZone)
+    cityTimeMap.set(city, cityStartTime)
+  }
+  console.log(cityTimeMap);
+  setInterval(function () {
+    
+  }, 1000)
+}
+
+function swapDateParts (liveDate) {
+  const temp = liveDate[0]
+  liveDate[0] = liveDate[1]
+  liveDate[1] = temp
+  liveDate = liveDate.join('/')
+  return liveDate
+}
+
+function startTime(cityTimeZone, cityTime, citySeconds) {
+  let liveTime = new Date().toLocaleString([], { timeZone: cityTimeZone })
+  liveTime = liveTime.split('/')
+  liveTime = swapDateParts(liveTime)
+  const liveTimeToDateObject = new Date(liveTime)
+  let liveTimeHour = liveTimeToDateObject.getHours()
+  let liveTimeMinute = liveTimeToDateObject.getMinutes()
+  // Method to append '0' if the time comprises of a single digit.
+  /**
+   *
+   * @returns {string} - passed string appended with '0' if needed
+   * @param {string} i - to pass live time as string
+   */
+  function checkTime(i) {
+    if (i < 10) { i = '0' + i }
+    return i
+  }
+  let ampm = ''
+  ampm = liveTimeHour >= 12 ? 'PM' : 'AM'
+  liveTimeHour = liveTimeHour % 12
+  liveTimeHour = liveTimeHour || 12
+  liveTimeHour = checkTime(liveTimeHour)
+  liveTimeMinute = checkTime(liveTimeMinute)
+  let liveTimeSeconds = liveTimeToDateObject.getSeconds()
+  liveTimeSeconds = checkTime(liveTimeSeconds)
+  const timeToString = liveTimeHour + ':' + liveTimeMinute + ':' + liveTimeSeconds + ' ' + ampm
+  return timeToString
 }
 // '-------------------------------------------------------------------------------------------------------'

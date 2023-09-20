@@ -65,6 +65,7 @@ export function swapDateParts (liveDate) {
   liveDate = liveDate.join('/')
   return liveDate
 }
+console.log(4)
 
 // Method to update Date for respective city
 /**

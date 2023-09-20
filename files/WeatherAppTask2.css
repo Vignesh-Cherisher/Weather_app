@@ -87,11 +87,11 @@
 input[type="number"]::-webkit-inner-spin-button, 
 input[type="number"]::-webkit-outer-spin-button {  
     opacity: 1;
-    height: 12px;
+    height: 15px;
     position: absolute;
-    right: 3px;
-    bottom: 4px;
-    transform: scale(1.6);
+    right: 0;
+    bottom: 2px;
+    transform: scaleY(1.5);
 }
 
 .cards-rack {
