@@ -1,12 +1,10 @@
-import * as middleSection from './WeatherAppTask2.js'
-
 const continentCityContainer = document.querySelector('.continent-city-container')
 const sortIcons = document.querySelectorAll('.sort-icon')
 let orderOfSortByTemperature = true
 let orderOfSortByContinentName = true
 let sortedContinentArray = []
 let sortedMap
-let setIntervalFlag = 0
+export let sortedCityArray = []
 
 // Method to create continent and city card
 export function createContinentCard(jsonEntry) {
@@ -14,7 +12,7 @@ export function createContinentCard(jsonEntry) {
   const continentCard = `<div class="continent-city-self">
                         <p class="continent-name">${continentName}</p>
                         <p class="continent-temperature">${jsonEntry.temperature}</p>
-                        <p class="continent-place-time">${jsonEntry.cityName}, <span class="continent-time">${middleSection.startTime(jsonEntry.timeZone)}</span></p>
+                        <p class="continent-place-time">${jsonEntry.cityName}, <span class="continent-time"></span></p>
                         <div class="continent-humidity-container">
                             <img src="../Weather_Icons/humidityIcon.svg" alt="Rain-Drop" class="continent-humidity-icon">
                             <p class="icon-value-card">${jsonEntry.humidity}</p>
@@ -30,11 +28,7 @@ export function sortOnClick(jsonData) {
   sortIcons.forEach((element, index) => {
     if (index) {
       element.addEventListener('mouseup', function () {
-        setIntervalFlag = 1
-        setTimeout(() => {
-          setIntervalFlag = 0
-          reduceCityList(jsonData)
-        }, '200')
+        reduceCityList(jsonData)
       })
     }
     else {
@@ -50,7 +44,7 @@ export function sortOnClick(jsonData) {
 // Method to sort cards by temperature
 function sortByTemperature(jsonData, continentCountArray) {
   let cityTemperatureMap = new Map()
-  let sortedCityArray = []
+  sortedCityArray = []
   for (let [city] of sortedMap.entries()) {
     if (city != "nil") { cityTemperatureMap.set(city, parseInt(jsonData[city].temperature)) }
   }
@@ -98,7 +92,7 @@ function sortByTemperature(jsonData, continentCountArray) {
 // Method to sort cards by continent Name
 function sortByContinentName(jsonData) {
   let cityContinentMap = new Map()
-  let sortedCityArray = []
+  sortedCityArray = []
   for (let city in jsonData) {
     if (city != "nil") { cityContinentMap.set(city, jsonData[city].timeZone.split('/').slice(0, 1)) }
   }
@@ -143,20 +137,4 @@ function createContinentCards(citiesList) {
   for (let i = 11; i >= 0; i--) {
     createContinentCard(citiesList[i])
   }
-  startContinentTime(citiesList)
-}
-
-function startContinentTime(citiesList) {
-  let continentTime = document.querySelectorAll('.continent-time')
-  const continentInterval = setInterval(function () {
-    if (setIntervalFlag === 1) {
-      clearInterval(continentInterval)
-    }
-    for (let i = 0; i < 12; i++) {
-      let continentTimeZone = citiesList[i].timeZone
-      if (!(middleSection.startTime(continentTimeZone) === undefined)) {
-        continentTime[i].innerHTML = middleSection.startTime(continentTimeZone)
-      }
-    }
-  }, 100)
 }

@@ -3,116 +3,7 @@ const cardRack = document.querySelector('.cards-rack')
 const scrollOverlay = document.getElementsByClassName('card-overlay')
 const cardCardCount = document.querySelector('#counter-value')
 const cardScrollerIcon = document.querySelectorAll('.card-scroller-icon')
-let setIntervalFlag = 0
 export let filteredCityArray = []
-
-// Method to return livetime for provided Timezone
-/**
- *
- * @returns {string} - Live time in string Format
- * @param {string} cityTimeZone - passing specified city TimeZone
- * @param {object} cityTime - HTML element displaying hour and minute of a city
- * @param {object} citySeconds - HTML element displaying seconds of a city
- */
-export function startTime (cityTimeZone, cityTime, citySeconds) {
-  let liveTime = new Date().toLocaleString([], { timeZone: cityTimeZone })
-  liveTime = liveTime.split('/')
-  liveTime = swapDateParts(liveTime)
-  const liveTimeToDateObject = new Date(liveTime)
-  let liveTimeHour = liveTimeToDateObject.getHours()
-  let liveTimeMinute = liveTimeToDateObject.getMinutes()
-
-  // Method to append '0' if the time comprises of a single digit.
-  /**
-   *
-   * @returns {string} - passed string appended with '0' if needed
-   * @param {string} i - to pass live time as string
-   */
-  function checkTime (i) {
-    if (i < 10) { i = '0' + i }
-    return i
-  }
-  let ampm = ''
-  ampm = liveTimeHour >= 12 ? 'PM' : 'AM'
-  liveTimeHour = liveTimeHour % 12
-  liveTimeHour = liveTimeHour || 12
-  liveTimeHour = checkTime(liveTimeHour)
-  liveTimeMinute = checkTime(liveTimeMinute)
-  if (cityTime !== undefined) {
-    if(citySeconds !== undefined) {
-      let liveTimeSeconds = liveTimeToDateObject.getSeconds()
-      liveTimeSeconds = checkTime(liveTimeSeconds)
-      citySeconds.innerHTML = ':' + liveTimeSeconds
-      cityTime.innerHTML = liveTimeHour + ':' + liveTimeMinute
-      if (ampm === 'AM') {
-        return 0
-      } else {
-        return 1
-      }
-    }
-  }
-  const timeToString = liveTimeHour + ':' + liveTimeMinute + ' ' + ampm
-  return timeToString
-}
-
-// Method to swap Month variable and Date variable for proper tolocaleString() execution
-/**
- *
- * @returns {object} - live Date in mm/dd/yyyy format
- * @param {object} liveDate - live Date of a city in dd/mm/yyyy format
- */
-export function swapDateParts (liveDate) {
-  const temp = liveDate[0]
-  liveDate[0] = liveDate[1]
-  liveDate[1] = temp
-  liveDate = liveDate.join('/')
-  return liveDate
-}
-console.log(4)
-
-// Method to update Date for respective city
-/**
- *
- * @returns {string} - live Date of a specified city
- * @param {string} cityTimeZone - timezone of a city
- * @param {number} flag - to know the caller of the function
- */
-export function getDate (cityTimeZone, flag) {
-  let liveDate = new Date().toLocaleDateString([], { timeZone: cityTimeZone })
-  liveDate = liveDate.split('/')
-  liveDate = swapDateParts(liveDate)
-  const liveDateToDateObject = new Date(liveDate).toLocaleString('en-GB', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric'
-  })
-  let date = liveDateToDateObject.split(' ')
-  if (flag === undefined) {
-    date[1] = date[1].toUpperCase()
-  }
-  date = date.join('-')
-  return date
-}
-
-// Method to update live time and date whenever a new card is created
-/**
- *
- * @param {string} cityTimeZone - passing specified city TimeZone
- * @param {object} cityCardTime - HTML element to display live Time of a city card
- * @param {object} cityCardDate - HTML element to display live Date of a city card
- */
-function runTimeDateForCards (cityTimeZone, cityCardTime, cityCardDate) {
-  cityCardTime.innerHTML = startTime(cityTimeZone)
-  const t = setInterval(function () {
-    if (setIntervalFlag === 1) {
-      clearInterval(t)
-    }
-    if (!(startTime(cityTimeZone) === undefined)) {
-      cityCardTime.innerHTML = startTime(cityTimeZone)
-      cityCardDate.innerHTML = getDate(cityTimeZone)
-    }
-  }, 100)
-}
 
 // Method to create a card to display city details.
 /**
@@ -144,7 +35,6 @@ function createCard (jsonCityEntry) {
 
   cardBgImage.src = '../Icons_for_cities/' + jsonCityEntry.url
   cityCardName.innerHTML = jsonCityEntry.cityName
-  runTimeDateForCards(jsonCityEntry.timeZone, cityCardTime, cityCardDate)
   cityCardCelsiusIcon.src = '../Weather_Icons/sunnyIcon.svg'
   cityCardCelsiusValue.innerHTML = jsonCityEntry.temperature
 
@@ -190,11 +80,7 @@ export function addFilterIconsListener (jsonData) {
           filterIcons[i].classList.remove('active-filter-icon')
         }
       }
-      setIntervalFlag = 1
-      setTimeout(() => {
-        setIntervalFlag = 0
-        filterOnClick(index, jsonData)
-      }, '100')
+      filterOnClick(index, jsonData)
     })
   })
 }

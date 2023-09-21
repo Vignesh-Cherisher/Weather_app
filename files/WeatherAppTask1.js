@@ -331,16 +331,46 @@ function setTimeMap(jsonData) {
     cityTimeMap.set(city, [ jsonData[city].timeZone , cityStartTime ])
   }
   console.log(cityTimeMap);
-  updateSelectedCityTimeAndDate()
+  updateTimeCalls()
   setInterval(function () {
-    updateSelectedCityTimeAndDate()
-    // updateDisplayedCardsTimeAndDate()
-    // updateContinentCardsTime()
+    updateTimeCalls()
   }, 100)
 }
 
 function updateTimeCalls() {
+  updateSelectedCityTimeAndDate()
+  updateDisplayedCardsTimeAndDate()
+  updateContinentCardsTime()
+}
 
+function updateContinentCardsTime() {
+  let continentTime = document.querySelectorAll('.continent-time')
+  for (let i = 0; i < 12; i++) {
+    let continentTimeZone = bottomSection.sortedCityArray[i].timeZone
+    if (!(startTime(continentTimeZone) === undefined)) {
+      let continentTimeWithSeconds = startTime(continentTimeZone).split(':')
+      continentTimeWithSeconds = continentTimeWithSeconds[0] + ':' + continentTimeWithSeconds[1] + ' ' + continentTimeWithSeconds[2].split(' ')[1]
+      continentTime[i].innerHTML = continentTimeWithSeconds
+    }
+  }
+}
+
+function updateDisplayedCardsTimeAndDate() {
+  let cityCardTime = document.querySelectorAll('.city-time-card')
+  let cityCardDate = document.querySelectorAll('.city-date-card')
+  let index = 0
+  for (let city in middleSection.filteredCityArray) {
+    if (index == cityCardTime.length)
+      break
+    let cityCardTimeZone = cityTimeMap.get(middleSection.filteredCityArray[city])[0]
+    let cardTimeWithSeconds = startTime(cityCardTimeZone).split(':')
+    cardTimeWithSeconds = cardTimeWithSeconds[0] + ':' + cardTimeWithSeconds[1] + ' ' + cardTimeWithSeconds[2].split(' ')[1]
+    if (cityCardTime[index] !== null || cityCardDate[index !== null]) {
+      cityCardTime[index].innerHTML = cardTimeWithSeconds
+      cityCardDate[index].innerHTML = getDate(cityCardTimeZone)      
+    }
+    index++
+  }
 }
 
 function updateSelectedCityTimeAndDate() {
