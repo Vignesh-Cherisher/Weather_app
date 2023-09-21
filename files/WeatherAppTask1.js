@@ -15,6 +15,7 @@ const alertCityNotFound = document.querySelector('.alert-city-not-found')
 let toggleAmPm = 0
 let cityNotFound = 1
 let cityTimeMap = new Map()
+let selectedCityId = 'nome'
 
 // Method to create span element for displaying
 /**
@@ -39,10 +40,11 @@ const citySeconds = document.querySelector('.seconds')
  *
  * @param {object} val - Specific City's key value pairs
  */
-function cityUpdateFunctions (val) {
-  changeCityImg(val)
-  updateCityDateTime(val)
+function cityUpdateFunctions(val) {
+  selectedCityId = val.cityName.toLowerCase()
+  cityTimeContainer.id = selectedCityId
   updateTimelineHours()
+  changeCityImg(val)
   changeForecastValues(val)
   changeForecastTimeline(val)
 }
@@ -55,13 +57,12 @@ function cityUpdateFunctions (val) {
   const response = await fetch('./data.json')
   const jsonData = await response.json()
   datalistPopulate(jsonData)
-  setTimeMap(jsonData)
   keepDatalistOptions('.drop-down', jsonData)
-  timeMap(jsonData)
   middleSection.addFilterIconsListener(jsonData)
   middleSection.makeSunnyFilterIconDefault()
   bottomSection.sortOnClick(jsonData)
   cityUpdateFunctions(jsonData.nome)
+  setTimeMap(jsonData)
 })()
 
 // Method to add option values from json to Datalist
@@ -86,38 +87,6 @@ function changeCityImg (jsonCityEntry) {
   if (jsonCityEntry === 'nil') { cityImage.src = '../Icons_for_cities/placeholder.png' } else {
     const cityImgSource = jsonCityEntry.url
     cityImage.src = '../Icons_for_cities/' + cityImgSource
-  }
-}
-
-// Method to update City Time based on TimeZone
-/**
- *
- * @param {object} jsonEntry - Specific City's key value pairs
- */
-function updateCityDateTime (jsonEntry) {
-  let cityName = jsonEntry.cityName
-  if (cityName === 'NIL') {
-    cityTime.innerHTML = 'NIL'
-    citySeconds.innerHTML = ''
-    toggleAmPm = 'NIL'
-    changeAmState(toggleAmPm)
-    cityDate.innerHTML = ''
-  } else {
-    const cityTimeZone = jsonEntry.timeZone
-    toggleAmPm = middleSection.startTime(cityTimeZone, cityTime, citySeconds)
-    changeAmState(toggleAmPm)
-    cityDate.innerHTML = middleSection.getDate(cityTimeZone, 1)
-    const interval = setInterval(function () {
-      if ((cityName !== cityInput.value) && (cityName !== cityInput.placeholder)) {
-        cityName = cityInput.value
-        clearInterval(interval)
-      } else {
-        toggleAmPm = middleSection.startTime(cityTimeZone, cityTime, citySeconds)
-        changeAmState(toggleAmPm)
-        cityDate.innerHTML = middleSection.getDate(cityTimeZone, 1)
-        // changeTimelineHours()
-      }
-    }, 1000)
   }
 }
 
@@ -181,7 +150,9 @@ function changeForecastValues (jsonCityEntry) {
  */
 function changeForecastTimeline (jsonCityEntry) {
   if (jsonCityEntry.cityName !== 'NIL') {
-    changeTimelineHours()
+    setTimeout(() => {
+      changeTimelineHours()
+    },100)
     changeTimelineTemperature(jsonCityEntry)
     changeTimelineIcon(jsonCityEntry)
   } else {
@@ -354,15 +325,42 @@ function updateTimelineHours () {
   })
 }
 
-function timeMap(jsonData) {
+function setTimeMap(jsonData) {
   for (const city in jsonData) {
     let cityStartTime = startTime(jsonData[city].timeZone)
-    cityTimeMap.set(city, cityStartTime)
+    cityTimeMap.set(city, [ jsonData[city].timeZone , cityStartTime ])
   }
   console.log(cityTimeMap);
+  updateSelectedCityTimeAndDate()
   setInterval(function () {
-    
-  }, 1000)
+    updateSelectedCityTimeAndDate()
+    // updateDisplayedCardsTimeAndDate()
+    // updateContinentCardsTime()
+  }, 100)
+}
+
+function updateTimeCalls() {
+
+}
+
+function updateSelectedCityTimeAndDate() {
+  let cityStartTime = cityTimeMap.get(selectedCityId)
+  if (selectedCityId === 'nil') {
+    cityTime.innerHTML = 'NIL'
+    citySeconds.innerHTML = ''
+    toggleAmPm = 'NIL'
+    changeAmState(toggleAmPm)
+    cityDate.innerHTML = ''
+  } else {
+    cityDate.innerHTML = getDate(cityStartTime[0], 1)
+    cityStartTime = startTime(cityStartTime[0]).split(':')
+    let cityTimeInHours = cityStartTime[0] + ':' + cityStartTime[1]
+    let cityTimeInSeconds = ':' + cityStartTime[2].split(' ')[0]
+    toggleAmPm = cityStartTime[2].split(' ')[1] == 'AM' ? 0 : 1
+    changeAmState(toggleAmPm)
+    cityTime.innerHTML = cityTimeInHours
+    citySeconds.innerHTML = cityTimeInSeconds
+  }
 }
 
 function swapDateParts (liveDate) {
@@ -373,23 +371,24 @@ function swapDateParts (liveDate) {
   return liveDate
 }
 
-function startTime(cityTimeZone, cityTime, citySeconds) {
+// Method to append '0' if the time comprises of a single digit.
+/**
+ *
+ * @returns {string} - passed string appended with '0' if needed
+ * @param {string} i - to pass live time as string
+ */
+function checkTime(i) {
+  if (i < 10) { i = '0' + i }
+  return i
+}
+
+function startTime(cityTimeZone) {
   let liveTime = new Date().toLocaleString([], { timeZone: cityTimeZone })
   liveTime = liveTime.split('/')
   liveTime = swapDateParts(liveTime)
   const liveTimeToDateObject = new Date(liveTime)
   let liveTimeHour = liveTimeToDateObject.getHours()
   let liveTimeMinute = liveTimeToDateObject.getMinutes()
-  // Method to append '0' if the time comprises of a single digit.
-  /**
-   *
-   * @returns {string} - passed string appended with '0' if needed
-   * @param {string} i - to pass live time as string
-   */
-  function checkTime(i) {
-    if (i < 10) { i = '0' + i }
-    return i
-  }
   let ampm = ''
   ampm = liveTimeHour >= 12 ? 'PM' : 'AM'
   liveTimeHour = liveTimeHour % 12
@@ -400,5 +399,29 @@ function startTime(cityTimeZone, cityTime, citySeconds) {
   liveTimeSeconds = checkTime(liveTimeSeconds)
   const timeToString = liveTimeHour + ':' + liveTimeMinute + ':' + liveTimeSeconds + ' ' + ampm
   return timeToString
+}
+
+// Method to update Date for respective city
+/**
+ *
+ * @returns {string} - live Date of a specified city
+ * @param {string} cityTimeZone - timezone of a city
+ * @param {number} flag - to know the caller of the function
+ */
+function getDate (cityTimeZone, flag) {
+  let liveDate = new Date().toLocaleDateString([], { timeZone: cityTimeZone })
+  liveDate = liveDate.split('/')
+  liveDate = swapDateParts(liveDate)
+  const liveDateToDateObject = new Date(liveDate).toLocaleString('en-GB', {
+    month: 'short',
+    day: 'numeric',
+    year: 'numeric'
+  })
+  let date = liveDateToDateObject.split(' ')
+  if (flag === undefined) {
+    date[1] = date[1].toUpperCase()
+  }
+  date = date.join('-')
+  return date
 }
 // '-------------------------------------------------------------------------------------------------------'

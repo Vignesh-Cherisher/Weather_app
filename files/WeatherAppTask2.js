@@ -4,6 +4,7 @@ const scrollOverlay = document.getElementsByClassName('card-overlay')
 const cardCardCount = document.querySelector('#counter-value')
 const cardScrollerIcon = document.querySelectorAll('.card-scroller-icon')
 let setIntervalFlag = 0
+export let filteredCityArray = []
 
 // Method to return livetime for provided Timezone
 /**
@@ -207,7 +208,7 @@ export function addFilterIconsListener (jsonData) {
 function filterOnClick (iconValue, jsonData) {
   const cityValueMap = new Map()
   let sortedMap
-  let filteredCityArray = []
+  filteredCityArray = []
   switch (iconValue) {
     case 0:
       for (const city in jsonData) {
