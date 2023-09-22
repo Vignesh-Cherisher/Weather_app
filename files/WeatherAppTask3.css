@@ -37,16 +37,24 @@
     justify-content: end;
 }
 
+.sort-content {
+    font-weight: 100;
+    font-size: calc(10px + 0.8vw);
+}
+
 .sort-icon {
     padding-left: 4%;
     aspect-ratio: 1/1;
     width: 8%;
+}
+
+.sort-content-container:hover .sort-content, .sort-content-container:hover .sort-icon {
+    color: #fff78c;
     cursor: pointer;
 }
 
-.sort-content {
-    font-weight: 100;
-    font-size: calc(10px + 0.8vw);
+.sort-content-container:hover .sort-icon {
+    filter:drop-shadow(0 0 4px rgb(252 255 86));
 }
 
 .continent-city-container {

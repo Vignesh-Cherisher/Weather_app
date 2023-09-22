@@ -14,7 +14,7 @@ const cityTimeContainer = document.querySelector('.time')
 const alertCityNotFound = document.querySelector('.alert-city-not-found')
 let toggleAmPm = 0
 let cityNotFound = 1
-let cityTimeMap = new Map()
+const cityTimeMap = new Map()
 let selectedCityId = 'nome'
 
 // Method to create span element for displaying
@@ -40,13 +40,15 @@ const citySeconds = document.querySelector('.seconds')
  *
  * @param {object} val - Specific City's key value pairs
  */
-function cityUpdateFunctions(val) {
+function cityUpdateFunctions (val) {
   selectedCityId = val.cityName.toLowerCase()
   cityTimeContainer.id = selectedCityId
-  updateTimelineHours()
   changeCityImg(val)
   changeForecastValues(val)
   changeForecastTimeline(val)
+  setTimeout(() => {
+    updateTimelineHours()
+  }, 100)
 }
 
 // Asynchronous Function to load json Data
@@ -152,7 +154,7 @@ function changeForecastTimeline (jsonCityEntry) {
   if (jsonCityEntry.cityName !== 'NIL') {
     setTimeout(() => {
       changeTimelineHours()
-    },100)
+    }, 100)
     changeTimelineTemperature(jsonCityEntry)
     changeTimelineIcon(jsonCityEntry)
   } else {
@@ -177,7 +179,10 @@ function changeTimelineHours () {
   let cityHour = parseInt(cityTime.innerHTML.slice(0, -3)) + 1
   const forecastAmPm = []
   forecastAmPm[0] = toggleAmPm
-  forecastAmPm[1] = (toggleAmPm ? ' PM' : ' AM')
+  if (cityHour === 12) {
+    forecastAmPm[0] = !forecastAmPm[0]
+  }
+  forecastAmPm[1] = (forecastAmPm[0] ? ' PM' : ' AM')
   let i = 0; let j = 0
   const interval = setInterval(function () {
     scaleTime[j].innerHTML = '---'
@@ -197,7 +202,7 @@ function changeTimelineHours () {
     if (i === 6) {
       clearInterval(interval)
     }
-  }, 200)
+  }, 100)
 }
 
 // Method to change forecasted Temperature in Forecast Timeline
@@ -315,38 +320,52 @@ function keepDatalistOptions (selector = '', jsonData) {
 function updateTimelineHours () {
   let currentHour = cityTime.innerHTML.split(':')
   currentHour = currentHour[0]
-  cityTime.addEventListener('change', function (e) {
+  const observer = new window.MutationObserver(() => {
     let hourChangeIndicator = cityTime.innerHTML.split(':')
     hourChangeIndicator = hourChangeIndicator[0]
+    console.log(hourChangeIndicator)
     if (hourChangeIndicator !== currentHour) {
       currentHour = hourChangeIndicator
       changeTimelineHours()
     }
   })
+  observer.observe(cityTime, { childList: true })
 }
 
-function setTimeMap(jsonData) {
+// Method to create a Map consisting of cities associated with their respective Time Zones and calling time updating functions in a single set interval
+/**
+ *
+ * @param {object} jsonData - to pass Entire json Data
+ */
+function setTimeMap (jsonData) {
   for (const city in jsonData) {
-    let cityStartTime = startTime(jsonData[city].timeZone)
-    cityTimeMap.set(city, [ jsonData[city].timeZone , cityStartTime ])
+    const cityStartTime = startTime(jsonData[city].timeZone)
+    cityTimeMap.set(city, [jsonData[city].timeZone, cityStartTime])
   }
-  console.log(cityTimeMap);
   updateTimeCalls()
   setInterval(function () {
     updateTimeCalls()
   }, 100)
 }
 
-function updateTimeCalls() {
+// Method to call Time and date updating functions for all displayed city information
+/**
+ *
+ */
+function updateTimeCalls () {
   updateSelectedCityTimeAndDate()
   updateDisplayedCardsTimeAndDate()
   updateContinentCardsTime()
 }
 
-function updateContinentCardsTime() {
-  let continentTime = document.querySelectorAll('.continent-time')
+// Method to update live time of cities displayed in bottom section
+/**
+ *
+ */
+function updateContinentCardsTime () {
+  const continentTime = document.querySelectorAll('.continent-time')
   for (let i = 0; i < 12; i++) {
-    let continentTimeZone = bottomSection.sortedCityArray[i].timeZone
+    const continentTimeZone = bottomSection.sortedCityArray[i].timeZone
     if (!(startTime(continentTimeZone) === undefined)) {
       let continentTimeWithSeconds = startTime(continentTimeZone).split(':')
       continentTimeWithSeconds = continentTimeWithSeconds[0] + ':' + continentTimeWithSeconds[1] + ' ' + continentTimeWithSeconds[2].split(' ')[1]
@@ -355,25 +374,32 @@ function updateContinentCardsTime() {
   }
 }
 
-function updateDisplayedCardsTimeAndDate() {
-  let cityCardTime = document.querySelectorAll('.city-time-card')
-  let cityCardDate = document.querySelectorAll('.city-date-card')
+// Method to update live time and date of cities displayed in cards
+/**
+ *
+ */
+function updateDisplayedCardsTimeAndDate () {
+  const cityCardTime = document.querySelectorAll('.city-time-card')
+  const cityCardDate = document.querySelectorAll('.city-date-card')
   let index = 0
-  for (let city in middleSection.filteredCityArray) {
-    if (index == cityCardTime.length)
-      break
-    let cityCardTimeZone = cityTimeMap.get(middleSection.filteredCityArray[city])[0]
+  for (const city in middleSection.filteredCityArray) {
+    if (index === cityCardTime.length) { break }
+    const cityCardTimeZone = cityTimeMap.get(middleSection.filteredCityArray[city])[0]
     let cardTimeWithSeconds = startTime(cityCardTimeZone).split(':')
     cardTimeWithSeconds = cardTimeWithSeconds[0] + ':' + cardTimeWithSeconds[1] + ' ' + cardTimeWithSeconds[2].split(' ')[1]
     if (cityCardTime[index] !== null || cityCardDate[index !== null]) {
       cityCardTime[index].innerHTML = cardTimeWithSeconds
-      cityCardDate[index].innerHTML = getDate(cityCardTimeZone)      
+      cityCardDate[index].innerHTML = getDate(cityCardTimeZone)
     }
     index++
   }
 }
 
-function updateSelectedCityTimeAndDate() {
+// Method to update live time and date of selected city in Top section
+/**
+ *
+ */
+function updateSelectedCityTimeAndDate () {
   let cityStartTime = cityTimeMap.get(selectedCityId)
   if (selectedCityId === 'nil') {
     cityTime.innerHTML = 'NIL'
@@ -384,15 +410,20 @@ function updateSelectedCityTimeAndDate() {
   } else {
     cityDate.innerHTML = getDate(cityStartTime[0], 1)
     cityStartTime = startTime(cityStartTime[0]).split(':')
-    let cityTimeInHours = cityStartTime[0] + ':' + cityStartTime[1]
-    let cityTimeInSeconds = ':' + cityStartTime[2].split(' ')[0]
-    toggleAmPm = cityStartTime[2].split(' ')[1] == 'AM' ? 0 : 1
+    const cityTimeInHours = cityStartTime[0] + ':' + cityStartTime[1]
+    const cityTimeInSeconds = ':' + cityStartTime[2].split(' ')[0]
+    toggleAmPm = cityStartTime[2].split(' ')[1] === 'AM' ? 0 : 1
     changeAmState(toggleAmPm)
     cityTime.innerHTML = cityTimeInHours
     citySeconds.innerHTML = cityTimeInSeconds
   }
 }
 
+// Method to interchange date from MM/DD/YYYY format to DD/MM/YYYY format
+/**
+ * @returns {string} - live Date of a city object
+ * @param {object} liveDate - Array of strings consisting live date of a city object
+ */
 function swapDateParts (liveDate) {
   const temp = liveDate[0]
   liveDate[0] = liveDate[1]
@@ -407,18 +438,24 @@ function swapDateParts (liveDate) {
  * @returns {string} - passed string appended with '0' if needed
  * @param {string} i - to pass live time as string
  */
-function checkTime(i) {
+function checkTime (i) {
   if (i < 10) { i = '0' + i }
   return i
 }
 
-function startTime(cityTimeZone) {
+// Method to get Live Time of a City by passing it's Time Zone
+/**
+ * @returns {string} - live time of a city object
+ * @param {string} cityTimeZone - timezone of a city object
+ */
+function startTime (cityTimeZone) {
   let liveTime = new Date().toLocaleString([], { timeZone: cityTimeZone })
   liveTime = liveTime.split('/')
   liveTime = swapDateParts(liveTime)
   const liveTimeToDateObject = new Date(liveTime)
-  let liveTimeHour = liveTimeToDateObject.getHours()
-  let liveTimeMinute = liveTimeToDateObject.getMinutes()
+  const liveTimeToDateString = liveTimeToDateObject.toString()
+  let liveTimeHour = parseInt(liveTimeToDateString.split(' ')[4].slice(0, -6))
+  let liveTimeMinute = parseInt(liveTimeToDateString.split(' ')[4].slice(-5, -3))
   let ampm = ''
   ampm = liveTimeHour >= 12 ? 'PM' : 'AM'
   liveTimeHour = liveTimeHour % 12
@@ -454,4 +491,3 @@ function getDate (cityTimeZone, flag) {
   date = date.join('-')
   return date
 }
-// '-------------------------------------------------------------------------------------------------------'

@@ -1,0 +1,3 @@
+Replace card creation function in Middle section with HTML templates
+Optimize the code
+When value is changed, use setinterval like used in timelineHours for wherever possible

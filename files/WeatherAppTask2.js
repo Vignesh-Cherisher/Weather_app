@@ -212,6 +212,7 @@ function getSpinnerValue (citiesList, jsonData) {
     } else if (e.target.value > 10) {
       e.target.value = 10
     }
+    console.log(e.target.value)
     spinnerValue = e.target.value
     createCards(citiesList, jsonData, spinnerValue)
   })
