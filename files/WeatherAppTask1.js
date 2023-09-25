@@ -16,6 +16,7 @@ let toggleAmPm = 0
 let cityNotFound = 1
 const cityTimeMap = new Map()
 let selectedCityId = 'nome'
+const observer = new window.MutationObserver(updateTimelineHours)
 
 // Method to create span element for displaying
 /**
@@ -34,6 +35,8 @@ function timeElementCreation () {
 timeElementCreation()
 const cityTime = document.querySelector('.time').children[0]
 const citySeconds = document.querySelector('.seconds')
+let currentHour = cityTime.innerHTML.split(':')
+currentHour = currentHour[0]
 
 // Method to call functions to update city details
 /**
@@ -318,18 +321,17 @@ function keepDatalistOptions (selector = '', jsonData) {
  *
  */
 function updateTimelineHours () {
-  let currentHour = cityTime.innerHTML.split(':')
-  currentHour = currentHour[0]
-  const observer = new window.MutationObserver(() => {
-    let hourChangeIndicator = cityTime.innerHTML.split(':')
-    hourChangeIndicator = hourChangeIndicator[0]
-    console.log(hourChangeIndicator)
-    if (hourChangeIndicator !== currentHour) {
-      currentHour = hourChangeIndicator
-      changeTimelineHours()
-    }
-  })
-  observer.observe(cityTime, { childList: true })
+  let hourChangeIndicator = cityTime.innerHTML.split(':')
+  hourChangeIndicator = hourChangeIndicator[0]
+  if (hourChangeIndicator !== currentHour) {
+    currentHour = hourChangeIndicator
+    console.log(hourChangeIndicator);
+    if (hourChangeIndicator === 'NIL') {
+      for (let i = 0; i < scaleTime.length; i++) {
+        scaleTime[i].innerHTML = 'NIL'
+      }
+    } else { changeTimelineHours() }
+  }
 }
 
 // Method to create a Map consisting of cities associated with their respective Time Zones and calling time updating functions in a single set interval
@@ -491,3 +493,7 @@ function getDate (cityTimeZone, flag) {
   date = date.join('-')
   return date
 }
+
+observer.observe(cityTime, { childList: true })
+
+module.exports = swapDateParts

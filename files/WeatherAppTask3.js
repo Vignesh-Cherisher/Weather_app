@@ -2,7 +2,6 @@ const continentCityContainer = document.querySelector('.continent-city-container
 const sortContentContainer = document.querySelectorAll('.sort-content-container')
 let orderOfSortByTemperature = true
 let orderOfSortByContinentName = true
-let sortedContinentArray = []
 let sortedMap
 export let sortedCityArray = []
 
@@ -32,15 +31,13 @@ export function createContinentCard (jsonEntry) {
  */
 export function sortOnClick (jsonData) {
   sortByContinentName(jsonData)
-  reduceCityList(jsonData)
   sortContentContainer.forEach((element, index) => {
     if (index) {
       element.addEventListener('mouseup', function () {
-        reduceCityList(jsonData)
+        sortByTemp(jsonData)
       })
     } else {
       element.addEventListener('mouseup', function () {
-        sortedContinentArray = []
         sortedMap = new Map()
         sortByContinentName(jsonData)
       })
@@ -52,53 +49,48 @@ export function sortOnClick (jsonData) {
 /**
  *
  * @param {object} jsonData - Data loaded from json
- * @param {object} continentCountArray - Array of numbers containing the count of each continents
  * @param {number} flag - to pass the origin of function call
  */
-function sortByTemperature (jsonData, continentCountArray, flag) {
+function sortByTemp (jsonData, flag) {
   if (flag === 1) {
     orderOfSortByTemperature = !orderOfSortByTemperature
   }
-  const cityTemperatureMap = new Map()
+  let index = -1
+  const cityTemperatureMap = []
+  const citySortedByTemp = []
+  const cityGroupedByContinent = []
   sortedCityArray = []
-  for (const [city] of sortedMap.entries()) {
-    if (city !== 'nil') { cityTemperatureMap.set(city, parseInt(jsonData[city].temperature)) }
-  }
-  let continentCount = 0
-  let skipCity = 0
-  for (let i = 0; i < continentCountArray.length; i++) {
-    let iterator = 0
-    let continentWiseMap = new Map()
-    continentCount += continentCountArray[i]
-    for (const [city] of cityTemperatureMap) {
-      if (skipCity > iterator) {
-        iterator++
-        continue
-      }
-      if (iterator < continentCount) {
-        continentWiseMap.set(city, parseInt(jsonData[city].temperature))
-        if (orderOfSortByTemperature) {
-          continentWiseMap = new Map([...continentWiseMap.entries()].sort((a, b) => a[1] - b[1]))
-        } else {
-          continentWiseMap = new Map([...continentWiseMap.entries()].sort((a, b) => b[1] - a[1]))
-        }
-      } else {
-        break
-      }
-      iterator++
-    }
-    skipCity += continentCountArray[i]
-    for (const [key] of continentWiseMap) {
-      sortedCityArray.push(jsonData[key])
+  for (const [city, continent] of sortedMap) {
+    const last = cityGroupedByContinent[cityGroupedByContinent.length - 1]
+    if (!last || JSON.stringify(continent).localeCompare(JSON.stringify(last[0]))) {
+      cityTemperatureMap[++index] = []
+      citySortedByTemp.push(cityTemperatureMap[index])
+      cityTemperatureMap[index].push([city, parseInt(jsonData[city].temperature)])
+      cityGroupedByContinent.push([continent])
+    } else {
+      cityTemperatureMap[index].push([city, parseInt(jsonData[city].temperature)])
+      last.push(continent)
     }
   }
+  citySortedByTemp.forEach((element, index) => {
+    if (orderOfSortByTemperature) {
+      citySortedByTemp[index] = element.sort((a, b) => a[1] - b[1])
+    } else {
+      citySortedByTemp[index] = element.sort((a, b) => b[1] - a[1])
+    }
+    element.forEach((element) => {
+      sortedCityArray.push(jsonData[element[0]])
+    })
+  })
+
   if (orderOfSortByTemperature) {
-    sortContentContainer[1].children[1].src = '../General_Images_&_Icons/arrowUp.svg'
-  } else {
     sortContentContainer[1].children[1].src = '../General_Images_&_Icons/arrowDown.svg'
+  } else {
+    sortContentContainer[1].children[1].src = '../General_Images_&_Icons/arrowUp.svg'
   }
+
   orderOfSortByTemperature = !orderOfSortByTemperature
-  createContinentCards(sortedCityArray)
+  createContinentCardSection(sortedCityArray)
 }
 
 // Method to sort cards by continent Name
@@ -125,29 +117,7 @@ function sortByContinentName (jsonData) {
   for (const [key] of sortedMap) {
     sortedCityArray.push(jsonData[key])
   }
-  sortedContinentArray = Array.from(sortedMap.values())
-  reduceCityList(jsonData, 1)
-}
-
-// Method to group cities with similar continents
-/**
- *
- * @param {object} jsonData - Data loaded from json
- * @param {number} flag - to pass the origin of function call
- */
-function reduceCityList (jsonData, flag) {
-  let index = 0
-  const continentCountArray = [1]
-  sortedContinentArray.reduce((accumulator, currentValue) => {
-    if (accumulator[0] === currentValue[0]) {
-      continentCountArray[index] += 1
-    } else {
-      index += 1
-      continentCountArray[index] = 1
-    }
-    return currentValue
-  })
-  sortByTemperature(jsonData, continentCountArray, flag)
+  sortByTemp(jsonData, 1)
 }
 
 // Method to call create cards for continent-wise display of cities
@@ -155,7 +125,7 @@ function reduceCityList (jsonData, flag) {
  *
  * @param {object} citiesList - Array of sorted city names
  */
-function createContinentCards (citiesList) {
+function createContinentCardSection (citiesList) {
   continentCityContainer.innerHTML = ''
   for (let i = 11; i >= 0; i--) {
     createContinentCard(citiesList[i])

@@ -212,11 +212,10 @@ function getSpinnerValue (citiesList, jsonData) {
     } else if (e.target.value > 10) {
       e.target.value = 10
     }
-    console.log(e.target.value)
     spinnerValue = e.target.value
-    createCards(citiesList, jsonData, spinnerValue)
+    createCardSection(citiesList, jsonData, spinnerValue)
   })
-  createCards(citiesList, jsonData, spinnerValue)
+  createCardSection(citiesList, jsonData, spinnerValue)
 }
 
 // Method to call create card for filtered cities
@@ -226,7 +225,7 @@ function getSpinnerValue (citiesList, jsonData) {
  * @param {object} jsonData - Data loaded from json
  * @param {number} spinnerValue - Current value of counter input
  */
-function createCards (citiesList, jsonData, spinnerValue) {
+function createCardSection (citiesList, jsonData, spinnerValue) {
   cardRack.innerHTML = ''
   citiesList.forEach((element, index) => {
     if (parseInt(spinnerValue) > index) {
