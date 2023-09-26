@@ -1,5 +1,6 @@
 import * as middleSection from './WeatherAppTask2.js'
 import * as bottomSection from './WeatherAppTask3.js'
+import * as unitFunctions from './utils.js'
 
 const cityImage = document.querySelector('#city-image').children[0]
 const cityValue = document.querySelector('#cities')
@@ -139,7 +140,7 @@ function changeForecastValues (jsonCityEntry) {
     forecastedValues[2].children[1].innerHTML = ''
     forecastedValues[3].children[1].innerHTML = ''
   } else {
-    const fahrenheit = ((parseInt(jsonCityEntry.temperature) * 1.8) + 32).toFixed(0) + ' F'
+    const fahrenheit = unitFunctions.celsiusToFahrenheit(jsonCityEntry.temperature)
     forecastedValues[1].innerHTML = fahrenheit
     forecastedValues[2].children[0].innerHTML = jsonCityEntry.humidity.slice(0, -1)
     forecastedValues[3].children[0].innerHTML = jsonCityEntry.precipitation.slice(0, -1)
@@ -325,7 +326,6 @@ function updateTimelineHours () {
   hourChangeIndicator = hourChangeIndicator[0]
   if (hourChangeIndicator !== currentHour) {
     currentHour = hourChangeIndicator
-    console.log(hourChangeIndicator);
     if (hourChangeIndicator === 'NIL') {
       for (let i = 0; i < scaleTime.length; i++) {
         scaleTime[i].innerHTML = 'NIL'
@@ -421,30 +421,6 @@ function updateSelectedCityTimeAndDate () {
   }
 }
 
-// Method to interchange date from MM/DD/YYYY format to DD/MM/YYYY format
-/**
- * @returns {string} - live Date of a city object
- * @param {object} liveDate - Array of strings consisting live date of a city object
- */
-function swapDateParts (liveDate) {
-  const temp = liveDate[0]
-  liveDate[0] = liveDate[1]
-  liveDate[1] = temp
-  liveDate = liveDate.join('/')
-  return liveDate
-}
-
-// Method to append '0' if the time comprises of a single digit.
-/**
- *
- * @returns {string} - passed string appended with '0' if needed
- * @param {string} i - to pass live time as string
- */
-function checkTime (i) {
-  if (i < 10) { i = '0' + i }
-  return i
-}
-
 // Method to get Live Time of a City by passing it's Time Zone
 /**
  * @returns {string} - live time of a city object
@@ -453,7 +429,7 @@ function checkTime (i) {
 function startTime (cityTimeZone) {
   let liveTime = new Date().toLocaleString([], { timeZone: cityTimeZone })
   liveTime = liveTime.split('/')
-  liveTime = swapDateParts(liveTime)
+  liveTime = unitFunctions.swapDateParts(liveTime)
   const liveTimeToDateObject = new Date(liveTime)
   const liveTimeToDateString = liveTimeToDateObject.toString()
   let liveTimeHour = parseInt(liveTimeToDateString.split(' ')[4].slice(0, -6))
@@ -462,10 +438,10 @@ function startTime (cityTimeZone) {
   ampm = liveTimeHour >= 12 ? 'PM' : 'AM'
   liveTimeHour = liveTimeHour % 12
   liveTimeHour = liveTimeHour || 12
-  liveTimeHour = checkTime(liveTimeHour)
-  liveTimeMinute = checkTime(liveTimeMinute)
+  liveTimeHour = unitFunctions.addZeroToSingleDigitTime(liveTimeHour)
+  liveTimeMinute = unitFunctions.addZeroToSingleDigitTime(liveTimeMinute)
   let liveTimeSeconds = liveTimeToDateObject.getSeconds()
-  liveTimeSeconds = checkTime(liveTimeSeconds)
+  liveTimeSeconds = unitFunctions.addZeroToSingleDigitTime(liveTimeSeconds)
   const timeToString = liveTimeHour + ':' + liveTimeMinute + ':' + liveTimeSeconds + ' ' + ampm
   return timeToString
 }
@@ -480,7 +456,7 @@ function startTime (cityTimeZone) {
 function getDate (cityTimeZone, flag) {
   let liveDate = new Date().toLocaleDateString([], { timeZone: cityTimeZone })
   liveDate = liveDate.split('/')
-  liveDate = swapDateParts(liveDate)
+  liveDate = unitFunctions.swapDateParts(liveDate)
   const liveDateToDateObject = new Date(liveDate).toLocaleString('en-GB', {
     month: 'short',
     day: 'numeric',
@@ -495,5 +471,3 @@ function getDate (cityTimeZone, flag) {
 }
 
 observer.observe(cityTime, { childList: true })
-
-module.exports = swapDateParts

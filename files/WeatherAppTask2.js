@@ -1,3 +1,5 @@
+import * as unitFunctions from './utils.js'
+
 const filterIcons = document.querySelectorAll('.icons')
 const cardRack = document.querySelector('.cards-rack')
 const scrollOverlay = document.getElementsByClassName('card-overlay')
@@ -104,7 +106,7 @@ function filterOnClick (iconValue, jsonData) {
       for (const [key] of sortedMap) {
         filteredCityArray.push(jsonData[key])
       }
-      filteredCityArray = filteredCityArray.filter(filterOnSunny)
+      filteredCityArray = filteredCityArray.filter(unitFunctions.filterOnSunny)
       break
     case 1:
       for (const city in jsonData) {
@@ -114,7 +116,7 @@ function filterOnClick (iconValue, jsonData) {
       for (const [key] of sortedMap) {
         filteredCityArray.push(jsonData[key])
       }
-      filteredCityArray = filteredCityArray.filter(filterOnSnow)
+      filteredCityArray = filteredCityArray.filter(unitFunctions.filterOnSnow)
       break
     case 2:
       for (const city in jsonData) {
@@ -129,43 +131,13 @@ function filterOnClick (iconValue, jsonData) {
       for (const [key] of sortedMap) {
         filteredCityArray.push(jsonData[key])
       }
-      filteredCityArray = filteredCityArray.filter(filterOnCloudy)
+      filteredCityArray = filteredCityArray.filter(unitFunctions.filterOnRainy)
       break
   }
   filteredCityArray.forEach((element, index) => {
     filteredCityArray[index] = filteredCityArray[index].cityName.toLowerCase()
   })
   getSpinnerValue(filteredCityArray, jsonData)
-}
-
-// Filter method to filter for Sunny Weather
-/**
- *
- * @returns {boolean} - truthy value for filter function
- * @param {object} cityPair - Specific City's key value pairs
- */
-function filterOnSunny (cityPair) {
-  return (parseInt(cityPair.temperature)) > 29
-}
-
-// Filter method to filter for Snowy Weather
-/**
- *
- * @returns {boolean} - truthy value for filter function
- * @param {object} cityPair - Specific City's key value pairs
- */
-function filterOnSnow (cityPair) {
-  return (parseInt(cityPair.temperature) >= 20 && parseInt(cityPair.temperature) < 29) && (parseInt(cityPair.humidity) > 50) && (parseInt(cityPair.precipitation) < 50)
-}
-
-// Filter method to filter for Cloudy Weather
-/**
- *
- * @returns {boolean} - truthy value for filter function
- * @param {object} cityPair - Specific City's key value pairs
- */
-function filterOnCloudy (cityPair) {
-  return ((parseInt(cityPair.temperature) < 20) && (parseInt(cityPair.humidity) >= 50))
 }
 
 // Method to set sunny icon as default icon and filter the cards based on it
