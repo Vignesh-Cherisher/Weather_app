@@ -1,5 +1,6 @@
 import * as middleSection from './WeatherAppTask2.js'
 import * as bottomSection from './WeatherAppTask3.js'
+import * as cityProtoFunctions from './cityPrototype.js'
 import * as unitFunctions from './utils.js'
 
 const cityImage = document.querySelector('#city-image').children[0]
@@ -47,9 +48,7 @@ currentHour = currentHour[0]
 function cityUpdateFunctions (val) {
   selectedCityId = val.cityName.toLowerCase()
   cityTimeContainer.id = selectedCityId
-  changeCityImg(val)
-  changeForecastValues(val)
-  changeForecastTimeline(val)
+  cityProtoFunctions.createCityObject(val)
   setTimeout(() => {
     updateTimelineHours()
   }, 100)
@@ -89,7 +88,7 @@ function datalistPopulate (jsonData) {
  *
  * @param {object} jsonCityEntry - Specific City's key value pairs
  */
-function changeCityImg (jsonCityEntry) {
+export function changeCityImg (jsonCityEntry) {
   if (jsonCityEntry === 'nil') { cityImage.src = '../Icons_for_cities/placeholder.png' } else {
     const cityImgSource = jsonCityEntry.url
     cityImage.src = '../Icons_for_cities/' + cityImgSource
@@ -131,7 +130,7 @@ function changeAmState (toggleAmPm) {
  *
  * @param {object} jsonCityEntry - Specific City's key value pairs
  */
-function changeForecastValues (jsonCityEntry) {
+export function changeForecastValues (jsonCityEntry) {
   forecastedValues[0].innerHTML = jsonCityEntry.temperature
   if (jsonCityEntry.cityName === 'NIL') {
     forecastedValues[1].innerHTML = jsonCityEntry.temperature
@@ -154,7 +153,7 @@ function changeForecastValues (jsonCityEntry) {
  *
  * @param {object} jsonCityEntry - Specific City's key value pairs
  */
-function changeForecastTimeline (jsonCityEntry) {
+export function changeForecastTimeline (jsonCityEntry) {
   if (jsonCityEntry.cityName !== 'NIL') {
     setTimeout(() => {
       changeTimelineHours()
