@@ -1,6 +1,6 @@
 import * as middleSection from './WeatherAppTask2.js'
 import * as bottomSection from './WeatherAppTask3.js'
-import * as cityProtoFunctions from './cityPrototype.js'
+import * as cityProtoFunctions from './cityClass.js'
 import * as unitFunctions from './utils.js'
 
 const cityImage = document.querySelector('#city-image').children[0]
