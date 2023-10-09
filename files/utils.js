@@ -3,8 +3,8 @@
  * @returns {string} - fahrenheit value of a city
  * @param {object} celsius - Celsius value of a city
  */
-export function celsiusToFahrenheit(celsius) {
-  return (parseInt(celsius) * 9 / 5 + 32).toFixed(0) + ' F'; // round to two decimal places.
+export function celsiusToFahrenheit (celsius) {
+  return (parseInt(celsius) * 9 / 5 + 32).toFixed(0) + ' F' // round to two decimal places.
 }
 
 // Method to interchange date from MM/DD/YYYY format to DD/MM/YYYY format
@@ -12,7 +12,7 @@ export function celsiusToFahrenheit(celsius) {
  * @returns {string} - live Date of a city object
  * @param {object} liveDate - Array of strings consisting live date of a city object
  */
-export function swapDateParts(liveDate) {
+export function swapDateParts (liveDate) {
   if (liveDate.length === 3) {
     const temp = liveDate[0]
     liveDate[0] = liveDate[1]
@@ -63,5 +63,3 @@ export function filterOnSnow (cityPair) {
 export function filterOnRainy (cityPair) {
   return ((parseInt(cityPair.temperature) < 20) && (parseInt(cityPair.humidity) >= 50))
 }
-
-

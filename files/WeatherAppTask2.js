@@ -35,7 +35,7 @@ function createCard (jsonCityEntry) {
   cityCardCelsiusIcon.classList.add('celsius-content-card')
   cityCardCelsiusValue.classList.add('celsius-value-card')
 
-  cardBgImage.src = '../Icons_for_cities/' + jsonCityEntry.url
+  cardBgImage.src = '../Icons_for_cities/' + jsonCityEntry.cityName.toLowerCase() + '.svg'
   cityCardName.innerHTML = jsonCityEntry.cityName
   cityCardCelsiusIcon.src = '../Weather_Icons/sunnyIcon.svg'
   cityCardCelsiusValue.innerHTML = jsonCityEntry.temperature
@@ -204,6 +204,7 @@ function createCardSection (citiesList, jsonData, spinnerValue) {
       createCard(jsonData[element])
     }
   })
+  cardRack.addEventListener('scroll', displayCardScrollIcon)
   changeCardRackStyle()
   scrollOnClick()
 }
@@ -219,16 +220,36 @@ window.onresize = function () {
 function changeCardRackStyle () {
   const cardRackWidth = cardRack.scrollWidth - cardRack.clientWidth
   if (cardRackWidth <= 0) {
-    cardScrollerIcon[0].style.display = 'none'
-    cardScrollerIcon[1].style.display = 'none'
+    cardScrollerIcon[0].style.visibility = 'hidden'
+    cardScrollerIcon[1].style.visibility = 'hidden'
     cardRack.classList.add('flex-space-evenly')
     cardRack.classList.remove('flex-space-between')
   } else {
-    cardScrollerIcon[0].style.display = 'block'
-    cardScrollerIcon[1].style.display = 'block'
+    cardScrollerIcon[0].style.visibility = 'visible'
+    cardScrollerIcon[1].style.visibility = 'visible'
+    displayCardScrollIcon()
     cardRack.classList.add('flex-space-between')
     cardRack.classList.remove('flex-space-evenly')
   }
+}
+
+// Method to show Card Scroll Icon
+/**
+ *
+ */
+function displayCardScrollIcon () {
+  const cardRackScrollPosition = cardRack.scrollWidth - cardRack.scrollLeft
+  let ceilCardRackWidth = Math.ceil(cardRackScrollPosition)
+  const floorCardRackWidth = Math.floor(cardRackScrollPosition)
+  if (ceilCardRackWidth === floorCardRackWidth) {
+    ceilCardRackWidth += 1
+  }
+  if ((ceilCardRackWidth === cardRack.offsetWidth) || (floorCardRackWidth === cardRack.offsetWidth)) {
+    cardScrollerIcon[1].style.visibility = 'hidden'
+  } else { cardScrollerIcon[1].style.visibility = 'visible' }
+  if (cardRack.scrollLeft === 0) {
+    cardScrollerIcon[0].style.visibility = 'hidden'
+  } else { cardScrollerIcon[0].style.visibility = 'visible' }
 }
 
 // Method to scroll the cards on clicking arrow icons

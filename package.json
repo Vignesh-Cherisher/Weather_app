@@ -195,7 +195,9 @@
     "yocto-queue": "^0.1.0"
   },
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --findRelatedTests tests/"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --findRelatedTests tests/",
+    "build-css": "node-sass --include-path scss files/improvements.scss files/improvements.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "keywords": [],
   "author": "",

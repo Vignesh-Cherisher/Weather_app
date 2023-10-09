@@ -11,8 +11,9 @@
         <link rel="stylesheet" href="./WeatherAppTask1.css">
         <link rel="stylesheet" href="./WeatherAppTask2.css">
         <link rel="stylesheet" href="./WeatherAppTask3.css">
+        <link rel="stylesheet" href="./improvements.css">
     </head>
-    <body>
+    <body class="loader">
         <div class="app-container">
             <section class = "header-section">
                 <div class="split-half flex-row">
@@ -297,6 +298,20 @@
                 <div class="continent-city-container">
                 </div>
             </section>
+        </div>
+        <div class="curtain">
+            <div class="curtain__wrapper">
+                <input type="checkbox" checked class="curtainCheckBox">
+                
+                <div class="curtain__panel curtain__panel--left bevel-box-left">
+                    <img src="../General_Images_&_Icons/sunrise-left.png" class="sunrise-img" alt="Sunrise Logo">
+                </div> <!-- curtain__panel -->
+                
+                <div class="curtain__panel curtain__panel--right bevel-box-right">
+                    <img src="../General_Images_&_Icons/sunrise-right.png" class="sunrise-img" alt="Sunrise Logo">
+                </div> <!-- curtain__panel -->
+
+            </div> <!-- curtain__wrapper -->
         </div>
         <script src="./WeatherAppTask1.js" type="module"></script>
         <script src="./WeatherAppTask2.js" type="module"></script>

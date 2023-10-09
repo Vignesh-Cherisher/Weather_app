@@ -1,6 +1,6 @@
 const continentCityContainer = document.querySelector('.continent-city-container')
 const sortContentContainer = document.querySelectorAll('.sort-content-container')
-let orderOfSortByTemperature = true
+let orderOfSortByTemperature = false
 let orderOfSortByContinentName = true
 let sortedMap
 export let sortedCityArray = []
@@ -84,11 +84,10 @@ function sortByTemp (jsonData, flag) {
   })
 
   if (orderOfSortByTemperature) {
-    sortContentContainer[1].children[1].src = '../General_Images_&_Icons/arrowDown.svg'
-  } else {
     sortContentContainer[1].children[1].src = '../General_Images_&_Icons/arrowUp.svg'
+  } else {
+    sortContentContainer[1].children[1].src = '../General_Images_&_Icons/arrowDown.svg'
   }
-
   orderOfSortByTemperature = !orderOfSortByTemperature
   createContinentCardSection(sortedCityArray)
 }

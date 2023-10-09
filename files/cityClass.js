@@ -1,34 +1,37 @@
 import * as topSection from './WeatherAppTask1.js'
 
 class cityFunctions {
-  constructor(jsonEntry) {
+  constructor (jsonEntry) {
     this.cityObject = jsonEntry
     this.dateAndTime = jsonEntry.dateAndTime
     this.precipitation = jsonEntry.precipitation
   }
-  changeCityImg() {
+
+  changeCityImg () {
     topSection.changeCityImg(this.cityObject)
   }
 
-  changeForecastValues() {
+  changeForecastValues () {
     topSection.changeForecastValues(this.cityObject)
   }
 }
 
 class cityObject extends cityFunctions {
-  constructor(jsonEntry) {
+  constructor (jsonEntry) {
     super(jsonEntry)
-    this.url = jsonEntry.url
     this.name = jsonEntry.cityName
-    this.nextFiveHrs = jsonEntry.nextFiveHrs
   }
 
-  changeForecastTimeline() {
+  changeForecastTimeline () {
     topSection.changeForecastTimeline(this.cityObject)
   }
 }
 
-export function createCityObject(jsonEntry) {
+/**
+ *
+ * @param {object} jsonEntry -  Specific City's key value pairs
+ */
+export function createCityObject (jsonEntry) {
   const city = new cityObject(jsonEntry)
   city.changeCityImg()
   city.changeForecastValues()

@@ -56,7 +56,6 @@ test('Filter function to detect Snow Weather that returns true', () => {
     'Chicago': { temperature: '20°C', humidity: '51%', precipitation: '49%' }
   }
   for (let city in cityTemperaturePairs) {
-    console.log(cityTemperaturePairs[city]);
     expect(unitFunctions.filterOnSnow(cityTemperaturePairs[city])).toBeTruthy();
   } 
 })
