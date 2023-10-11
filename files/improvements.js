@@ -1,11 +1,11 @@
 const documentBody = document.querySelector('body')
 const loader = document.querySelector('.curtain')
-const checkbox = document.querySelector('.curtainCheckBox')
+const checkbox = document.querySelector('.curtain-check-box')
 
 export function switchLoader() {
-  // setTimeout(() => {
-  //   checkbox.checked = false
-  // },3000)
+  setTimeout(() => {
+    checkbox.checked = false
+  },3000)
 }
 
 loader.addEventListener('transitionend', () => {

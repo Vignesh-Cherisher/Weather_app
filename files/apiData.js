@@ -13,7 +13,7 @@ export async function fetchCityTime () {
  * @returns {object} - Key-value pairs of all city objects with city name as key value
  * @param {object} fetchData - Key-value pairs with numbers as key value
  */
-function changeKeyValues (fetchData) {
+export function changeKeyValues (fetchData) {
   for (const iterator in fetchData) {
     const keyValue = fetchData[iterator].cityName.toLowerCase()
     const value = fetchData[iterator]
@@ -45,8 +45,9 @@ export async function fetchNextFiveHours (cityDateAndTime, cityName) {
     redirect: 'follow'
   }
 
-  const fetchData = await fetch('https://soliton.glitch.me/hourly-forecast', requestOptions)
+  const fetchData = await fetch('/hourly-forecast', requestOptions)
     .then((response) => { return response.json() })
     .catch(error => console.log('error', error))
+  console.log(fetchData);
   return (fetchData.temperature)
 }

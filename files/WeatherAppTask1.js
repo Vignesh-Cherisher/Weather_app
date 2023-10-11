@@ -70,18 +70,32 @@ function dataInitCalls (jsonData) {
  *
  */
 (async () => {
-  let jsonData = await apiFetchFunctions.fetchCityTime()
-  loaderFunctions.switchLoader()
+  // const jsonData = requestFunctions.requestTimeZone()
+  let jsonData = httpGet('/all-timezone-cities')
+  jsonData = await JSON.parse(jsonData)
+  jsonData = apiFetchFunctions.changeKeyValues(jsonData.weatherResult)
+  console.log(jsonData)
   datalistPopulate(jsonData)
   dataInitCalls(jsonData)
   middleSection.makeSunnyFilterIconDefault()
   cityUpdateFunctions(jsonData.nome)
   setTimeMap(jsonData)
+  loaderFunctions.switchLoader()
   setInterval(async () => {
-    jsonData = await apiFetchFunctions.fetchCityTime()
+    jsonData = httpGet('/all-timezone-cities')
+    jsonData = await JSON.parse(jsonData)
+    jsonData = apiFetchFunctions.changeKeyValues(jsonData.weatherResult)
     dataInitCalls(jsonData)
   }, 60000 * 2)
 })()
+
+function httpGet(theUrl)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
 
 /**
  *
